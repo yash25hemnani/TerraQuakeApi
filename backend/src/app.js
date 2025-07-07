@@ -3,7 +3,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import expressListEndpoints from 'express-list-endpoints'
 
-import routeGetStart from './routers/testRouters.js'
+import routeGetStart from './routes/testRoutes.js'
 
 dotenv.config()
 
