@@ -4,7 +4,7 @@ const router = express.Router()
 
 // NOTE: CATEGORIA -> Esercitazione/Demo
 
-// NOTE: simula un terremoto per test UI
+// NOTE: simula un evento sismico per test UI
 router.get('/fake-earthquake')
 
 // NOTE: ritorna JSON di esempio per allenamento o esercizi

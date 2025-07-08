@@ -7,7 +7,7 @@ const router = express.Router()
 // NOTE: statistiche globali (totali, medie, picco)
 router.get('/stats/global')
 
-// NOTE: statistiche di terremoti per regioni
+// NOTE: statistiche sismiche per regioni
 router.get('/stats/region/:region')
 
 // NOTE: statistiche sismiche per anno
