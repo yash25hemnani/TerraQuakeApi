@@ -1,5 +1,5 @@
 import express from 'express'
-import { recent, today } from '../controllers/earthquakesControllers.js'
+import { lastWeek, recent, today } from '../controllers/earthquakesControllers.js'
 
 const router = express.Router()
 
@@ -12,7 +12,7 @@ router.get('/recent', recent)
 router.get('/today', today)
 
 // NOTE: lista completa eventi sismici dell'ultima settimana
-router.get('/last-week')
+router.get('/last-week', lastWeek)
 
 // NOTE: lista completa eventi sismici per mese specifico (es. marzo 2025)
 router.get('/month/:year/:month')
