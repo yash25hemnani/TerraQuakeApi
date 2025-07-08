@@ -1,11 +1,12 @@
 import express from 'express'
+import { recent } from '../controllers/earthquakesControllers.js'
 
 const router = express.Router()
 
 // NOTE: CATEGORIA -> Terremoti
 
 // NOTE: lista dei terremoti più recenti
-router.get('/recent')
+router.get('/recent', recent)
 
 // NOTE: terremoti avvenuti oggi
 router.get('/today')
