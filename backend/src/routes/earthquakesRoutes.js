@@ -1,21 +1,26 @@
 import express from 'express'
-import { lastWeek, recent, today } from '../controllers/earthquakesControllers.js'
+import {
+  getEarthquakesByMonth,
+  getEarthquakesLastWeek,
+  getEarthquakesRecent,
+  getEarthquakesToday
+} from '../controllers/earthquakesControllers.js'
 
 const router = express.Router()
 
 // NOTE: CATEGORIA -> Terremoti
 
 // NOTE: lista completa eventi sismici più recenti
-router.get('/recent', recent)
+router.get('/recent', getEarthquakesRecent)
 
 // NOTE: lista completa eventi sismici della data odierna
-router.get('/today', today)
+router.get('/today', getEarthquakesToday)
 
 // NOTE: lista completa eventi sismici dell'ultima settimana
-router.get('/last-week', lastWeek)
+router.get('/last-week', getEarthquakesLastWeek)
 
 // NOTE: lista completa eventi sismici per mese specifico (es. marzo 2025)
-router.get('/month/:year/:month')
+router.get('/month/:year/:month', getEarthquakesByMonth)
 
 // NOTE: cerca eventi sismici vicino a latitudine/longitudine specifica
 router.get('/location/:latitude/:longitude')
