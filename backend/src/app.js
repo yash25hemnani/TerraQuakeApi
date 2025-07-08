@@ -5,8 +5,9 @@ import expressListEndpoints from 'express-list-endpoints'
 
 import routeGetStart from './routes/testRoutes.js'
 import routeEarthquakes from './routes/earthquakesRoutes.js'
-import routeStats from './routes/statisticsRoutes.js'
+import routeStations from './routes/stationsRoutes.js'
 import routeGeospatial from './routes/geospatialRoutes.js'
+import routeStats from './routes/statisticsRoutes.js'
 import routeDemo from './routes/demoRoutes.js'
 
 dotenv.config()
@@ -19,11 +20,12 @@ app.use(express.json())
 
 const port = process.env.PORT || 5000
 
-app.use('/api', routeGetStart)
-app.use('/api', routeEarthquakes)
-app.use('/api', routeStats)
-app.use('/api', routeGeospatial)
-app.use('/api', routeDemo)
+app.use('/api/test', routeGetStart)
+app.use('/api/earthquakes', routeEarthquakes)
+app.use('/api/station', routeStations)
+app.use('/api/geospatial', routeGeospatial)
+app.use('/api/statistics', routeStats)
+app.use('/api/demo', routeDemo)
 
 const startServer = async () => {
   try {
