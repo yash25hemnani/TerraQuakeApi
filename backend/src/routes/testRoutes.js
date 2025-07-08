@@ -3,6 +3,6 @@ import { getStart } from '../controllers/getStartControllers.js'
 
 const router = express.Router()
 
-router.get('/test', getStart)
+router.get('/', getStart)
 
 export default router
