@@ -1,5 +1,6 @@
 import handleHttpError from '../utils/handleError.js'
 
+// NOTE: funzione per la lettura da endpoint INGV e la restituzione degli eventi sismici più recenti
 export const recent = async (req, res) => {
   try {
     const urlINGV = 'https://webservices.ingv.it/fdsnws/event/1/query?orderby=time&format=geojson'
