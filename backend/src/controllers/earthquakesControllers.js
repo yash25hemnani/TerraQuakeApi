@@ -2,7 +2,7 @@ import { regionBoundingBoxes } from '../config/regionBoundingBoxes.js'
 import handleHttpError from '../utils/handleError.js'
 
 // NOTE: funzione per la lettura da endpoint INGV e la restituzione degli eventi sismici più recenti
-export const getEarthquakesRecent = async (req, res) => {
+export const getEarthquakesByRecent = async (req, res) => {
   try {
     const urlINGV = process.env.URL_INGV
     const { limit } = req.query
@@ -61,7 +61,7 @@ export const getEarthquakesRecent = async (req, res) => {
 }
 
 // NOTE: funzione per la lettura da endpoint INGV e la restituzione degli eventi odierni
-export const getEarthquakesToday = async (req, res) => {
+export const getEarthquakesByToday = async (req, res) => {
   try {
     const { limit } = req.query
 
@@ -124,7 +124,7 @@ export const getEarthquakesToday = async (req, res) => {
 }
 
 // NOTE: funzione per ottenere la lista completa eventi sismici dell'ultima settimana
-export const getEarthquakesLastWeek = async (req, res) => {
+export const getEarthquakesByLastWeek = async (req, res) => {
   try {
     const { limit } = req.query
 
@@ -322,7 +322,7 @@ export const getEarthquakesByRegion = async (req, res) => {
 }
 
 // NOTE: funzione per la lettura da endpoint INGV e la restituzione degli eventi sismici filtrati per profondità
-export const getEarthquakesDepth = async (req, res) => {
+export const getEarthquakesByDepth = async (req, res) => {
   try {
     const urlINGV = process.env.URL_INGV
     const { depth, limit } = req.query
@@ -388,25 +388,25 @@ export const getEarthquakesDepth = async (req, res) => {
   }
 }
 
-// NOTE: funzione per la lettura da endpoint INGV e la restituzione degli eventi sismici filtrati per un intervallo di tempo starttime e endtime
-export const getEarthquakesByTimeRange = async (req, res) => {
+// NOTE: funzione per la lettura da endpoint INGV e la restituzione degli eventi sismici filtrati per un intervallo di tempo startdate e enddate
+export const getEarthquakesByDateRange = async (req, res) => {
   try {
-    const { starttime, endtime, limit } = req.query
+    const { startdate, enddate, limit } = req.query
     const urlINGV = process.env.URL_INGV
 
     // Validazione base
-    if (!starttime || !endtime) {
-      return handleHttpError(res, 'I parametri "starttime" e "endtime" sono obbligatori. Esempio: ?starttime=2024-01-01&endtime=2024-01-31', 400)
+    if (!startdate || !enddate) {
+      return handleHttpError(res, 'I parametri startdate e enddate sono obbligatori. Esempio: ?startdate=2024-01-01&enddate=2024-01-31', 400)
     }
 
     // Validazione formato ISO (opzionale ma utile)
     const isoRegex = /^\d{4}-\d{2}-\d{2}$/
-    if (!isoRegex.test(starttime) || !isoRegex.test(endtime)) {
+    if (!isoRegex.test(startdate) || !isoRegex.test(enddate)) {
       return handleHttpError(res, 'Usare il formato data ISO: YYYY-MM-DD. Esempio: ?starttime=2024-01-01', 400)
     }
 
     // Costruisci URL INGV con filtro temporale
-    let url = `${urlINGV}?starttime=${starttime}&endtime=${endtime}&orderby=time&format=geojson`
+    let url = `${urlINGV}?starttime=${startdate}&endtime=${enddate}&orderby=time&format=geojson`
 
     if (limit !== undefined) {
       // Se è stato inserito, valida
@@ -448,7 +448,7 @@ export const getEarthquakesByTimeRange = async (req, res) => {
       path: req.originalUrl,
       timestamp: new Date().toISOString(),
       total: data.features.length,
-      message: `Eventi sismici tra ${starttime} e ${endtime}`,
+      message: `Eventi sismici tra ${startdate} e ${enddate}`,
       data
     })
   } catch (error) {
@@ -457,7 +457,7 @@ export const getEarthquakesByTimeRange = async (req, res) => {
   }
 }
 
-// NOTE: funzione per la lettura da endpoint INGV e la restituzione degli eventi sismici filtrati per profondità
+// NOTE: funzione per la lettura da endpoint INGV e la restituzione degli eventi sismici filtrati per magnitudo
 export const getEarthquakesByMagnitude = async (req, res) => {
   try {
     const urlINGV = process.env.URL_INGV
@@ -515,11 +515,11 @@ export const getEarthquakesByMagnitude = async (req, res) => {
       timestamp: new Date().toISOString(),
       success: true,
       total: filteredMagnitude.length,
-      message: `Eventi sismici con profondità >= ${mag || 0}`,
+      message: `Eventi sismici con magnitudo >= ${mag || 0}`,
       data: filteredMagnitude
     })
   } catch (error) {
-    console.error('Errore nel controller earthquakes/depth:', error.message)
+    console.error('Errore nel controller earthquakes/magnitude:', error.message)
     handleHttpError(res)
   }
 }
