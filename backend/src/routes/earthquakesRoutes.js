@@ -1,6 +1,8 @@
 import express from 'express'
 import {
   getEarthquakesByMonth,
+  getEarthquakesByRegion,
+  getEarthquakesDepth,
   getEarthquakesLastWeek,
   getEarthquakesRecent,
   getEarthquakesToday
@@ -20,22 +22,22 @@ router.get('/today', getEarthquakesToday)
 router.get('/last-week', getEarthquakesLastWeek)
 
 // NOTE: lista completa eventi sismici per mese specifico (es. marzo 2025)
-router.get('/month/:year/:month', getEarthquakesByMonth)
+router.get('/month', getEarthquakesByMonth)
 
 // NOTE: cerca eventi sismici vicino a latitudine/longitudine specifica
-router.get('/location/:latitude/:longitude')
+router.get('/location')
 
 // NOTE: lista completa eventi sismici per regione geografica (es. Calabria)
-router.get('/region/:region')
+router.get('/region', getEarthquakesByRegion)
 
 // NOTE: filtra eventi sismici per profondità (es. > 100Km)
-router.get('/depth/:depth')
+router.get('/depth', getEarthquakesDepth)
 
-// NOTE: filtra eventi sismici per un intervallo di tempo  starttime e endtime
-router.get('/range/:starttime/:endtime')
+// NOTE: filtra eventi sismici per un intervallo di tempo starttime e endtime
+router.get('/range-time')
 
 // NOTE: filtra eventi sismici per magnitudo (es. da 4.0 a 6.0)
-router.get('/magnitude/:min/:max')
+router.get('/magnitude')
 
 // NOTE: dettagli di un singolo evento sismico specifico
 router.get('/:id')

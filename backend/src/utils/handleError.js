@@ -4,7 +4,7 @@
 // Viene usata nei controller per uniformare la gestione e la risposta degli errori.
 const handleHttpError = (res, message = 'Errore interno al server. La tua richiesta non può essere processata in questo momento.', code = 500) => {
   res.status(code).json({
-    status: 'ERROR',
+    status: 'error',
     code,
     timestamp: new Date().toISOString(),
     success: false,

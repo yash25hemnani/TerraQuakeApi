@@ -1,25 +1,52 @@
+import { regionBoundingBoxes } from '../config/regionBoundingBoxes.js'
 import handleHttpError from '../utils/handleError.js'
 
 // NOTE: funzione per la lettura da endpoint INGV e la restituzione degli eventi sismici più recenti
 export const getEarthquakesRecent = async (req, res) => {
   try {
-    const urlINGV = 'https://webservices.ingv.it/fdsnws/event/1/query?orderby=time&format=geojson'
+    const urlINGV = process.env.URL_INGV
+    const { limit } = req.query
 
-    const response = await fetch(urlINGV)
+    let url = `${urlINGV}?orderby=time&format=geojson`
+
+    if (limit !== undefined) {
+      // Se è stato inserito, valida
+      if (
+        typeof limit !== 'string' ||
+        limit.trim() === '' ||
+        isNaN(limit) ||
+        parseInt(limit) <= 0
+      ) {
+        return handleHttpError(
+          res,
+          'Il parametro limit, se fornito, deve essere un numero intero positivo maggiore di 0. Esempio: ?limit=10',
+          400
+        )
+      }
+
+      // Se valido, aggiungilo all’URL
+      const parsedLimit = parseInt(limit)
+      url += `&limit=${parsedLimit}`
+    }
+
+    // const urlINGV = `https://webservices.ingv.it/fdsnws/event/1/query?orderby=time&limit=${limit}&format=geojson`
+
+    const response = await fetch(url)
 
     if (!response.ok) {
-      handleHttpError(res, `HTTP error! Status: ${response.status}`, response.status)
-      return
+      return handleHttpError(
+        res,
+        `Errore HTTP dalla sorgente INGV: ${response.status} ${response.statusText || ''}`.trim(),
+        response.status
+      )
     }
 
     const data = await response.json()
 
-    console.log(urlINGV)
-
     res.status(200).json({
-      status: 'OK',
+      status: 'ok',
       code: 200,
-      method: req.method,
+      method: req.method.toLowerCase(),
       path: req.originalUrl,
       timestamp: new Date().toISOString(),
       success: true,
@@ -28,7 +55,7 @@ export const getEarthquakesRecent = async (req, res) => {
       data
     })
   } catch (error) {
-    console.error('Errore nel controller earthquakes/event:', error.message)
+    console.error('Errore nel controller earthquakes/recent:', error.message)
     handleHttpError(res)
   }
 }
@@ -36,27 +63,53 @@ export const getEarthquakesRecent = async (req, res) => {
 // NOTE: funzione per la lettura da endpoint INGV e la restituzione degli eventi odierni
 export const getEarthquakesToday = async (req, res) => {
   try {
-    const today = new Date()
-    const yyyy = today.getFullYear()
-    const mm = String(today.getMonth() + 1).padStart(2, '0')
-    const dd = String(today.getDate()).padStart(2, '0')
+    const { limit } = req.query
+
+    const nowUTC = new Date()
+    const yyyy = nowUTC.getUTCFullYear()
+    const mm = String(nowUTC.getUTCMonth() + 1).padStart(2, '0')
+    const dd = String(nowUTC.getUTCDate()).padStart(2, '0')
     const dateStr = `${yyyy}-${mm}-${dd}`
+    console.log(dateStr)
 
-    const urlINGV = `https://webservices.ingv.it/fdsnws/event/1/query?starttime=${dateStr}T00:00:00&endtime=${dateStr}T23:59:59&orderby=time&format=geojson`
+    let url = `https://webservices.ingv.it/fdsnws/event/1/query?starttime=${dateStr}T00:00:00&endtime=${dateStr}T23:59:59&orderby=time&format=geojson`
 
-    const response = await fetch(urlINGV)
+    if (limit !== undefined) {
+      // Se è stato inserito, valida
+      if (
+        typeof limit !== 'string' ||
+        limit.trim() === '' ||
+        isNaN(limit) ||
+        parseInt(limit) <= 0
+      ) {
+        return handleHttpError(
+          res,
+          'Il parametro limit, se fornito, deve essere un numero intero positivo maggiore di 0. Esempio: ?limit=10',
+          400
+        )
+      }
+
+      // Se valido, aggiungilo all’URL
+      const parsedLimit = parseInt(limit)
+      url += `&limit=${parsedLimit}`
+    }
+
+    const response = await fetch(url)
 
     if (!response.ok) {
-      handleHttpError(res, `HTTP error! Status: ${response.status}`, response.status)
-      return
+      return handleHttpError(
+        res,
+        `Errore HTTP dalla sorgente INGV: ${response.status} ${response.statusText || ''}`.trim(),
+        response.status
+      )
     }
 
     const data = await response.json()
 
     res.status(200).json({
-      status: 'OK',
+      status: 'ok',
       code: 200,
-      method: req.method,
+      method: req.method.toLowerCase(),
       path: req.originalUrl,
       timestamp: new Date().toISOString(),
       success: true,
@@ -65,7 +118,7 @@ export const getEarthquakesToday = async (req, res) => {
       data
     })
   } catch (error) {
-    console.error('Errore nel controller earthquakes/event:', error.message)
+    console.error('Errore nel controller earthquakes/today:', error.message)
     handleHttpError(res)
   }
 }
@@ -73,6 +126,8 @@ export const getEarthquakesToday = async (req, res) => {
 // NOTE: funzione per ottenere la lista completa eventi sismici dell'ultima settimana
 export const getEarthquakesLastWeek = async (req, res) => {
   try {
+    const { limit } = req.query
+
     const today = new Date()
     const endDate = today.toISOString().split('T')[0] // es: 2025-07-08
 
@@ -80,21 +135,44 @@ export const getEarthquakesLastWeek = async (req, res) => {
     lastWeekDate.setDate(today.getDate() - 7)
     const startDate = lastWeekDate.toISOString().split('T')[0]
 
-    const urlINGV = `https://webservices.ingv.it/fdsnws/event/1/query?starttime=${startDate}&endtime=${endDate}&orderby=time&format=geojson`
+    let url = `https://webservices.ingv.it/fdsnws/event/1/query?starttime=${startDate}&endtime=${endDate}&orderby=time&format=geojson`
 
-    const response = await fetch(urlINGV)
+    if (limit !== undefined) {
+      // Se è stato inserito, valida
+      if (
+        typeof limit !== 'string' ||
+        limit.trim() === '' ||
+        isNaN(limit) ||
+        parseInt(limit) <= 0
+      ) {
+        return handleHttpError(
+          res,
+          'Il parametro limit, se fornito, deve essere un numero intero positivo maggiore di 0. Esempio: ?limit=10',
+          400
+        )
+      }
+
+      // Se valido, aggiungilo all’URL
+      const parsedLimit = parseInt(limit)
+      url += `&limit=${parsedLimit}`
+    }
+
+    const response = await fetch(url)
 
     if (!response.ok) {
-      handleHttpError(res, `HTTP error! Status: ${response.status}`, response.status)
-      return
+      return handleHttpError(
+        res,
+        `Errore HTTP dalla sorgente INGV: ${response.status} ${response.statusText || ''}`.trim(),
+        response.status
+      )
     }
 
     const data = await response.json()
 
     res.status(200).json({
-      status: 'OK',
+      status: 'ok',
       code: 200,
-      method: req.method,
+      method: req.method.toLowerCase(),
       path: req.originalUrl,
       timestamp: new Date().toISOString(),
       success: true,
@@ -111,10 +189,10 @@ export const getEarthquakesLastWeek = async (req, res) => {
 // NOTE: funzione per ottenere una lista completa eventi sismici per mese specifico (es. marzo 2025)
 export const getEarthquakesByMonth = async (req, res) => {
   try {
-    const { year, month } = req.params
+    const { year, month, limit } = req.query
 
-    if (!year || !month) {
-      handleHttpError(res, 'Anno e mese sono obbligatori nei parametri URL (es. /month/2025/03)', 400)
+    if (!parseInt(year) || !parseInt(month)) {
+      handleHttpError(res, 'Anno e mese sono obbligatori nei parametri URL (es. ?year=2025&month=03)', 400)
       return
     }
 
@@ -129,21 +207,44 @@ export const getEarthquakesByMonth = async (req, res) => {
     const mm = String(nextMonth.getMonth() + 1).padStart(2, '0')
     const endDate = `${yyyy}-${mm}-01`
 
-    const urlINGV = `https://webservices.ingv.it/fdsnws/event/1/query?starttime=${startDate}&endtime=${endDate}&orderby=time&format=geojson`
+    let url = `https://webservices.ingv.it/fdsnws/event/1/query?starttime=${startDate}&endtime=${endDate}&orderby=time&format=geojson`
 
-    const response = await fetch(urlINGV)
+    if (limit !== undefined) {
+      // Se è stato inserito, valida
+      if (
+        typeof limit !== 'string' ||
+        limit.trim() === '' ||
+        isNaN(limit) ||
+        parseInt(limit) <= 0
+      ) {
+        return handleHttpError(
+          res,
+          'Il parametro limit, se fornito, deve essere un numero intero positivo maggiore di 0. Esempio: ?limit=10',
+          400
+        )
+      }
+
+      // Se valido, aggiungilo all’URL
+      const parsedLimit = parseInt(limit)
+      url += `&limit=${parsedLimit}`
+    }
+
+    const response = await fetch(url)
 
     if (!response.ok) {
-      handleHttpError(res, `HTTP error! Status: ${response.status}`, response.status)
-      return
+      return handleHttpError(
+        res,
+        `Errore HTTP dalla sorgente INGV: ${response.status} ${response.statusText || ''}`.trim(),
+        response.status
+      )
     }
 
     const data = await response.json()
 
     res.status(200).json({
-      status: 'OK',
+      status: 'ok',
       code: 200,
-      method: req.method,
+      method: req.method.toLowerCase(),
       path: req.originalUrl,
       timestamp: new Date().toISOString(),
       success: true,
@@ -153,6 +254,136 @@ export const getEarthquakesByMonth = async (req, res) => {
     })
   } catch (error) {
     console.error('Errore nel controller earthquakes/month:', error.message)
+    handleHttpError(res)
+  }
+}
+
+// NOTE: funzione per ottenere una lista completa eventi sismici per regione italiana
+export const getEarthquakesByRegion = async (req, res) => {
+  try {
+    const { region, limit } = req.query
+
+    if (!regionBoundingBoxes[region.toLowerCase().trim()]) {
+      handleHttpError(res, `Regione ${region} non supportata`, 400)
+      return
+    }
+
+    const { minlatitude, maxlatitude, minlongitude, maxlongitude } = regionBoundingBoxes[region.toLowerCase().trim()]
+
+    let url = `https://webservices.ingv.it/fdsnws/event/1/query?minlatitude=${minlatitude}&maxlatitude=${maxlatitude}&minlongitude=${minlongitude}&maxlongitude=${maxlongitude}&orderby=time&format=geojson`
+
+    if (limit !== undefined) {
+      // Se è stato inserito, valida
+      if (
+        typeof limit !== 'string' ||
+        limit.trim() === '' ||
+        isNaN(limit) ||
+        parseInt(limit) <= 0
+      ) {
+        return handleHttpError(
+          res,
+          'Il parametro limit, se fornito, deve essere un numero intero positivo maggiore di 0. Esempio: ?limit=10',
+          400
+        )
+      }
+
+      // Se valido, aggiungilo all’URL
+      const parsedLimit = parseInt(limit)
+      url += `&limit=${parsedLimit}`
+    }
+
+    const response = await fetch(url)
+
+    if (!response.ok) {
+      return handleHttpError(
+        res,
+        `Errore HTTP dalla sorgente INGV: ${response.status} ${response.statusText || ''}`.trim(),
+        response.status
+      )
+    }
+
+    const data = await response.json()
+
+    res.status(200).json({
+      status: 'ok',
+      code: 200,
+      method: req.method.toLowerCase(),
+      path: req.originalUrl,
+      timestamp: new Date().toISOString(),
+      success: true,
+      total: data.features?.length || 0,
+      message: `Eventi sismici regione ${region}`,
+      data
+    })
+  } catch (error) {
+    console.error('Errore nel controller earthquakes/region:', error.message)
+    handleHttpError(res)
+  }
+}
+
+// NOTE: funzione per la lettura da endpoint INGV e la restituzione degli eventi sismici filtrati per profondità
+export const getEarthquakesDepth = async (req, res) => {
+  try {
+    const urlINGV = process.env.URL_INGV
+    const { depth, limit } = req.query
+
+    let url = `${urlINGV}?orderby=time&format=geojson`
+
+    if (limit !== undefined) {
+      // Se è stato inserito, valida
+      if (
+        typeof limit !== 'string' ||
+        limit.trim() === '' ||
+        isNaN(limit) ||
+        parseInt(limit) <= 0
+      ) {
+        return handleHttpError(
+          res,
+          'Il parametro limit, se fornito, deve essere un numero intero positivo maggiore di 0. Esempio: ?limit=10',
+          400
+        )
+      }
+
+      // Se valido, aggiungilo all’URL
+      const parsedLimit = parseInt(limit)
+      url += `&limit=${parsedLimit}`
+    }
+
+    const response = await fetch(url)
+
+    if (!response.ok) {
+      return handleHttpError(
+        res,
+        `Errore HTTP dalla sorgente INGV: ${response.status} ${response.statusText || ''}`.trim(),
+        response.status
+      )
+    }
+
+    const data = await response.json()
+    const { features } = data
+
+    // Filtro per profondità minima (se fornita)
+    let filteredFeatures = features
+    if (depth && !isNaN(depth)) {
+      filteredFeatures = features.filter((feature) => {
+        const quakeDepth = feature.geometry.coordinates[2] // profondità in km
+        return quakeDepth > parseFloat(depth)
+      })
+    }
+
+    res.status(200).json({
+      status: 'ok',
+      code: 200,
+      method: req.method.toLowerCase(),
+      path: req.originalUrl,
+      timestamp: new Date().toISOString(),
+      success: true,
+      total: filteredFeatures.length,
+      message: `Eventi sismici con profondità > ${depth || 0} km`,
+      data: filteredFeatures
+    })
+  } catch (error) {
+    console.error('Errore nel controller earthquakes/depth:', error.message)
     handleHttpError(res)
   }
 }
