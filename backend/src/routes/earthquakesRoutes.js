@@ -5,6 +5,7 @@ import {
   getEarthquakesByTimeRange,
   getEarthquakesDepth,
   getEarthquakesLastWeek,
+  getEarthquakesByMagnitude,
   getEarthquakesRecent,
   getEarthquakesToday
 } from '../controllers/earthquakesControllers.js'
@@ -37,8 +38,8 @@ router.get('/depth', getEarthquakesDepth)
 // NOTE: filtra eventi sismici per un intervallo di tempo starttime e endtime
 router.get('/range-time', getEarthquakesByTimeRange)
 
-// NOTE: filtra eventi sismici per magnitudo (es. da 4.0 a 6.0)
-router.get('/magnitude')
+// NOTE: filtra eventi sismici per magnitudo (es. 4.0)
+router.get('/magnitude', getEarthquakesByMagnitude)
 
 // NOTE: dettagli di un singolo evento sismico specifico
 router.get('/:id')

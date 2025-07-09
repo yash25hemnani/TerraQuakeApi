@@ -456,3 +456,70 @@ export const getEarthquakesByTimeRange = async (req, res) => {
     handleHttpError(res)
   }
 }
+
+// NOTE: funzione per la lettura da endpoint INGV e la restituzione degli eventi sismici filtrati per profondità
+export const getEarthquakesByMagnitude = async (req, res) => {
+  try {
+    const urlINGV = process.env.URL_INGV
+    const { mag, limit } = req.query
+
+    let url = `${urlINGV}?orderby=time&format=geojson`
+
+    if (limit !== undefined) {
+      // Se è stato inserito, valida
+      if (
+        typeof limit !== 'string' ||
+        limit.trim() === '' ||
+        isNaN(limit) ||
+        parseInt(limit) <= 0
+      ) {
+        return handleHttpError(
+          res,
+          'Il parametro limit, se fornito, deve essere un numero intero positivo maggiore di 0. Esempio: ?limit=10',
+          400
+        )
+      }
+
+      // Se valido, aggiungilo all’URL
+      const parsedLimit = parseInt(limit)
+      url += `&limit=${parsedLimit}`
+    }
+
+    const response = await fetch(url)
+
+    if (!response.ok) {
+      return handleHttpError(
+        res,
+        `Errore HTTP dalla sorgente INGV: ${response.status} ${response.statusText || ''}`.trim(),
+        response.status
+      )
+    }
+
+    const data = await response.json()
+    const { features } = data
+
+    // Filtro per profondità minima (se fornita)
+    let filteredMagnitude = features
+    if (mag && !isNaN(mag)) {
+      filteredMagnitude = features.filter((feature) => {
+        const quakeMag = feature.properties.mag // magnitudo
+        return quakeMag >= parseFloat(mag)
+      })
+    }
+
+    res.status(200).json({
+      status: 'ok',
+      code: 200,
+      method: req.method.toLowerCase(),
+      path: req.originalUrl,
+      timestamp: new Date().toISOString(),
+      success: true,
+      total: filteredMagnitude.length,
+      message: `Eventi sismici con profondità >= ${mag || 0}`,
+      data: filteredMagnitude
+    })
+  } catch (error) {
+    console.error('Errore nel controller earthquakes/depth:', error.message)
+    handleHttpError(res)
+  }
+}
