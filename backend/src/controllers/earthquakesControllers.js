@@ -387,3 +387,72 @@ export const getEarthquakesDepth = async (req, res) => {
     handleHttpError(res)
   }
 }
+
+// NOTE: funzione per la lettura da endpoint INGV e la restituzione degli eventi sismici filtrati per un intervallo di tempo starttime e endtime
+export const getEarthquakesByTimeRange = async (req, res) => {
+  try {
+    const { starttime, endtime, limit } = req.query
+    const urlINGV = process.env.URL_INGV
+
+    // Validazione base
+    if (!starttime || !endtime) {
+      return handleHttpError(res, 'I parametri "starttime" e "endtime" sono obbligatori. Esempio: ?starttime=2024-01-01&endtime=2024-01-31', 400)
+    }
+
+    // Validazione formato ISO (opzionale ma utile)
+    const isoRegex = /^\d{4}-\d{2}-\d{2}$/
+    if (!isoRegex.test(starttime) || !isoRegex.test(endtime)) {
+      return handleHttpError(res, 'Usare il formato data ISO: YYYY-MM-DD. Esempio: ?starttime=2024-01-01', 400)
+    }
+
+    // Costruisci URL INGV con filtro temporale
+    let url = `${urlINGV}?starttime=${starttime}&endtime=${endtime}&orderby=time&format=geojson`
+
+    if (limit !== undefined) {
+      // Se è stato inserito, valida
+      if (
+        typeof limit !== 'string' ||
+        limit.trim() === '' ||
+        isNaN(limit) ||
+        parseInt(limit) <= 0
+      ) {
+        return handleHttpError(
+          res,
+          'Il parametro limit, se fornito, deve essere un numero intero positivo maggiore di 0. Esempio: ?limit=10',
+          400
+        )
+      }
+
+      // Se valido, aggiungilo all’URL
+      const parsedLimit = parseInt(limit)
+      url += `&limit=${parsedLimit}`
+    }
+
+    const response = await fetch(url)
+
+    if (!response.ok) {
+      return handleHttpError(
+        res,
+        `Errore HTTP dalla sorgente INGV: ${response.status} ${response.statusText || ''}`.trim(),
+        response.status
+      )
+    }
+
+    const data = await response.json()
+
+    res.status(200).json({
+      status: 'ok',
+      success: true,
+      code: 200,
+      method: req.method.toLowerCase(),
+      path: req.originalUrl,
+      timestamp: new Date().toISOString(),
+      total: data.features.length,
+      message: `Eventi sismici tra ${starttime} e ${endtime}`,
+      data
+    })
+  } catch (error) {
+    console.error('Errore nel controller earthquakes/range-time:', error.message)
+    handleHttpError(res)
+  }
+}

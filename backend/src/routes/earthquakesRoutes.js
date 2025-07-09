@@ -2,6 +2,7 @@ import express from 'express'
 import {
   getEarthquakesByMonth,
   getEarthquakesByRegion,
+  getEarthquakesByTimeRange,
   getEarthquakesDepth,
   getEarthquakesLastWeek,
   getEarthquakesRecent,
@@ -34,7 +35,7 @@ router.get('/region', getEarthquakesByRegion)
 router.get('/depth', getEarthquakesDepth)
 
 // NOTE: filtra eventi sismici per un intervallo di tempo starttime e endtime
-router.get('/range-time')
+router.get('/range-time', getEarthquakesByTimeRange)
 
 // NOTE: filtra eventi sismici per magnitudo (es. da 4.0 a 6.0)
 router.get('/magnitude')
