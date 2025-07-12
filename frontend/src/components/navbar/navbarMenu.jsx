@@ -13,22 +13,22 @@ export default function NavbarMenu() {
   ];
 
   return (
-    <header className='fixed left-1/2 top-[1%] translate-x-[-50%] bg-black/10 backdrop-blur-md bg-opacity-60 text-white shadow-lg z-20 w-full max-w-8xl rounded-full px-6 py-4 flex justify-between items-center'>
+    <header className='fixed w-full bg-black bg-opacity-60 text-white shadow-lg rounded-full py-4 flex justify-between items-center p-10 z-50'>
       {/* Logo */}
       <div className='relative flex justify-center items-center text-3xl font-bold w-fit h-12'>
         {/* Logo sovrapposto */}
         <img
           src={Sismic}
           alt='Tracciato logo'
-          className='absolute w-38 h-20 opacity-40 z-0'
+          className='absolute z-20 w-38 h-20 opacity-40'
         />
         {/* Testo sotto il logo */}
-        <span className='text-white ml-12'>TerraQuake</span>
+        <span className='text-white'>TerraQuake</span>
       </div>
 
       {/* Hamburger Icon */}
       <button
-        className='md:hidden flex items-center'
+        className='md:hidden flex items-center mr-10'
         onClick={() => setIsOpen(!isOpen)}
       >
         <svg
@@ -62,8 +62,8 @@ export default function NavbarMenu() {
       {/* Menu Items */}
       <ul
         className={`${
-          isOpen ? 'flex' : 'hidden'
-        } z-50 absolute md:static top-full left-0 w-full md:w-auto md:flex flex-col md:flex-row items-center gap-4 md:gap-8 bg-black/80 md:bg-transparent py-6 md:py-0 px-4 rounded-xl md:rounded-none backdrop-blur-md md:backdrop-blur-0 text-xl transition-all duration-300 ease-in-out`}
+          isOpen ? 'flex pointer-events-auto' : 'hidden pointer-events-auto'
+        } absolute z-10 md:static top-full left-0 w-full md:w-auto md:flex flex-col md:flex-row items-center gap-4 md:gap-8 py-6 md:py-0 px-4 rounded-xl md:rounded-none backdrop-blur-md md:backdrop-blur-0 text-xl transition-all duration-300 ease-in-out`}
       >
         {listItems.map((item) => (
           <li
@@ -76,7 +76,7 @@ export default function NavbarMenu() {
       </ul>
 
       {/* Button */}
-      <button className='hidden md:block bg-purple-600 hover:bg-purple-800 py-2 px-6 rounded-2xl md:text-[14px] lg:text-[16px] transition-colors duration-200 cursor-pointer'>
+      <button className='hidden lg:block bg-purple-600 hover:bg-purple-800 py-2 px-6 rounded-2xl md:text-[14px] lg:text-[16px] transition-colors duration-200 cursor-pointer'>
         Get Started
       </button>
     </header>
