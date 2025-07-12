@@ -68,7 +68,7 @@ export default function NavbarMenu() {
         {listItems.map((item) => (
           <li
             key={item}
-            className='hover:text-purple-400 transition-colors duration-200 cursor-pointer'
+            className='hover:text-purple-400 transition-colors duration-200 md:text-[14px] lg:text-[16px] cursor-pointer'
           >
             <a href='/home'>{item}</a>
           </li>
@@ -76,7 +76,7 @@ export default function NavbarMenu() {
       </ul>
 
       {/* Button */}
-      <button className='hidden md:block bg-purple-600 hover:bg-purple-800 py-2 px-6 rounded-2xl transition-colors duration-200 cursor-pointer'>
+      <button className='hidden md:block bg-purple-600 hover:bg-purple-800 py-2 px-6 rounded-2xl md:text-[14px] lg:text-[16px] transition-colors duration-200 cursor-pointer'>
         Get Started
       </button>
     </header>
