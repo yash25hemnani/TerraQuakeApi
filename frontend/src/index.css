@@ -28,3 +28,7 @@ html {
   scrollbar-color: #6b21a8 #0f0c29; /* thumb / track */
   scrollbar-width: thin;
 }
+
+body {
+  overflow-x: hidden;
+}
