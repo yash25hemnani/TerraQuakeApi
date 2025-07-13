@@ -1,6 +1,6 @@
 export default function Info() {
   return (
-    <section className='relative w-full min-h-[600px] flex flex-col justify-center items-center text-center px-6 py-20 bg-gradient-to-b text-white'>
+    <section className='relative z-30 w-full min-h-[600px] flex flex-col justify-center items-center text-center px-6 py-20 bg-gradient-to-b text-white'>
       <div>
         <h2 className='text-3xl md:text-6xl md:w-full mx-auto'>
           Introduction to TerraQuake API
@@ -13,8 +13,8 @@ export default function Info() {
           accessible earthquake data through a modern and developer-friendly
           interface. Here's what you can do with it:
         </p>
-        <div className='flex flex-col md:flex-col lg:flex-row justify-center mt-[50px] gap-5'>
-          <div className='md:m-auto lg:m-5 w-full sm:w-auto md:w-auto lg:w-[320px] rounded-3xl bg-gradient-to-br from-white/5 to-violet-950/10 shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 border border-white/10 backdrop-blur-sm'>
+        <div className='relative z-35 flex flex-col md:flex-col lg:flex-row justify-center mt-[50px] gap-5'>
+          <div className='md:m-auto lg:m-5 w-full sm:w-auto md:w-auto lg:w-[320px] rounded-3xl bg-gradient-to-br from-white/5 to-violet-950/10 shadow-lg hover:shadow-xl transition-transform duration-500 p-6 border border-white/10 backdrop-blur-sm scale-95 hover:scale-100 ease-in-out'>
             <h2 className='text-white text-2xl lg:text-2xl font-semibold text-center tracking-wide mb-4'>
               Event Details
             </h2>
@@ -29,7 +29,7 @@ export default function Info() {
             </div>
           </div>
 
-          <div className='md:m-auto lg:m-5 w-full sm:w-auto md:w-auto lg:w-[320px] rounded-3xl bg-gradient-to-br from-white/5 to-violet-950/10 shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 border border-white/10 backdrop-blur-sm'>
+          <div className='relative z-35 md:m-auto lg:m-5 w-full sm:w-auto md:w-auto lg:w-[320px] rounded-3xl bg-gradient-to-br from-white/5 to-violet-950/10 shadow-lg hover:shadow-xl transition-transform duration-300 p-6 border border-white/10 backdrop-blur-sm scale-95 hover:scale-100 ease-in-out'>
             <h2 className='text-white text-2xl lg:text-2xl font-semibold text-center tracking-wide mb-4'>
               Advanced Filtering
             </h2>
@@ -44,7 +44,7 @@ export default function Info() {
             </div>
           </div>
 
-          <div className='md:m-auto lg:m-5 w-full sm:w-auto md:w-auto lg:w-[320px] rounded-3xl bg-gradient-to-br from-white/5 to-violet-950/10 shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 border border-white/10 backdrop-blur-sm'>
+          <div className='relative z-35 md:m-auto lg:m-5 w-full sm:w-auto md:w-auto lg:w-[320px] rounded-3xl bg-gradient-to-br from-white/5 to-violet-950/10 shadow-lg hover:shadow-xl transition-transform duration-300 p-6 border border-white/10 backdrop-blur-sm scale-95 hover:scale-100 ease-in-out'>
             <h2 className='text-white text-2xl lg:text-2xl font-semibold text-center tracking-wide mb-4'>
               Statistical Insights
             </h2>
@@ -59,7 +59,7 @@ export default function Info() {
             </div>
           </div>
 
-          <div className='md:m-auto lg:m-5 w-full sm:w-auto md:w-auto lg:w-[320px] rounded-3xl bg-gradient-to-br from-white/5 to-violet-950/10 shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 border border-white/10 backdrop-blur-sm'>
+          <div className='relative z-35 md:m-auto lg:m-5 w-full sm:w-auto md:w-auto lg:w-[320px] rounded-3xl bg-gradient-to-br from-white/5 to-violet-950/10 shadow-lg hover:shadow-xl transition-transform duration-300 p-6 border border-white/10 backdrop-blur-sm scale-95 hover:scale-100 ease-in-out'>
             <h2 className='text-white text-2xl lg:text-2xl font-semibold text-center tracking-wide mb-4'>
               Easy Integration
             </h2>
