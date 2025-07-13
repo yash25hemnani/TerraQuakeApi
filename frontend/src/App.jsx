@@ -4,23 +4,9 @@ import ApiDocsEarthquakes from './components/apiDocs/apiDocsEarthquakes';
 import Hero from './components/hero/hero';
 import Info from './components/info/info';
 import NavbarMenu from './components/navbar/navbarMenu';
+import createStar from './components/utils/createStar';
 
 function App() {
-
-  // Funzione per creare animazione di stelle
-  const createStar = () => {
-    const star = document.createElement('div')
-    star.className = 'star'
-    star.style.left = `${Math.random() * 100}vw`
-    star.style.top = `${Math.random() * 100}vh`
-    star.style.animationDuration = `${Math.random() * 10 + 1}s`
-    document.body.appendChild(star)
-
-    // Elimina la stella dopo l'animazione
-    setTimeout(() => {
-      star.remove()
-    }, 1000)
-  }
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -29,7 +15,6 @@ function App() {
 
     return () => clearInterval(interval) // pulizia
   }, []);
-
 
   return (
     <main>
