@@ -12,6 +12,7 @@ import ApiAccess from './pages/apiAccess/apiAccess';
 import UseCases from './pages/useCases/useCases';
 import About from './pages/about/about';
 import NoPage from './pages/noPage/noPage';
+import Footer from './components/footer/footer';
 
 function App() {
 
@@ -39,6 +40,7 @@ function App() {
             <Route path='/about' element={<About />} />
             <Route path='*' element={<NoPage />} />
           </Routes>
+          <Footer />
         </div>
       </main>
     </BrowserRouter>
