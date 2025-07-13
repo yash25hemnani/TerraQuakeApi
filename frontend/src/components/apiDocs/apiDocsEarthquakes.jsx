@@ -1,4 +1,6 @@
+import './apiDocs.css';
 import { useState } from 'react';
+import { ImSpinner9 } from 'react-icons/im';
 
 export default function ApiDocsEarthquakes() {
   const URL = import.meta.env.VITE_URL_BACKEND;
@@ -240,10 +242,10 @@ It allows users to access detailed information about a single earthquake event, 
                 </button>
               </div>
 
-              {loading && <p className='text-yellow-400 mb-2'>⏳ Loading...</p>}
+              {loading && <p className='text-yellow-400 mb-2'><ImSpinner9 className='spinner'/> Loading...</p>}
 
               {responseData && (
-                <div className='bg-black/40 rounded-lg p-4 text-sm text-yellow-200 max-h-[400px] overflow-auto'>
+                <div className='bg-black/40 rounded-lg p-4 text-sm text-yellow-400 max-h-[400px] overflow-auto'>
                   <pre>{JSON.stringify(responseData, null, 2)}</pre>
                 </div>
               )}
