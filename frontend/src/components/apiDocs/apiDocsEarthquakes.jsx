@@ -10,60 +10,104 @@ export default function ApiDocsEarthquakes() {
   const endpoints = [
     {
       title: 'recent',
-      description:
-        'Fetches the most recent seismic events from INGV, ordered by time.',
+      description: `
+This endpoint retrieves all seismic events that occurred today from the TerraQuake API, based on UTC time. It provides users with   real-time insight into ongoing seismic activity for the current day. The response includes detailed information such as magnitude, location, depth, time, and unique event ID.
+      
+  Query Parameters:
+          
+      - limit: (Optional) The number of earthquake events to return. Defaults to 10 if not specified.`,
       query: '?limit=10',
       example: '/api/earthquakes/recent?limit=10',
       method: 'GET',
     },
     {
       title: 'today',
-      description: 'Fetches all seismic events that occurred today (UTC time).',
+      description: `
+This endpoint retrieves all seismic events that occurred today (from 00:00 UTC to the current time) from the TerraQuake API.
+It allows users to monitor real-time seismic activity and provides a daily overview of ongoing earthquakes.
+The response includes detailed information such as magnitude, location, depth, event time, and coordinates.
+      
+  Query Parameters:
+        
+      - limit: (Optional) The number of earthquake events to return. Default is 10 if not provided.`,
       query: '?limit=10',
       example: '/api/earthquakes/today?limit=10',
       method: 'GET',
     },
     {
       title: 'last-week',
-      description: 'Fetches seismic events from the past 7 days.',
+      description: `
+This endpoint retrieves all seismic events that occurred in the last 7 days from the TerraQuake API.
+It allows users to monitor and analyze recent seismic activity over the past week, providing insights into short-term trends and regional patterns.
+      
+  Query Parameters:
+        
+      - limit: (Optional) The number of earthquake events to return. Default is 10 if not specified.`,
       query: '?limit=20',
       example: '/api/earthquakes/last-week?limit=20',
       method: 'GET',
     },
     {
       title: 'month',
-      description: 'Fetches seismic events for a specific year and month.',
+      description: `
+This endpoint retrieves all seismic events that occurred during a specific month and year from the TerraQuake API.
+It allows users to explore historical earthquake data for a given period. The response includes detailed event information such as magnitude, location, depth, and timestamp.
+      
+  Query Parameters:
+        
+      - year: (Required) The target year (e.g., 2025).
+      - month: (Required) The target month in numeric format (01 to 12).
+      - limit: (Optional) The number of events to return. Default is 10 if not specified.`,
       query: '?year=2025&month=03&limit=10',
       example: '/api/earthquakes/month?year=2025&month=03&limit=15',
       method: 'GET',
     },
     {
       title: 'location',
-      description:
-        'Fetches events for a specific location (latitude and longitude-based).',
+      description: `----`,
       query: '?lat=42.5&lon=13.4&radius=50&limit=10',
       example: '/api/earthquakes/location?lat=42.5&lon=13.4&radius=50&limit=10',
       method: 'GET',
     },
     {
       title: 'region',
-      description:
-        'Fetches events that occurred within a specific Italian region.',
+      description: `
+This endpoint retrieves all seismic events that occurred within a specific Italian region from the TerraQuake API.
+It allows users to filter earthquakes by regional boundaries for localized seismic analysis. The response includes key data such as magnitude, location, depth, and time.
+      
+  Query Parameters:
+        
+      - region: (Required) The name of the Italian region to filter by (e.g., Campania, Sicilia, Lazio). Case-insensitive.
+      - limit: (Optional) The number of events to return. Defaults to 10 if not specified.`,
       query: '?region=Campania&limit=10',
       example: '/api/earthquakes/region?region=Campania&limit=10',
       method: 'GET',
     },
     {
       title: 'depth',
-      description:
-        'Fetches events with a specified focal depth (in kilometers).',
+      description: `
+This endpoint retrieves all seismic events that occurred at a specific focal depth, measured in kilometers, from the TerraQuake API.
+It allows users to analyze earthquakes based on their depth, which can help assess their potential surface impact.
+      
+  Query parameters:
+
+      - depth: (Required) The focal depth of the earthquakes in kilometers (e.g., 10).
+      - limit: (Optional) The number of events to return. Default is 10 if not specified.`,
       query: '?depth=10&limit=10',
       example: '/api/earthquakes/depth?depth=10&limit=10',
       method: 'GET',
     },
     {
       title: 'range-time',
-      description: 'Fetches events that occurred between two specific dates.',
+      description: `
+This endpoint retrieves all seismic events that occurred within a specific time range, using a custom start and end date.
+It allows users to query historical earthquake data over any desired period, making it ideal for research, reports, or time-based visualizations.
+
+  Query Parameters:
+
+      - startdate: (Required) The start date of the time range (format: YYYY-MM-DD).
+      - enddate: (Required) The end date of the time range (format: YYYY-MM-DD).
+      - limit: (Optional) The number of earthquake events to return. Default is 10 if not specified.`,
       query: '?startdate=2025-01-01&enddate=2025-03-30&limit=10',
       example:
         '/api/earthquakes/range-time?startdate=2025-01-01&enddate=2025-03-30&limit=10',
@@ -71,14 +115,27 @@ export default function ApiDocsEarthquakes() {
     },
     {
       title: 'magnitude',
-      description: 'Fetches events with a specific magnitude (e.g., ≥ 1.0).',
+      description: `
+This endpoint retrieves all seismic events that have a specific or greater magnitude from the TerraQuake API.
+It is useful for filtering earthquakes based on their strength and analyzing seismic intensity patterns over time or regions.
+      
+  Query Parameters:
+      
+      - mag: (Required) Minimum magnitude to filter by (e.g., 2 will return all events with magnitude ≥ 2.0).
+      - limit: (Optional) Number of earthquake events to return. Default is 10 if not specified.`,
       query: '?mag=1&limit=10',
       example: '/api/earthquakes/magnitude?mag=1&limit=10',
       method: 'GET',
     },
     {
       title: 'eventId',
-      description: 'Fetches a single seismic event by its unique event ID.',
+      description: `
+This endpoint retrieves a specific seismic event by its unique event ID from the TerraQuake API.
+It allows users to access detailed information about a single earthquake event, including magnitude, location, depth, and precise timestamp.
+      
+  Query Parameters:
+      
+      - eventId: (Required) The unique identifier of the earthquake event to retrieve.`,
       query: '?eventId=43410122',
       example: '/api/earthquakes/eventId?eventId=43410122',
       method: 'GET',
@@ -142,9 +199,21 @@ export default function ApiDocsEarthquakes() {
               className='bg-white/5 border border-white/10 rounded-2xl p-6 shadow-xl'
             >
               <h2 className='text-2xl font-semibold text-purple-400 mb-2'>
-                {ep.method} {ep.title}
+                <div className='flex flex-col gap-4'>
+                  <span>
+                    {ep.method} {ep.title}
+                  </span>
+                  <span className='overflow-auto whitespace-pre'>
+                    URL: {URL}
+                    {ep.example}
+                  </span>
+                </div>
               </h2>
-              <p className='text-gray-300 mb-4'>{ep.description}</p>
+              <p
+                className='text-gray-300 mt-4 mb-4 whitespace-pre-wrap'
+              >
+                {ep.description}
+              </p>
 
               <div className='mb-4'>
                 <p className='text-white font-medium mb-4'>Query Parameters:</p>
@@ -156,7 +225,7 @@ export default function ApiDocsEarthquakes() {
               <div className='mb-4'>
                 <p className='text-white font-medium'>Example:</p>
                 <pre className='bg-black/30 text-green-400 text-sm rounded-md p-4 overflow-auto whitespace-pre'>
-                  {`fetch('${ep.example}')
+                  {`fetch('${URL}${ep.example}')
   .then(res => res.json())
   .then(data => console.log(data))`}
                 </pre>

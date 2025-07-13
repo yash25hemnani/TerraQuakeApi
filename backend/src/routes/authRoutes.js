@@ -8,7 +8,7 @@ const router = express.Router()
 router.post('/signup')
 
 // NOTE: login utente
-router.get('/signin')
+router.post('/signin')
 
 // NOTE: password dimenticata
 router.post('/forgot-password')
@@ -17,6 +17,6 @@ router.post('/forgot-password')
 router.post('/reset-password/:token')
 
 // NOTE: cambia password
-router.delete('/change-password')
+router.post('/change-password')
 
 export default router
