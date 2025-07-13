@@ -7,7 +7,8 @@ import {
   getEarthquakesByLastWeek,
   getEarthquakesByMagnitude,
   getEarthquakesByRecent,
-  getEarthquakesByToday
+  getEarthquakesByToday,
+  getEarthquakesById
 } from '../controllers/earthquakesControllers.js'
 
 const router = express.Router()
@@ -42,6 +43,6 @@ router.get('/range-time', getEarthquakesByDateRange)
 router.get('/magnitude', getEarthquakesByMagnitude)
 
 // NOTE: dettagli di un singolo evento sismico specifico
-router.get('/:id')
+router.get('/eventId', getEarthquakesById)
 
 export default router
