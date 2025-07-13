@@ -40,7 +40,7 @@ export default function Hero() {
           <img
             src={JsonApi2}
             alt="Image json api postman"
-            className="rounded-2xl md:w-auto md-h-auto lg:w-[860px] lg:h-[400px] shadow-2xl filter brightness-120 contrast-160"
+            className="border border-gray-600 p-2 rounded-2xl md:w-auto md-h-auto lg:w-[860px] lg:h-[400px] shadow-2xl filter brightness-120 contrast-160"
           />
         </div>
 
