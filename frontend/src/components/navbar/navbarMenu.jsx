@@ -1,19 +1,20 @@
 import { useState } from 'react';
 import Sismic from '../../assets/images/tracciato.png';
+import { NavLink } from 'react-router-dom';
 
 export default function NavbarMenu() {
   const [isOpen, setIsOpen] = useState(false);
 
   const listItems = [
-    'Home',
-    'Explore Data',
-    'Api Access',
-    'Use Cases',
-    'About',
+    { name: 'Home', path: '/' },
+    { name: 'Explore Data', path: '/explore-data' },
+    { name: 'Api Access', path: '/api-access' },
+    { name: 'Use Cases', path: '/use-cases' },
+    { name: 'About', path: '/about' },
   ];
 
   return (
-    <header className='fixed w-full bg-black bg-opacity-60 text-white shadow-lg rounded-full py-4 flex justify-between items-center p-10 z-50'>
+    <header className='fixed w-full bg-black bg-opacity-60 text-white shadow-lg rounded-full py-4 px-[50px] flex justify-between items-center z-50'>
       {/* Logo */}
       <div className='relative flex justify-center items-center text-3xl font-bold w-fit h-12'>
         {/* Logo sovrapposto */}
@@ -28,7 +29,7 @@ export default function NavbarMenu() {
 
       {/* Hamburger Icon */}
       <button
-        className='md:hidden flex items-center mr-10'
+        className='md:hidden flex items-center mr-2'
         onClick={() => setIsOpen(!isOpen)}
       >
         <svg
@@ -60,20 +61,25 @@ export default function NavbarMenu() {
       </button>
 
       {/* Menu Items */}
-      <ul
+      <div
         className={`${
           isOpen ? 'flex pointer-events-auto' : 'hidden pointer-events-auto'
         } absolute z-10 md:static top-full left-0 w-full md:w-auto md:flex flex-col md:flex-row items-center gap-4 md:gap-8 py-6 md:py-0 px-4 rounded-xl md:rounded-none backdrop-blur-md md:backdrop-blur-0 text-xl transition-all duration-300 ease-in-out`}
       >
         {listItems.map((item) => (
-          <li
-            key={item}
-            className='hover:text-purple-400 transition-colors duration-200 md:text-[14px] lg:text-[16px] cursor-pointer'
-          >
-            <a href='/home'>{item}</a>
-          </li>
-        ))}
-      </ul>
+        <NavLink
+          key={item.name}
+          to={item.path}
+          className={({ isActive }) =>
+            isActive
+              ? 'md:text-[14px] lg:text-[16px] text-purple-400 font-semibold border-b-2 border-purple-500'
+              : 'md:text-[14px] lg:text-[16px] text-gray-300 hover:text-purple-400'
+          }
+        >
+          {item.name}
+        </NavLink>
+      ))}
+      </div>
 
       {/* Button */}
       <button className='hidden lg:block bg-purple-600 hover:bg-purple-800 py-2 px-6 rounded-2xl md:text-[14px] lg:text-[16px] transition-colors duration-200 cursor-pointer'>
