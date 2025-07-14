@@ -8,7 +8,8 @@ import {
   getEarthquakesByMagnitude,
   getEarthquakesByRecent,
   getEarthquakesByToday,
-  getEarthquakesById
+  getEarthquakesById,
+  getEarthquakesLocation
 } from '../controllers/earthquakesControllers.js'
 
 const router = express.Router()
@@ -28,7 +29,7 @@ router.get('/last-week', getEarthquakesByLastWeek)
 router.get('/month', getEarthquakesByMonth)
 
 // NOTE: cerca eventi sismici vicino a latitudine/longitudine specifica
-router.get('/location')
+router.get('/location', getEarthquakesLocation)
 
 // NOTE: lista completa eventi sismici per regione geografica (es. Calabria)
 router.get('/region', getEarthquakesByRegion)

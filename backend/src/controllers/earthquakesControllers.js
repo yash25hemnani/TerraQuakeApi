@@ -571,3 +571,30 @@ export const getEarthquakesById = async (req, res) => {
     handleHttpError(res)
   }
 }
+
+// NOTE: funzione per la lettura da endpoint INGV e la restituzione degli eventi sismici filtrati per latitudine e longitugine
+export const getEarthquakesLocation = async (req, res) => {
+  try {
+    const { lat, lon, radius, limit } = req.query
+
+    console.log('Latitude: ', lat)
+    console.log('Longitude: ', lon)
+    console.log('Radius: ', radius)
+    console.log('Limit: ', limit)
+
+    res.status(200).json({
+      status: 'ok',
+      code: 200,
+      method: req.method.toLowerCase(),
+      path: req.originalUrl,
+      timestamp: new Date().toISOString(),
+      success: true,
+      total: '',
+      message: `Evento sismico per posizione di latitudine ${lat} e longitudine ${lon} raggio ${radius}`,
+      data: ''
+    })
+  } catch (error) {
+    console.error('Errore nel controller earthquakes/location:', error.message)
+    handleHttpError(res)
+  }
+}
