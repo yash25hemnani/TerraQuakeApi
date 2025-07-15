@@ -1,5 +1,6 @@
 import { regionBoundingBoxes } from '../config/regionBoundingBoxes.js'
 import handleHttpError from '../utils/handleError.js'
+import haversine from 'haversine-distance'
 
 // NOTE: funzione per la lettura da endpoint INGV e la restituzione degli eventi sismici più recenti
 export const getEarthquakesByRecent = async (req, res) => {
@@ -575,12 +576,61 @@ export const getEarthquakesById = async (req, res) => {
 // NOTE: funzione per la lettura da endpoint INGV e la restituzione degli eventi sismici filtrati per latitudine e longitugine
 export const getEarthquakesLocation = async (req, res) => {
   try {
-    const { lat, lon, radius, limit } = req.query
+    const urlINGV = process.env.URL_INGV
+    const { lon, lat, radius, limit } = req.query
 
-    console.log('Latitude: ', lat)
-    console.log('Longitude: ', lon)
-    console.log('Radius: ', radius)
-    console.log('Limit: ', limit)
+    let url = `${urlINGV}?orderby=time&format=geojson`
+
+    // Validazione del parametro limit
+    if (limit !== undefined) {
+      if (
+        typeof limit !== 'string' ||
+        limit.trim() === '' ||
+        isNaN(limit) ||
+        parseInt(limit) <= 0
+      ) {
+        return handleHttpError(
+          res,
+          'Il parametro limit, se fornito, deve essere un numero intero positivo maggiore di 0. Esempio: ?limit=10',
+          400
+        )
+      }
+      url += `&limit=${parseInt(limit)}`
+    }
+
+    // Validazione del parametro radius
+    if (radius !== undefined && (isNaN(radius) || parseFloat(radius) <= 0)) {
+      return handleHttpError(res, 'Il parametro radius deve essere un numero positivo.', 400)
+    }
+
+    const response = await fetch(url)
+
+    if (!response.ok) {
+      return handleHttpError(
+        res,
+        `Errore HTTP dalla sorgente INGV: ${response.status} ${response.statusText || ''}`.trim(),
+        response.status
+      )
+    }
+
+    const data = await response.json()
+    const { features } = data
+
+    // Filtro per posizione geografica se fornita
+    let filteredLocation = features
+    if (lat && !isNaN(lat) && lon && !isNaN(lon)) {
+      const userLat = parseFloat(lat)
+      const userLon = parseFloat(lon)
+      const userPoint = { lat: userLat, lon: userLon }
+      const kmRadius = radius ? parseFloat(radius) : 10 // default 10 km
+
+      filteredLocation = features.filter(({ geometry }) => {
+        const [lonF, latF] = geometry.coordinates
+        const quakePoint = { lat: latF, lon: lonF }
+        const distanceMeters = haversine(userPoint, quakePoint)
+        return distanceMeters / 1000 <= kmRadius
+      })
+    }
 
     res.status(200).json({
       status: 'ok',
@@ -589,9 +639,11 @@ export const getEarthquakesLocation = async (req, res) => {
       path: req.originalUrl,
       timestamp: new Date().toISOString(),
       success: true,
-      total: '',
-      message: `Evento sismico per posizione di latitudine ${lat} e longitudine ${lon} raggio ${radius}`,
-      data: ''
+      total: filteredLocation.length,
+      message: lat && lon
+        ? `Eventi sismici vicino a [${lat}, ${lon}] entro ${radius || 10} km`
+        : 'Lista eventi sismici (non filtrati per coordinate)',
+      data: filteredLocation
     })
   } catch (error) {
     console.error('Errore nel controller earthquakes/location:', error.message)

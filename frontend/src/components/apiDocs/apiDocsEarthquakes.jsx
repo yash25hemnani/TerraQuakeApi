@@ -66,9 +66,20 @@ It allows users to explore historical earthquake data for a given period. The re
     },
     {
       title: 'location',
-      description: `----`,
-      query: '?lat=42.5&lon=13.4&radius=50&limit=10',
-      example: '/api/earthquakes/location?lat=42.5&lon=13.4&radius=50&limit=10',
+      description: `
+This endpoint retrieves seismic events near a specific geographical location using latitude, longitude, and an optional search radius.
+It allows users to filter recent earthquake events based on proximity to a point of interest.
+
+  Query Parameters:
+
+    - lat: (Required) The latitude of the location (e.g., 41.7142).
+    - lon: (Required) The longitude of the location (e.g., 15.9577).
+    - radius: (Optional) The search radius in kilometers. Default is 10 km if not specified.
+    - limit: (Optional) The number of events to return. If not specified, it returns all matching events.
+
+The response includes detailed information for each event such as magnitude, coordinates, depth, and time of occurrence.`,
+      query: '?lon=15.9577&lat=41.7142&radius=10',
+      example: '/api/earthquakes/location?lon=15.9577&lat=41.7142&radius=10&limit=10',
       method: 'GET',
     },
     {
@@ -200,7 +211,7 @@ It allows users to access detailed information about a single earthquake event, 
               key={ep.title}
               className='bg-white/5 border border-white/10 rounded-2xl p-6 shadow-xl'
             >
-              <h2 className='text-2xl font-semibold text-purple-400 mb-2'>
+              <h2 className='text-md font-semibold text-purple-400 mb-2'>
                 <div className='flex flex-col gap-4'>
                   <span>
                     {ep.method} {ep.title}
