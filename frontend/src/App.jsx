@@ -16,13 +16,13 @@ import Footer from './components/footer/footer';
 
 function App() {
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      createStar()
-    }, 300); // crea una stella ogni 300ms
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     createStar()
+  //   }, 300); // crea una stella ogni 300ms
 
-    return () => clearInterval(interval) // pulizia
-  }, []);
+  //   return () => clearInterval(interval) // pulizia
+  // }, []);
 
   return (
     <BrowserRouter>
