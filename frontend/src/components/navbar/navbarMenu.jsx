@@ -14,7 +14,7 @@ export default function NavbarMenu() {
   ];
 
   return (
-    <header className='fixed w-full bg-black bg-opacity-60 text-white shadow-lg rounded-full py-4 px-[50px] flex justify-between items-center z-50'>
+    <header className='fixed w-full backdrop-blur-2xl bg-opacity-60 text-white shadow-lg rounded-full py-4 px-[50px] flex justify-between items-center z-50'>
       {/* Logo */}
       <div className='relative flex justify-center items-center text-3xl font-bold w-fit h-12'>
         {/* Logo sovrapposto */}
@@ -29,7 +29,7 @@ export default function NavbarMenu() {
 
       {/* Hamburger Icon */}
       <button
-        className='md:hidden flex items-center mr-2'
+        className='md:hidden flex items-center ml-[130px]'
         onClick={() => setIsOpen(!isOpen)}
       >
         <svg
@@ -64,7 +64,7 @@ export default function NavbarMenu() {
       <div
         className={`${
           isOpen ? 'flex pointer-events-auto' : 'hidden pointer-events-auto'
-        } absolute z-10 md:static top-full left-0 w-full md:w-auto md:flex flex-col md:flex-row items-center gap-4 md:gap-8 py-6 md:py-0 px-4 rounded-xl md:rounded-none backdrop-blur-md md:backdrop-blur-0 text-xl transition-all duration-300 ease-in-out`}
+        } absolute z-40 md:static top-full left-0 w-full md:w-auto md:flex flex-col md:flex-row items-center gap-4 md:gap-8 py-6 md:py-0 rounded-xl md:rounded-none bg-[#090414] text-xl transition-all duration-300 ease-in-out`}
       >
         {listItems.map((item) => (
         <NavLink
@@ -82,9 +82,14 @@ export default function NavbarMenu() {
       </div>
 
       {/* Button */}
-      <button className='hidden lg:block bg-purple-600 hover:bg-purple-800 py-2 px-6 rounded-2xl md:text-[14px] lg:text-[16px] transition-colors duration-200 cursor-pointer'>
-        Get Started
-      </button>
+      <div className='flex gap-4'>
+        <button className='hidden lg:block border border-white hover:bg-white hover:text-black transition-colors duration-300 text-white font-semibold py-2 px-6 rounded-2xl md:text-[14px] lg:text-[16px] cursor-pointer'>
+          Sign In
+        </button>
+        <button className='hidden lg:block bg-purple-600 hover:bg-purple-800 py-2 px-6 rounded-2xl md:text-[14px] lg:text-[16px] transition-colors duration-200 cursor-pointer'>
+          Sign Up
+        </button>
+      </div>
     </header>
   );
 }
