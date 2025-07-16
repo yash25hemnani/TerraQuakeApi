@@ -1,7 +1,8 @@
-import JsonApi1 from '../../assets/images/json-api-1.png'
+import { useNavigate } from 'react-router-dom';
 import JsonApi2 from '../../assets/images/json-api-2.png'
 
 export default function Hero() {
+  const navigate = useNavigate();
 
   const handleClick = () => {
     alert('hai cliccato')
@@ -26,11 +27,11 @@ export default function Hero() {
               className='relative z-30 bg-purple-600 hover:bg-purple-800 transition-colors duration-300 text-white font-semibold py-3 px-8 rounded-full cursor-pointer'
               onClick={() => handleClick()}
             >
-              Get Started
+              Sign Up
             </button>
             <button 
               className='relative z-30 border border-white hover:bg-white hover:text-black transition-colors duration-300 text-white font-semibold py-3 px-8 rounded-full cursor-pointer'
-              onClick={() => handleClick()}
+              onClick={() => navigate('/explore-data')}
             >
               Explore Seismic Events
             </button>
