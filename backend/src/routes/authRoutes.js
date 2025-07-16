@@ -1,14 +1,16 @@
 import express from 'express'
+import { signIn, signUp } from '../controllers/authControllers.js'
+import { validatorSignIn, validatorSignUp } from '../validators/userValidators.js'
 
 const router = express.Router()
 
 // NOTE: AUTH
 
 // NOTE: registrazione utente
-router.post('/signup')
+router.post('/signup', validatorSignUp, signUp)
 
 // NOTE: login utente
-router.post('/signin')
+router.post('/signin', validatorSignIn, signIn)
 
 // NOTE: password dimenticata
 router.post('/forgot-password')

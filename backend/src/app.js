@@ -3,10 +3,11 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import expressListEndpoints from 'express-list-endpoints'
 
-// import routeAuth from './routes/authRoutes.js'
+import routeAuth from './routes/authRoutes.js'
 // import routeUsers from './routes/usersRoutes.js'
 import routeGetStart from './routes/testRoutes.js'
 import routeEarthquakes from './routes/earthquakesRoutes.js'
+import dbConnect from './config/mongoConfig.js'
 // import routeStations from './routes/stationsRoutes.js'
 // import routeGeospatial from './routes/geospatialRoutes.js'
 // import routeStats from './routes/statisticsRoutes.js'
@@ -22,7 +23,7 @@ app.use(express.json())
 
 const port = process.env.PORT || 5000
 
-// app.use('/auth', routeAuth)
+app.use('/auth', routeAuth)
 // app.use('/users', routeUsers)
 app.use('/api/test', routeGetStart)
 app.use('/api/earthquakes', routeEarthquakes)
@@ -34,6 +35,8 @@ app.use('/api/earthquakes', routeEarthquakes)
 const startServer = async () => {
   try {
     console.clear()
+    await dbConnect()
+
     app.listen(port, () => {
       console.log(`Server in ambiente ${devEnv || 'production'}`)
       console.log(`Avviato su: http://localhost:${port}`)
