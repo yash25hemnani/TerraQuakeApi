@@ -12,6 +12,9 @@ import ApiAccess from './pages/apiAccess/apiAccess';
 import UseCases from './pages/useCases/useCases';
 import About from './pages/about/about';
 import NoPage from './pages/noPage/noPage';
+import SignUp from './pages/auth/signUp';
+import SignIn from './pages/auth/signIn';
+
 import Footer from './components/footer/footer';
 
 function App() {
@@ -37,7 +40,9 @@ function App() {
             <Route path='/explore-data' element={<ExploreData />} />
             <Route path='/api-access' element={<ApiAccess />} />
             <Route path='/use-cases' element={<UseCases />} />
-            <Route path='/about' element={<About />} />
+            <Route path='/about' element={<About />} /> 
+            <Route path='/signup' element={<SignUp />} /> 
+            <Route path='/signin' element={<SignIn />} /> 
             <Route path='*' element={<NoPage />} />
           </Routes>
           <Footer />

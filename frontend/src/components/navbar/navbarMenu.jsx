@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import Sismic from '../../assets/images/tracciato.png';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 export default function NavbarMenu() {
+  const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false);
 
   const listItems = [
@@ -64,7 +65,7 @@ export default function NavbarMenu() {
       <div
         className={`${
           isOpen ? 'flex pointer-events-auto' : 'hidden pointer-events-auto'
-        } absolute z-40 md:static top-full left-0 w-full md:w-auto md:flex flex-col md:flex-row items-center gap-4 md:gap-8 py-6 md:py-0 rounded-xl md:rounded-none bg-[#090414] text-xl transition-all duration-300 ease-in-out`}
+        } absolute z-40 md:static top-full left-0 w-full md:w-auto md:flex flex-col md:flex-row items-center gap-4 md:gap-8 py-6 md:py-0 rounded-xl md:rounded-none bg-[#090414] md:bg-transparent text-xl transition-all duration-300 ease-in-out`}
       >
         {listItems.map((item) => (
         <NavLink
@@ -83,10 +84,16 @@ export default function NavbarMenu() {
 
       {/* Button */}
       <div className='flex gap-4'>
-        <button className='hidden lg:block border border-white hover:bg-white hover:text-black transition-colors duration-300 text-white font-semibold py-2 px-6 rounded-2xl md:text-[14px] lg:text-[16px] cursor-pointer'>
+        <button 
+          className='hidden lg:block border border-white hover:bg-white hover:text-black transition-colors duration-300 text-white font-semibold py-2 px-6 rounded-2xl md:text-[14px] lg:text-[16px] cursor-pointer'
+          onClick={() => navigate('/signin')}
+        >
           Sign In
         </button>
-        <button className='hidden lg:block bg-purple-600 hover:bg-purple-800 py-2 px-6 rounded-2xl md:text-[14px] lg:text-[16px] transition-colors duration-200 cursor-pointer'>
+        <button 
+          className='hidden lg:block bg-purple-600 hover:bg-purple-800 py-2 px-6 rounded-2xl md:text-[14px] lg:text-[16px] transition-colors duration-200 cursor-pointer'
+          onClick={() => navigate('/signup')}
+        >
           Sign Up
         </button>
       </div>
