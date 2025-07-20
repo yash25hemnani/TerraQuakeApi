@@ -1,100 +1,12 @@
-# TerraQuake Frontend
+# React + Vite
 
-**TerraQuake** is a modern web application that visualizes real-time and historical earthquake data, providing users with intuitive charts, interactive maps, and educational insights on seismic activity. This frontend is built using **React 19**, **Vite**, and **Tailwind CSS 4**, offering a fast and responsive user experience.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
----
+Currently, two official plugins are available:
 
-## Features
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-- **Data Visualization** of earthquakes by date, location, and magnitude.
-- **Interactive Maps** to explore seismic events around the world.
-- **API Integration** with the TerraQuake backend.
-- Responsive and accessible **UI built with TailwindCSS 4**.
-- Lightning-fast development with **Vite**.
+## Expanding the ESLint configuration
 
----
-
-## Tech Stack
-
-- **React 19** – Modern frontend library for building UI components.
-- **Vite** – Next-gen frontend tooling for fast development and builds.
-- **Tailwind CSS 4** – Utility-first CSS framework for styling.
-- **ESLint** – Linting and code quality enforcement.
-
----
-
-## Installation
-
-1. **Clone the repo**:
-
-```bash
-git clone https://github.com/your-username/terraquake-frontend.git
-cd terraquake-frontend
-```
-
-2. **Install dependencies**:
-
-```bash
-npm install
-```
-
-3. **Start development server:**
-
-```bash
-npm run dev
-```
-
-4. **Build for production:**
-
-```bash
-npm run build
-```
-
-5. **Preview production build:**
-
-```bash
-npm run preview
-```
-
-## Project Structure
-
-```bash
-frontend/
-├── public/
-├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── pages/
-│   ├── App.jsx
-│   └── main.jsx
-├── tailwind.config.js
-├── vite.config.js
-└── index.html
-```
-
-## Linting
-To check code quality:
-
-```bash
-npm run lint
-```
-
-## API
-This frontend consumes data from the TerraQuake API. Make sure the backend is running and accessible before launching the frontend.
-
-## License
-This project is licensed under the MIT License.
-
-## Author
-Dr. Gianluca Chiaravalloti
-Web Developer & Geologist
-[Linkedin]() [Portfolio](https://portfolio-gianluca-phi.vercel.app/)
-
-Let me know if you want to:
-
-- Add images or usage examples  
-- Include `.env` setup or environment variables  
-- Split sections for contributors or roadmap  
-
-Just drop your preferences and I’ll adjust it!
-
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
