@@ -6,19 +6,19 @@ export const validatorSignUp = [
     .exists()
     .notEmpty()
     .isLength({ min: 3, max: 99 })
-    .withMessage('Inserisci un nome utente non valido'),
+    .withMessage('Please enter a valid username'),
   check('email')
     .exists()
     .notEmpty()
     .isEmail()
-    .withMessage('Inserisci una email valida'),
+    .withMessage('Please enter a valid email address'),
   check('role')
     .notEmpty(),
   check('password')
     .exists()
     .notEmpty()
     .isLength({ min: 3, max: 15 })
-    .withMessage('Inserisci una password valida'),
+    .withMessage('Please enter a valid password'),
   (req, res, next) => {
     return validateResults(req, res, next)
   }
@@ -29,12 +29,12 @@ export const validatorSignIn = [
     .exists()
     .notEmpty()
     .isEmail()
-    .withMessage('Inserisci un indirizzo email valido'),
+    .withMessage('Please enter a valid email address'),
   check('password')
     .exists()
     .notEmpty()
     .isLength({ min: 3, max: 15 })
-    .withMessage('Inserisci una password valida'),
+    .withMessage('Please enter a valid password'),
   (req, res, next) => {
     return validateResults(req, res, next)
   }
