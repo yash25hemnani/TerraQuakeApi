@@ -23,9 +23,9 @@ app.use(express.json())
 
 const port = process.env.PORT || 5000
 
+app.use('/api/test', routeGetStart)
 app.use('/auth', routeAuth)
 // app.use('/users', routeUsers)
-app.use('/api/test', routeGetStart)
 app.use('/api/earthquakes', routeEarthquakes)
 // app.use('/api/station', routeStations)
 // app.use('/api/geospatial', routeGeospatial)
@@ -38,15 +38,15 @@ const startServer = async () => {
     await dbConnect()
 
     app.listen(port, () => {
-      console.log(`Server in ambiente ${devEnv || 'production'}`)
-      console.log(`Avviato su: http://localhost:${port}`)
+      console.log(`Server running in ${devEnv || 'production'} environment`)
+      console.log(`Started at: http://localhost:${port}`)
       console.log(`Test: http://localhost:${port}/api/test`)
       const endPoints = expressListEndpoints(app)
-      console.log('Elenco endpoint disponibili:')
+      console.log('List of available endpoints:')
       console.table(endPoints)
     })
   } catch (error) {
-    console.log('Errore avvio server:', error.message)
+    console.log('Server startup error:', error.message)
     process.exit(1)
   }
 }
