@@ -27,14 +27,23 @@ export const signUp = async (req, res) => {
       user
     }
 
-    res.status(200).json({
-      status: 200,
-      dataUser,
-      message: 'Registrazione avvenuta con successo'
-    })
+    res.status(200).json(
+      {
+        success: true,
+        code: 200,
+        status: 'OK',
+        message: 'Registration successful',
+        dataUser,
+        meta: {
+          method: req.method,
+          path: req.originalUrl,
+          timestamp: new Date().toISOString()
+        }
+      }
+    )
   } catch (error) {
     console.error(error.message)
-    handleHttpError(res, 'Errore nella richiesta')
+    handleHttpError(res, 'Error in the request')
   }
 }
 
@@ -50,7 +59,7 @@ export const signIn = async (req, res) => {
     const user = await User.findOne({ email: req.email }).select('password name email role')
 
     if (!user) {
-      handleHttpError(res, "Utente non trovato. Verifica l'indirizzo email o registrati per creare un account.", 404)
+      handleHttpError(res, 'User not found. Please check the email address or register to create an account', 404)
       return
     }
 
@@ -58,20 +67,29 @@ export const signIn = async (req, res) => {
     const check = await compare(req.password, hashPassword)
 
     if (!check) {
-      handleHttpError(res, 'Password errata. Controlla e riprova oppure utilizza la funzione di recupero password.', 401)
+      handleHttpError(res, 'Incorrect password. Please check and try again, or use the password recovery feature', 401)
       return
     }
 
     user.set('password', undefined, { strict: false })
 
-    res.status(200).json({
-      status: 200,
-      token: await tokenSign(user),
-      user,
-      message: 'Autenticazione completata con successo.'
-    })
+    res.status(200).json(
+      {
+        success: true,
+        code: 200,
+        status: 'OK',
+        message: 'Authentication completed successfully',
+        user,
+        token: await tokenSign(user),
+        meta: {
+          method: req.method,
+          path: req.originalUrl,
+          timestamp: new Date().toISOString()
+        }
+      }
+    )
   } catch (error) {
     console.error(error.message)
-    handleHttpError(res, "Si è verificato un errore interno del server. Riprova più tardi o contatta l'assistenza se il problema persiste.")
+    handleHttpError(res, 'An internal server error occurred. Please try again later or contact support if the problem persists')
   }
 }
