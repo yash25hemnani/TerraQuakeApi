@@ -20,7 +20,7 @@ export const getEarthquakesByRecent = async (req, res) => {
       ) {
         return handleHttpError(
           res,
-          'Il parametro limit, se fornito, deve essere un numero intero positivo maggiore di 0. Esempio: ?limit=10',
+          'The limit parameter, if provided, must be a positive integer greater than 0. Example: ?limit=10',
           400
         )
       }
@@ -37,7 +37,7 @@ export const getEarthquakesByRecent = async (req, res) => {
     if (!response.ok) {
       return handleHttpError(
         res,
-        `Errore HTTP dalla sorgente INGV: ${response.status} ${response.statusText || ''}`.trim(),
+        `HTTP error from the INGV source: ${response.status} ${response.statusText || ''}`.trim(),
         response.status
       )
     }
@@ -45,18 +45,20 @@ export const getEarthquakesByRecent = async (req, res) => {
     const data = await response.json()
 
     res.status(200).json({
-      status: 'ok',
-      code: 200,
-      method: req.method.toLowerCase(),
-      path: req.originalUrl,
-      timestamp: new Date().toISOString(),
       success: true,
+      code: 200,
+      status: 'OK',
+      message: 'Recent seismic events',
+      data,
       total: data.features.length,
-      message: 'Eventi sismici recenti',
-      data
+      meta: {
+        method: req.method.toUpperCase(),
+        path: req.originalUrl,
+        timestamp: new Date().toISOString()
+      }
     })
   } catch (error) {
-    console.error('Errore nel controller earthquakes/recent:', error.message)
+    console.error('Error in the earthquakes/recent controller:', error.message)
     handleHttpError(res)
   }
 }
@@ -85,7 +87,7 @@ export const getEarthquakesByToday = async (req, res) => {
       ) {
         return handleHttpError(
           res,
-          'Il parametro limit, se fornito, deve essere un numero intero positivo maggiore di 0. Esempio: ?limit=10',
+          'The limit parameter, if provided, must be a positive integer greater than 0. Example: ?limit=10',
           400
         )
       }
@@ -100,26 +102,30 @@ export const getEarthquakesByToday = async (req, res) => {
     if (!response.ok) {
       return handleHttpError(
         res,
-        `Errore HTTP dalla sorgente INGV: ${response.status} ${response.statusText || ''}`.trim(),
+        `HTTP error from the INGV source: ${response.status} ${response.statusText || ''}`.trim(),
         response.status
       )
     }
 
     const data = await response.json()
 
-    res.status(200).json({
-      status: 'ok',
-      code: 200,
-      method: req.method.toLowerCase(),
-      path: req.originalUrl,
-      timestamp: new Date().toISOString(),
-      success: true,
-      total: data.features.length,
-      message: 'Eventi sismici data odierna',
-      data
-    })
+    res.status(200).json(
+      {
+        success: true,
+        code: 200,
+        status: 'OK',
+        message: 'Seismic events for today',
+        total: data.features.length,
+        data,
+        meta: {
+          method: req.method.toUpperCase(),
+          path: req.originalUrl,
+          timestamp: new Date().toISOString()
+        }
+      }
+    )
   } catch (error) {
-    console.error('Errore nel controller earthquakes/today:', error.message)
+    console.error('Error in the earthquakes/today controller:', error.message)
     handleHttpError(res)
   }
 }
@@ -148,7 +154,7 @@ export const getEarthquakesByLastWeek = async (req, res) => {
       ) {
         return handleHttpError(
           res,
-          'Il parametro limit, se fornito, deve essere un numero intero positivo maggiore di 0. Esempio: ?limit=10',
+          'The limit parameter, if provided, must be a positive integer greater than 0. Example: ?limit=10',
           400
         )
       }
@@ -163,26 +169,30 @@ export const getEarthquakesByLastWeek = async (req, res) => {
     if (!response.ok) {
       return handleHttpError(
         res,
-        `Errore HTTP dalla sorgente INGV: ${response.status} ${response.statusText || ''}`.trim(),
+        `HTTP error from the INGV source: ${response.status} ${response.statusText || ''}`.trim(),
         response.status
       )
     }
 
     const data = await response.json()
 
-    res.status(200).json({
-      status: 'ok',
-      code: 200,
-      method: req.method.toLowerCase(),
-      path: req.originalUrl,
-      timestamp: new Date().toISOString(),
-      success: true,
-      total: data.features?.length || 0,
-      message: `Eventi sismici dal ${startDate} al ${endDate}`,
-      data
-    })
+    res.status(200).json(
+      {
+        success: true,
+        code: 200,
+        status: 'OK',
+        message: `Seismic events from ${startDate} to ${endDate}`,
+        total: data.features?.length || 0,
+        data,
+        meta: {
+          method: req.method.toUpperCase(),
+          path: req.originalUrl,
+          timestamp: new Date().toISOString()
+        }
+      }
+    )
   } catch (error) {
-    console.error('Errore nel controller earthquakes/last-week:', error.message)
+    console.error('Error in the earthquakes/last-week controller:', error.message)
     handleHttpError(res)
   }
 }
@@ -193,7 +203,7 @@ export const getEarthquakesByMonth = async (req, res) => {
     const { year, month, limit } = req.query
 
     if (!parseInt(year) || !parseInt(month)) {
-      handleHttpError(res, 'Anno e mese sono obbligatori nei parametri URL (es. ?year=2025&month=03)', 400)
+      handleHttpError(res, 'Year and month are required in the URL parameters (e.g., ?year=2025&month=03)', 400)
       return
     }
 
@@ -220,7 +230,7 @@ export const getEarthquakesByMonth = async (req, res) => {
       ) {
         return handleHttpError(
           res,
-          'Il parametro limit, se fornito, deve essere un numero intero positivo maggiore di 0. Esempio: ?limit=10',
+          'The limit parameter, if provided, must be a positive integer greater than 0. Example: ?limit=10',
           400
         )
       }
@@ -235,26 +245,30 @@ export const getEarthquakesByMonth = async (req, res) => {
     if (!response.ok) {
       return handleHttpError(
         res,
-        `Errore HTTP dalla sorgente INGV: ${response.status} ${response.statusText || ''}`.trim(),
+        `HTTP error from the INGV source: ${response.status} ${response.statusText || ''}`.trim(),
         response.status
       )
     }
 
     const data = await response.json()
 
-    res.status(200).json({
-      status: 'ok',
-      code: 200,
-      method: req.method.toLowerCase(),
-      path: req.originalUrl,
-      timestamp: new Date().toISOString(),
-      success: true,
-      total: data.features?.length || 0,
-      message: `Eventi sismici di ${year}-${month.padStart(2, '0')}`,
-      data
-    })
+    res.status(200).json(
+      {
+        success: true,
+        code: 200,
+        status: 'OK',
+        message: `Seismic events of ${year}-${month.padStart(2, '0')}`,
+        total: data.features?.length || 0,
+        data,
+        meta: {
+          method: req.method.toUpperCase(),
+          path: req.originalUrl,
+          timestamp: new Date().toISOString()
+        }
+      }
+    )
   } catch (error) {
-    console.error('Errore nel controller earthquakes/month:', error.message)
+    console.error('Error in the earthquakes/month controller:', error.message)
     handleHttpError(res)
   }
 }
@@ -265,7 +279,7 @@ export const getEarthquakesByRegion = async (req, res) => {
     const { region, limit } = req.query
 
     if (!regionBoundingBoxes[region.toLowerCase().trim()]) {
-      handleHttpError(res, `Regione ${region} non supportata`, 400)
+      handleHttpError(res, `Region ${region} not supported`, 400)
       return
     }
 
@@ -283,7 +297,7 @@ export const getEarthquakesByRegion = async (req, res) => {
       ) {
         return handleHttpError(
           res,
-          'Il parametro limit, se fornito, deve essere un numero intero positivo maggiore di 0. Esempio: ?limit=10',
+          'The limit parameter, if provided, must be a positive integer greater than 0. Example: ?limit=10',
           400
         )
       }
@@ -298,26 +312,30 @@ export const getEarthquakesByRegion = async (req, res) => {
     if (!response.ok) {
       return handleHttpError(
         res,
-        `Errore HTTP dalla sorgente INGV: ${response.status} ${response.statusText || ''}`.trim(),
+        `HTTP error from the INGV source: ${response.status} ${response.statusText || ''}`.trim(),
         response.status
       )
     }
 
     const data = await response.json()
 
-    res.status(200).json({
-      status: 'ok',
-      code: 200,
-      method: req.method.toLowerCase(),
-      path: req.originalUrl,
-      timestamp: new Date().toISOString(),
-      success: true,
-      total: data.features?.length || 0,
-      message: `Eventi sismici regione ${region}`,
-      data
-    })
+    res.status(200).json(
+      {
+        success: true,
+        code: 200,
+        status: 'OK',
+        message: `Seismic events in region ${region}`,
+        total: data.features?.length || 0,
+        data,
+        meta: {
+          method: req.method.toUpperCase(),
+          path: req.originalUrl,
+          timestamp: new Date().toISOString()
+        }
+      }
+    )
   } catch (error) {
-    console.error('Errore nel controller earthquakes/region:', error.message)
+    console.error('Error in the earthquakes/region controller:', error.message)
     handleHttpError(res)
   }
 }
@@ -340,7 +358,7 @@ export const getEarthquakesByDepth = async (req, res) => {
       ) {
         return handleHttpError(
           res,
-          'Il parametro limit, se fornito, deve essere un numero intero positivo maggiore di 0. Esempio: ?limit=10',
+          'The limit parameter, if provided, must be a positive integer greater than 0. Example: ?limit=10',
           400
         )
       }
@@ -355,7 +373,7 @@ export const getEarthquakesByDepth = async (req, res) => {
     if (!response.ok) {
       return handleHttpError(
         res,
-        `Errore HTTP dalla sorgente INGV: ${response.status} ${response.statusText || ''}`.trim(),
+        `HTTP error from the INGV source: ${response.status} ${response.statusText || ''}`.trim(),
         response.status
       )
     }
@@ -372,19 +390,23 @@ export const getEarthquakesByDepth = async (req, res) => {
       })
     }
 
-    res.status(200).json({
-      status: 'ok',
-      code: 200,
-      method: req.method.toLowerCase(),
-      path: req.originalUrl,
-      timestamp: new Date().toISOString(),
-      success: true,
-      total: filteredFeatures.length,
-      message: `Eventi sismici con profondità > ${depth || 0} km`,
-      data: filteredFeatures
-    })
+    res.status(200).json(
+      {
+        success: true,
+        code: 200,
+        status: 'OK',
+        message: `Seismic events with depth > ${depth || 0} km`,
+        total: filteredFeatures.length,
+        data: filteredFeatures,
+        meta: {
+          method: req.method.toUpperCase(),
+          path: req.originalUrl,
+          timestamp: new Date().toISOString()
+        }
+      }
+    )
   } catch (error) {
-    console.error('Errore nel controller earthquakes/depth:', error.message)
+    console.error('Error in the earthquakes/depth controller:', error.message)
     handleHttpError(res)
   }
 }
@@ -397,13 +419,13 @@ export const getEarthquakesByDateRange = async (req, res) => {
 
     // Validazione base
     if (!startdate || !enddate) {
-      return handleHttpError(res, 'I parametri startdate e enddate sono obbligatori. Esempio: ?startdate=2024-01-01&enddate=2024-01-31', 400)
+      return handleHttpError(res, 'The parameters startdate and enddate are required. Example: ?startdate=2024-01-01&enddate=2024-01-31', 400)
     }
 
     // Validazione formato ISO (opzionale ma utile)
     const isoRegex = /^\d{4}-\d{2}-\d{2}$/
     if (!isoRegex.test(startdate) || !isoRegex.test(enddate)) {
-      return handleHttpError(res, 'Usare il formato data ISO: YYYY-MM-DD. Esempio: ?starttime=2024-01-01', 400)
+      return handleHttpError(res, 'Use the ISO date format: YYYY-MM-DD. Example: ?starttime=2024-01-01', 400)
     }
 
     // Costruisci URL INGV con filtro temporale
@@ -419,7 +441,7 @@ export const getEarthquakesByDateRange = async (req, res) => {
       ) {
         return handleHttpError(
           res,
-          'Il parametro limit, se fornito, deve essere un numero intero positivo maggiore di 0. Esempio: ?limit=10',
+          'The limit parameter, if provided, must be a positive integer greater than 0. Example: ?limit=10',
           400
         )
       }
@@ -434,26 +456,30 @@ export const getEarthquakesByDateRange = async (req, res) => {
     if (!response.ok) {
       return handleHttpError(
         res,
-        `Errore HTTP dalla sorgente INGV: ${response.status} ${response.statusText || ''}`.trim(),
+        `HTTP error from the INGV source: ${response.status} ${response.statusText || ''}`.trim(),
         response.status
       )
     }
 
     const data = await response.json()
 
-    res.status(200).json({
-      status: 'ok',
-      success: true,
-      code: 200,
-      method: req.method.toLowerCase(),
-      path: req.originalUrl,
-      timestamp: new Date().toISOString(),
-      total: data.features.length,
-      message: `Eventi sismici tra ${startdate} e ${enddate}`,
-      data
-    })
+    res.status(200).json(
+      {
+        success: true,
+        code: 200,
+        status: 'OK',
+        message: `Seismic events between ${startdate} and ${enddate}`,
+        total: data.features.length,
+        data,
+        meta: {
+          method: req.method.toUpperCase(),
+          path: req.originalUrl,
+          timestamp: new Date().toISOString()
+        }
+      }
+    )
   } catch (error) {
-    console.error('Errore nel controller earthquakes/range-time:', error.message)
+    console.error('Error in the earthquakes/range-time controller:', error.message)
     handleHttpError(res)
   }
 }
@@ -476,7 +502,7 @@ export const getEarthquakesByMagnitude = async (req, res) => {
       ) {
         return handleHttpError(
           res,
-          'Il parametro limit, se fornito, deve essere un numero intero positivo maggiore di 0. Esempio: ?limit=10',
+          'The limit parameter, if provided, must be a positive integer greater than 0. Example: ?limit=10',
           400
         )
       }
@@ -491,7 +517,7 @@ export const getEarthquakesByMagnitude = async (req, res) => {
     if (!response.ok) {
       return handleHttpError(
         res,
-        `Errore HTTP dalla sorgente INGV: ${response.status} ${response.statusText || ''}`.trim(),
+        `HTTP error from the INGV source: ${response.status} ${response.statusText || ''}`.trim(),
         response.status
       )
     }
@@ -508,19 +534,23 @@ export const getEarthquakesByMagnitude = async (req, res) => {
       })
     }
 
-    res.status(200).json({
-      status: 'ok',
-      code: 200,
-      method: req.method.toLowerCase(),
-      path: req.originalUrl,
-      timestamp: new Date().toISOString(),
-      success: true,
-      total: filteredMagnitude.length,
-      message: `Eventi sismici con magnitudo >= ${mag || 0}`,
-      data: filteredMagnitude
-    })
+    res.status(200).json(
+      {
+        success: true,
+        code: 200,
+        status: 'OK',
+        message: `Seismic events with magnitude >= ${mag || 0}`,
+        total: filteredMagnitude.length,
+        data: filteredMagnitude,
+        meta: {
+          method: req.method.toUpperCase(),
+          path: req.originalUrl,
+          timestamp: new Date().toISOString()
+        }
+      }
+    )
   } catch (error) {
-    console.error('Errore nel controller earthquakes/magnitude:', error.message)
+    console.error('Error in the earthquakes/magnitude controller:', error.message)
     handleHttpError(res)
   }
 }
@@ -539,7 +569,7 @@ export const getEarthquakesById = async (req, res) => {
     if (!response.ok) {
       return handleHttpError(
         res,
-        `Errore HTTP dalla sorgente INGV: ${response.status} ${response.statusText || ''}`.trim(),
+        `HTTP error from the INGV source: ${response.status} ${response.statusText || ''}`.trim(),
         response.status
       )
     }
@@ -553,22 +583,26 @@ export const getEarthquakesById = async (req, res) => {
     )
 
     if (filteredEvent.length === 0) {
-      return handleHttpError(res, `Nessun evento trovato con ID ${eventId}`, 404)
+      return handleHttpError(res, `No event found with ID ${eventId}`, 404)
     }
 
-    res.status(200).json({
-      status: 'ok',
-      code: 200,
-      method: req.method.toLowerCase(),
-      path: req.originalUrl,
-      timestamp: new Date().toISOString(),
-      success: true,
-      total: filteredEvent.length,
-      message: `Evento sismico con id ${eventId}`,
-      data: filteredEvent
-    })
+    res.status(200).json(
+      {
+        success: true,
+        code: 200,
+        status: 'OK',
+        message: `Seismic event with id ${eventId}`,
+        total: filteredEvent.length,
+        data: filteredEvent,
+        meta: {
+          method: req.method.toUpperCase(),
+          path: req.originalUrl,
+          timestamp: new Date().toISOString()
+        }
+      }
+    )
   } catch (error) {
-    console.error('Errore nel controller earthquakes/eventId:', error.message)
+    console.error('Error in the earthquakes/eventId controller:', error.message)
     handleHttpError(res)
   }
 }
@@ -591,7 +625,7 @@ export const getEarthquakesLocation = async (req, res) => {
       ) {
         return handleHttpError(
           res,
-          'Il parametro limit, se fornito, deve essere un numero intero positivo maggiore di 0. Esempio: ?limit=10',
+          'The limit parameter, if provided, must be a positive integer greater than 0. Example: ?limit=10',
           400
         )
       }
@@ -600,7 +634,7 @@ export const getEarthquakesLocation = async (req, res) => {
 
     // Validazione del parametro radius
     if (radius !== undefined && (isNaN(radius) || parseFloat(radius) <= 0)) {
-      return handleHttpError(res, 'Il parametro radius deve essere un numero positivo.', 400)
+      return handleHttpError(res, 'The radius parameter must be a positive number', 400)
     }
 
     const response = await fetch(url)
@@ -608,7 +642,7 @@ export const getEarthquakesLocation = async (req, res) => {
     if (!response.ok) {
       return handleHttpError(
         res,
-        `Errore HTTP dalla sorgente INGV: ${response.status} ${response.statusText || ''}`.trim(),
+        `HTTP error from the INGV source: ${response.status} ${response.statusText || ''}`.trim(),
         response.status
       )
     }
@@ -632,21 +666,25 @@ export const getEarthquakesLocation = async (req, res) => {
       })
     }
 
-    res.status(200).json({
-      status: 'ok',
-      code: 200,
-      method: req.method.toLowerCase(),
-      path: req.originalUrl,
-      timestamp: new Date().toISOString(),
-      success: true,
-      total: filteredLocation.length,
-      message: lat && lon
-        ? `Eventi sismici vicino a [${lat}, ${lon}] entro ${radius || 10} km`
-        : 'Lista eventi sismici (non filtrati per coordinate)',
-      data: filteredLocation
-    })
+    res.status(200).json(
+      {
+        success: true,
+        code: 200,
+        status: 'OK',
+        message: lat && lon
+          ? `Seismic events near [${lat}, ${lon}] within ${radius || 10} km`
+          : 'List of seismic events (not filtered by coordinates)',
+        total: filteredLocation.length,
+        data: filteredLocation,
+        meta: {
+          method: req.method.toUpperCase(),
+          path: req.originalUrl,
+          timestamp: new Date().toISOString()
+        }
+      }
+    )
   } catch (error) {
-    console.error('Errore nel controller earthquakes/location:', error.message)
+    console.error('Error in the earthquakes/location controller:', error.message)
     handleHttpError(res)
   }
 }
