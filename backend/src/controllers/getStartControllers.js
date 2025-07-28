@@ -5,17 +5,22 @@ export const getStart = async (req, res) => {
     // Simulazione errore
     // await Promise.reject(new Error('Errore asincrono simulato'))
 
-    res.status(200).json({
-      status: 'OK',
-      code: 200,
-      method: req.method,
-      path: req.originalUrl,
-      timestamp: new Date().toISOString(),
-      success: true,
-      message: 'Server avviato correttamente'
-    })
+    res.status(200).json(
+      {
+        success: true,
+        code: 200,
+        status: 'OK',
+        message: 'Server started successfully',
+        data: null,
+        meta: {
+          method: req.method,
+          path: req.originalUrl,
+          timestamp: new Date().toISOString()
+        }
+      }
+    )
   } catch (error) {
-    console.error('Errore nel controller getStart:', error.message)
+    console.error('Error in the getStart controller:', error.message)
     handleHttpError(res)
   }
 }
