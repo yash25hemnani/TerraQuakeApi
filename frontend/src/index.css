@@ -1,5 +1,38 @@
 @import "tailwindcss";
 
-@theme {
-  --color-background: oklch(0.72 0.11 178);
+/* Tutta la scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Sfondo della scrollbar */
+::-webkit-scrollbar-track {
+  background: #0f0c29;
+}
+
+/* Thumb (parte mobile) */
+::-webkit-scrollbar-thumb {
+  background-color: #6b21a8;
+  border-radius: 6px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+/* Al passaggio del mouse */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #8b5cf6;
+}
+
+/* Per Firefox */
+html {
+  scrollbar-color: #6b21a8 #0f0c29; /* thumb / track */
+  scrollbar-width: thin;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.custom-swal-popup {
+  border: #8b5cf6;
 }
