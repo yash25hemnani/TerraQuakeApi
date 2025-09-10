@@ -79,3 +79,9 @@ If you’d like to improve TerraQuake API, please fork the repository and open a
 Whether it’s fixing a bug, improving documentation, or adding a feature — all contributions are appreciated!  
 
 Please make sure to follow the [contributing guidelines](CONTRIBUTING.md).
+
+## 🎉 Hacktoberfest 2025
+
+This project is participating in Hacktoberfest 2025!  
+Contributions count toward the event. Feel free to submit PRs and join us in building TerraQuake API together 🌍  
+
