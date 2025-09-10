@@ -16,7 +16,10 @@ export const getStart = async (req, res) => {
           method: req.method,
           path: req.originalUrl,
           timestamp: new Date().toISOString()
-        }
+        },
+        author: 'Gianluca Chiaravalloti',
+        version: '1.0.0',
+        date: '01.01.2025'
       }
     )
   } catch (error) {
