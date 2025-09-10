@@ -98,9 +98,6 @@ Upload data via CSV/JSON with Multer
 
 Integration with INGV & USGS data feeds
 
-## License
-This project is licensed under the MIT License.
-
 ## Author
 Dr. Gianluca Chiaravalloti
 Web Developer & Geologist

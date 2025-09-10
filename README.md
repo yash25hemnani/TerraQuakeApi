@@ -67,10 +67,15 @@ Returns statistics such as:
 
 ---
 
-## License
-This project is licensed under the MIT License.
-
 ## Author
-Gianluca Chiaravalloti
-Web Developer · Geologist · Maker
+Dr. Gianluca Chiaravalloti
+Web Developer & Geologist
+[Linkedin]() [Portfolio](https://portfolio-gianluca-phi.vercel.app/)
 
+## 🤝 Contributing
+
+Contributions are welcome!  
+If you’d like to improve TerraQuake API, please fork the repository and open a pull request.  
+Whether it’s fixing a bug, improving documentation, or adding a feature — all contributions are appreciated!  
+
+Please make sure to follow the [contributing guidelines](CONTRIBUTING.md).

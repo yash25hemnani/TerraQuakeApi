@@ -82,9 +82,6 @@ npm run lint
 ## API
 This frontend consumes data from the TerraQuake API. Make sure the backend is running and accessible before launching the frontend.
 
-## License
-This project is licensed under the MIT License.
-
 ## Author
 Dr. Gianluca Chiaravalloti
 Web Developer & Geologist
