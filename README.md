@@ -83,5 +83,25 @@ Please make sure to follow the [contributing guidelines](CONTRIBUTING.md).
 ## 🎉 Hacktoberfest 2025
 
 This project is participating in Hacktoberfest 2025!  
-Contributions count toward the event. Feel free to submit PRs and join us in building TerraQuake API together 🌍  
+Contributions count toward the event. Feel free to submit PRs and join us in building TerraQuake API together 🌍
+
+## 💖 Support the Project
+
+TerraQuake API is an open-source initiative aimed at making real-time seismic data accessible for developers, researchers, and communities.
+
+If you find this project useful and would like to support its development, consider becoming a sponsor.
+Your contribution helps:
+
+Maintain and improve the API
+
+Add new features and documentation
+
+Keep the project open and accessible to everyone
+
+Even a small donation makes a big difference in keeping the project alive and growing.
+
+
+[![Sponsor](https://img.shields.io/badge/Sponsor-GitHub-ff69b4?style=flat-square&logo=github)](https://github.com/sponsors/nagcas)
+
+Thank you for supporting open source and helping TerraQuake API reach more people! 🌍
 
