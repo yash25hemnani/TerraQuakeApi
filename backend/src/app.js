@@ -18,7 +18,28 @@ dotenv.config()
 const devEnv = process.env.DEV_ENV
 const app = express()
 
-app.use(cors())
+// CORS configuration
+const corsOptions = {
+  origin: function (origin, callback) {
+    const whitelist = [
+      process.env.FRONTEND_DEVELOPMENT, // Frontend in sviluppo
+      // Frontend in produzione
+      process.env.BACKEND_URL // Backend in produzione
+    ]
+    if (process.env.NODE_ENV === 'development') {
+      callback(null, true)
+    } else if (whitelist.indexOf(origin) !== -1 || !origin) {
+      callback(null, true)
+    } else {
+      callback(new Error('PERMESSO NEGATO - CORS'))
+    }
+  },
+  credentials: true // Permette l'invio di credenziali, come nel caso di autenticazione
+}
+
+// Abilita CORS
+app.use(cors(corsOptions))
+
 app.use(express.json())
 
 const port = process.env.PORT || 5000
