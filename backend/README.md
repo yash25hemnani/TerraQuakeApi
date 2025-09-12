@@ -98,6 +98,23 @@ Upload data via CSV/JSON with Multer
 
 Integration with INGV & USGS data feeds
 
+# New Features 
+## 1)Array-Based Query Utilities for Proxy Data
+- **`applyArrayFeatures(features, req.query, opts)`**  
+  - Provides in-memory **sort**, **field projection**, and **pagination** for GeoJSON `features[]`.
+  - Keeps GeoJSON shape when no `fields` are requested; otherwise returns projected items list
+
+## 2) Centralized Query Parsing/Validation
+- **`getPositiveInt(query, key, { min, max, def })`**  
+  - Single place to parse/validate `page`, `limit`, and upstream `limit` params.
+  - Prevents repeated blocks and ensures consistent 400 errors for invalid inputs.
+
+- **Normalized ID comparison** in `/eventId`:
+  - Compares `String(eventId)` to handle numeric or string IDs gracefully.
+
+- **Safer region handling**:
+  - Guards against missing/unsupported `region` before `.toLowerCase()`.
+  
 ## Author
 Dr. Gianluca Chiaravalloti
 Web Developer & Geologist
