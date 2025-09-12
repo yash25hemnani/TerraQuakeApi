@@ -1,6 +1,6 @@
 import { regionBoundingBoxes } from '../config/regionBoundingBoxes.js'
 import handleHttpError from '../utils/handleError.js'
-import { getPositiveInt } from '../utils/getPositiveInt.js'
+import { getPositiveInt } from '../utils/httpQuery.js'
 import { processFeatures } from '../utils/processFeatures.js'
 import haversine from 'haversine-distance'
 
@@ -33,7 +33,7 @@ export const getEarthquakesByRecent = async (req, res) => {
   try {
     const urlINGV = process.env.URL_INGV
     const limit = getPositiveInt(req.query, 'limit')
-    
+
     if (limit === null) {
       return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=10', 400)
     }
@@ -52,6 +52,7 @@ export const getEarthquakesByRecent = async (req, res) => {
       ...buildResponse(req, 'Recent seismic events', result.items, result.totalFetched),
       pagination: {
         page: result.page,
+        totalPages: result.totalPages,
         limit: result.limit,
         hasMore: result.hasMore
       }
@@ -66,7 +67,7 @@ export const getEarthquakesByRecent = async (req, res) => {
 export const getEarthquakesByToday = async (req, res) => {
   try {
     const limit = getPositiveInt(req.query, 'limit')
-    
+
     if (limit === null) {
       return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=10', 400)
     }
@@ -102,14 +103,14 @@ export const getEarthquakesByToday = async (req, res) => {
 export const getEarthquakesByLastWeek = async (req, res) => {
   try {
     const limit = getPositiveInt(req.query, 'limit')
-    
+
     if (limit === null) {
       return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=10', 400)
     }
 
     const today = new Date()
     const endDate = today.toISOString().split('T')[0]
-    
+
     const lastWeekDate = new Date(today)
     lastWeekDate.setDate(today.getDate() - 7)
     const startDate = lastWeekDate.toISOString().split('T')[0]
@@ -128,6 +129,7 @@ export const getEarthquakesByLastWeek = async (req, res) => {
       ...buildResponse(req, `Seismic events from ${startDate} to ${endDate}`, result.items, result.totalFetched),
       pagination: {
         page: result.page,
+        totalPages: result.totalPages,
         limit: result.limit,
         hasMore: result.hasMore
       }
@@ -143,7 +145,7 @@ export const getEarthquakesByMonth = async (req, res) => {
   try {
     const { year, month } = req.query
     const limit = getPositiveInt(req.query, 'limit')
-    
+
     if (limit === null) {
       return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=10', 400)
     }
@@ -155,7 +157,7 @@ export const getEarthquakesByMonth = async (req, res) => {
     const startDate = `${year}-${month.padStart(2, '0')}-01`
     const nextMonth = new Date(`${startDate}T00:00:00Z`)
     nextMonth.setMonth(nextMonth.getMonth() + 1)
-    
+
     const yyyy = nextMonth.getFullYear()
     const mm = String(nextMonth.getMonth() + 1).padStart(2, '0')
     const endDate = `${yyyy}-${mm}-01`
@@ -174,6 +176,7 @@ export const getEarthquakesByMonth = async (req, res) => {
       ...buildResponse(req, `Seismic events of ${year}-${month.padStart(2, '0')}`, result.items, result.totalFetched),
       pagination: {
         page: result.page,
+        totalPages: result.totalPages,
         limit: result.limit,
         hasMore: result.hasMore
       }
@@ -189,7 +192,7 @@ export const getEarthquakesByRegion = async (req, res) => {
   try {
     const { region } = req.query
     const limit = getPositiveInt(req.query, 'limit')
-    
+
     if (limit === null) {
       return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=10', 400)
     }
@@ -214,6 +217,7 @@ export const getEarthquakesByRegion = async (req, res) => {
       ...buildResponse(req, `Seismic events in region ${region}`, result.items, result.totalFetched),
       pagination: {
         page: result.page,
+        totalPages: result.totalPages,
         limit: result.limit,
         hasMore: result.hasMore
       }
@@ -230,7 +234,7 @@ export const getEarthquakesByDepth = async (req, res) => {
     const urlINGV = process.env.URL_INGV
     const { depth } = req.query
     const limit = getPositiveInt(req.query, 'limit')
-    
+
     if (limit === null) {
       return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=10', 400)
     }
@@ -259,6 +263,7 @@ export const getEarthquakesByDepth = async (req, res) => {
       ...buildResponse(req, `Seismic events with depth > ${depth || 0} km`, result.items, result.totalFetched),
       pagination: {
         page: result.page,
+        totalPages: result.totalPages,
         limit: result.limit,
         hasMore: result.hasMore
       }
@@ -303,6 +308,7 @@ export const getEarthquakesByDateRange = async (req, res) => {
       ...buildResponse(req, `Seismic events between ${startdate} and ${enddate}`, result.items, result.totalFetched),
       pagination: {
         page: result.page,
+        totalPages: result.totalPages,
         limit: result.limit,
         hasMore: result.hasMore
       }
@@ -319,7 +325,7 @@ export const getEarthquakesByMagnitude = async (req, res) => {
     const urlINGV = process.env.URL_INGV
     const { mag } = req.query
     const limit = getPositiveInt(req.query, 'limit')
-    
+
     if (limit === null) {
       return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=10', 400)
     }
@@ -348,6 +354,7 @@ export const getEarthquakesByMagnitude = async (req, res) => {
       ...buildResponse(req, `Seismic events with magnitude >= ${mag || 0}`, result.items, result.totalFetched),
       pagination: {
         page: result.page,
+        totalPages: result.totalPages,
         limit: result.limit,
         hasMore: result.hasMore
       }
@@ -386,6 +393,7 @@ export const getEarthquakesById = async (req, res) => {
       ...buildResponse(req, `Seismic event with id ${eventId}`, result.items, result.totalFetched),
       pagination: {
         page: result.page,
+        totalPages: result.totalPages,
         limit: result.limit,
         hasMore: result.hasMore
       }
@@ -403,7 +411,7 @@ export const getEarthquakesLocation = async (req, res) => {
     const { lon, lat, radius } = req.query
     const limit = getPositiveInt(req.query, 'limit')
     const radiusNum = getPositiveInt(req.query, 'radius', { min: 0.1, def: 10 })
-    
+
     if (limit === null) {
       return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=10', 400)
     }
@@ -446,6 +454,7 @@ export const getEarthquakesLocation = async (req, res) => {
       ...buildResponse(req, message, result.items, result.totalFetched),
       pagination: {
         page: result.page,
+        totalPages: result.totalPages,
         limit: result.limit,
         hasMore: result.hasMore
       }
