@@ -17,9 +17,9 @@ This endpoint retrieves all seismic events that occurred today from the TerraQua
       
   Query Parameters:
           
-      - limit: (Optional) The number of earthquake events to return. Defaults to 10 if not specified.`,
-      query: '?limit=10',
-      example: '/api/earthquakes/recent?limit=10',
+      - limit: (Optional) The number of earthquake events to return. Defaults to 50 if not specified.`,
+      query: '?limit=50',
+      example: '/api/earthquakes/recent?limit=50',
       method: 'GET',
     },
     {
@@ -31,9 +31,9 @@ The response includes detailed information such as magnitude, location, depth, e
       
   Query Parameters:
         
-      - limit: (Optional) The number of earthquake events to return. Default is 10 if not provided.`,
-      query: '?limit=10',
-      example: '/api/earthquakes/today?limit=10',
+      - limit: (Optional) The number of earthquake events to return. Default is 50 if not provided.`,
+      query: '?limit=50',
+      example: '/api/earthquakes/today?limit=50',
       method: 'GET',
     },
     {
@@ -44,9 +44,9 @@ It allows users to monitor and analyze recent seismic activity over the past wee
       
   Query Parameters:
         
-      - limit: (Optional) The number of earthquake events to return. Default is 10 if not specified.`,
-      query: '?limit=20',
-      example: '/api/earthquakes/last-week?limit=20',
+      - limit: (Optional) The number of earthquake events to return. Default is 50 if not specified.`,
+      query: '?limit=50',
+      example: '/api/earthquakes/last-week?limit=50',
       method: 'GET',
     },
     {
@@ -60,8 +60,8 @@ It allows users to explore historical earthquake data for a given period. The re
       - year: (Required) The target year (e.g., 2025).
       - month: (Required) The target month in numeric format (01 to 12).
       - limit: (Optional) The number of events to return. Default is 10 if not specified.`,
-      query: '?year=2025&month=03&limit=10',
-      example: '/api/earthquakes/month?year=2025&month=03&limit=15',
+      query: '?year=2025&month=03&limit=50',
+      example: '/api/earthquakes/month?year=2025&month=03&limit=50',
       method: 'GET',
     },
     {
@@ -78,8 +78,8 @@ It allows users to filter recent earthquake events based on proximity to a point
     - limit: (Optional) The number of events to return. If not specified, it returns all matching events.
 
 The response includes detailed information for each event such as magnitude, coordinates, depth, and time of occurrence.`,
-      query: '?lon=15.9577&lat=41.7142&radius=10',
-      example: '/api/earthquakes/location?lon=15.9577&lat=41.7142&radius=10&limit=10',
+      query: '?lon=15.9577&lat=41.7142&radius=50',
+      example: '/api/earthquakes/location?lon=15.9577&lat=41.7142&radius=10&limit=50',
       method: 'GET',
     },
     {
@@ -91,9 +91,9 @@ It allows users to filter earthquakes by regional boundaries for localized seism
   Query Parameters:
         
       - region: (Required) The name of the Italian region to filter by (e.g., Campania, Sicilia, Lazio). Case-insensitive.
-      - limit: (Optional) The number of events to return. Defaults to 10 if not specified.`,
-      query: '?region=Campania&limit=10',
-      example: '/api/earthquakes/region?region=Campania&limit=10',
+      - limit: (Optional) The number of events to return. Defaults to 50 if not specified.`,
+      query: '?region=Campania&limit=50',
+      example: '/api/earthquakes/region?region=Campania&limit=50',
       method: 'GET',
     },
     {
@@ -106,8 +106,8 @@ It allows users to analyze earthquakes based on their depth, which can help asse
 
       - depth: (Required) The focal depth of the earthquakes in kilometers (e.g., 10).
       - limit: (Optional) The number of events to return. Default is 10 if not specified.`,
-      query: '?depth=10&limit=10',
-      example: '/api/earthquakes/depth?depth=10&limit=10',
+      query: '?depth=10&limit=50',
+      example: '/api/earthquakes/depth?depth=10&limit=50',
       method: 'GET',
     },
     {
@@ -120,10 +120,10 @@ It allows users to query historical earthquake data over any desired period, mak
 
       - startdate: (Required) The start date of the time range (format: YYYY-MM-DD).
       - enddate: (Required) The end date of the time range (format: YYYY-MM-DD).
-      - limit: (Optional) The number of earthquake events to return. Default is 10 if not specified.`,
-      query: '?startdate=2025-01-01&enddate=2025-03-30&limit=10',
+      - limit: (Optional) The number of earthquake events to return. Default is 50 if not specified.`,
+      query: '?startdate=2025-01-01&enddate=2025-03-30&limit=50',
       example:
-        '/api/earthquakes/range-time?startdate=2025-01-01&enddate=2025-03-30&limit=10',
+        '/api/earthquakes/range-time?startdate=2025-01-01&enddate=2025-03-30&limit=50',
       method: 'GET',
     },
     {
@@ -135,9 +135,9 @@ It is useful for filtering earthquakes based on their strength and analyzing sei
   Query Parameters:
       
       - mag: (Required) Minimum magnitude to filter by (e.g., 2 will return all events with magnitude ≥ 2.0).
-      - limit: (Optional) Number of earthquake events to return. Default is 10 if not specified.`,
-      query: '?mag=1&limit=10',
-      example: '/api/earthquakes/magnitude?mag=1&limit=10',
+      - limit: (Optional) Number of earthquake events to return. Default is 50 if not specified.`,
+      query: '?mag=1&limit=50',
+      example: '/api/earthquakes/magnitude?mag=1&limit=50',
       method: 'GET',
     },
     {
