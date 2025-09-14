@@ -4,9 +4,6 @@ import JsonApi2 from '../../assets/images/json-api-2.png'
 export default function Hero() {
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    alert('hai cliccato')
-  }
   return (
     <section className='relative z-30 w-full min-h-screen flex flex-col justify-center items-center text-center px-6 py-20 bg-gradient-to-b text-white'>
 
@@ -25,7 +22,7 @@ export default function Hero() {
           <div className='mt-10 flex flex-col sm:flex-row justify-center gap-4'>
             <button 
               className='relative z-30 bg-purple-600 hover:bg-purple-800 transition-colors duration-300 text-white font-semibold py-3 px-8 rounded-full cursor-pointer'
-              onClick={() => handleClick()}
+              onClick={() => navigate('/signup')}
             >
               Sign Up
             </button>

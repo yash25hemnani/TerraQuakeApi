@@ -27,7 +27,7 @@ const corsOptions = {
       process.env.BACKEND_URL // Backend in produzione
     ]
     if (process.env.NODE_ENV === 'development') {
-      callback(null, true);
+      callback(null, true)
     } else if (whitelist.indexOf(origin) !== -1 || !origin) {
       callback(null, true)
     } else {
