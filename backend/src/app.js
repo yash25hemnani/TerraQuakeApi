@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 import expressListEndpoints from 'express-list-endpoints'
 
 import routeAuth from './routes/authRoutes.js'
-// import routeUsers from './routes/usersRoutes.js'
+import routeUsers from './routes/usersRoutes.js'
 import routeGetStart from './routes/testRoutes.js'
 import routeEarthquakes from './routes/earthquakesRoutes.js'
 import dbConnect from './config/mongoConfig.js'
@@ -27,7 +27,7 @@ const corsOptions = {
       process.env.BACKEND_URL // Backend in produzione
     ]
     if (process.env.NODE_ENV === 'development') {
-      callback(null, true)
+      callback(null, true);
     } else if (whitelist.indexOf(origin) !== -1 || !origin) {
       callback(null, true)
     } else {
@@ -45,8 +45,8 @@ app.use(express.json())
 const port = process.env.PORT || 5000
 
 app.use('/api/test', routeGetStart)
-app.use('/auth', routeAuth)
-// app.use('/users', routeUsers)
+app.use('/api/auth', routeAuth)
+app.use('/users', routeUsers)
 app.use('/api/earthquakes', routeEarthquakes)
 // app.use('/api/station', routeStations)
 // app.use('/api/geospatial', routeGeospatial)
