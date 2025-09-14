@@ -57,7 +57,7 @@ app.use(express.json())
 const port = process.env.PORT || 5000
 
 app.use('/api/test', routeGetStart)
-app.use('/api/auth', routeAuth)
+app.use('/auth', routeAuth)
 app.use('/users', routeUsers)
 app.use('/api/earthquakes', routeEarthquakes)
 // app.use('/api/station', routeStations)
