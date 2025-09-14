@@ -7,7 +7,7 @@ export default function Footer() {
         {/* Logo + Nome */}
         <div className="flex items-center gap-3">
           {/* Logo icona */}
-          <span className="text-sm md:text-base">&copy; 2025 TerraQuake API</span>
+          <span className="text-sm md:text-base">&copy; {new Date().getFullYear()} TerraQuake API</span>
         </div>
 
         {/* Link ai social */}
