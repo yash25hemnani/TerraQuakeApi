@@ -11,11 +11,11 @@ import { compare } from 'bcryptjs'
 // e restituisce un token JWT insieme ai dati utente (escludendo la password).
 export const signUp = async (req, res) => {
   try {
-    req = matchedData(req);
+    req = matchedData(req)
     const password = await encrypt(req.password)
     const data = { ...req, password }
 
-    console.log(`Encrypted password is: ${password}`);
+    console.log(`Encrypted password is: ${password}`)
 
     const newUser = new User(data)
 
