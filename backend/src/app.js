@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 import expressListEndpoints from 'express-list-endpoints'
 
 import routeAuth from './routes/authRoutes.js'
-// import routeUsers from './routes/usersRoutes.js'
+import routeUsers from './routes/usersRoutes.js'
 import routeGetStart from './routes/testRoutes.js'
 import routeEarthquakes from './routes/earthquakesRoutes.js'
 import dbConnect from './config/mongoConfig.js'
@@ -19,22 +19,34 @@ const devEnv = process.env.DEV_ENV
 const app = express()
 
 // CORS configuration
+// const corsOptions = {
+//  origin: function (origin, callback) {
+//    const whitelist = [
+//      process.env.FRONTEND_DEVELOPMENT, // Frontend in sviluppo
+// Frontend in produzione
+//      process.env.BACKEND_URL // Backend in produzione
+//    ]
+//    if (process.env.NODE_ENV === 'development') {
+//      callback(null, true)
+//    } else if (whitelist.indexOf(origin) !== -1 || !origin) {
+//      callback(null, true)
+//    } else {
+//      callback(new Error('PERMESSO NEGATO - CORS'))
+//    }
+//  },
+//  credentials: true // Permette l'invio di credenziali, come nel caso di autenticazione
+// }
+
+// Abilita CORS
+// app.use(cors(corsOptions))
+
+// CORS configuration - permette qualsiasi origine
 const corsOptions = {
   origin: function (origin, callback) {
-    const whitelist = [
-      process.env.FRONTEND_DEVELOPMENT, // Frontend in sviluppo
-      // Frontend in produzione
-      process.env.BACKEND_URL // Backend in produzione
-    ]
-    if (process.env.NODE_ENV === 'development') {
-      callback(null, true)
-    } else if (whitelist.indexOf(origin) !== -1 || !origin) {
-      callback(null, true)
-    } else {
-      callback(new Error('PERMESSO NEGATO - CORS'))
-    }
+    // Se vuoi permettere qualsiasi sito, accetta anche origin undefined (es. Postman)
+    callback(null, true)
   },
-  credentials: true // Permette l'invio di credenziali, come nel caso di autenticazione
+  credentials: true // Permette l'invio di credenziali, utile per autenticazione
 }
 
 // Abilita CORS
@@ -46,7 +58,7 @@ const port = process.env.PORT || 5000
 
 app.use('/api/test', routeGetStart)
 app.use('/auth', routeAuth)
-// app.use('/users', routeUsers)
+app.use('/users', routeUsers)
 app.use('/api/earthquakes', routeEarthquakes)
 // app.use('/api/station', routeStations)
 // app.use('/api/geospatial', routeGeospatial)
