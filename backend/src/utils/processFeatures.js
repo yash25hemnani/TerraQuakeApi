@@ -80,16 +80,20 @@ export function processFeatures (features, query, opts = {}) {
     })
   }
   // 3) Pagination
-  const page = Math.max(parseInt(query.page ?? '1', 10), 1)
-  const limitReq = Math.max(parseInt(query.limit ?? '50', 10), 1)
+  const totalItems = projected.length
+  const page = Math.max(Number.isNaN(parseInt(query.page, 10)) ? 1 : parseInt(query.page, 10), 1)
+  const limitReq = Math.max(Number.isNaN(parseInt(query.limit, 10)) ? 50 : parseInt(query.limit, 10), 1)
   const limit = Math.min(limitReq, 100) // hard cap
-  const start = (page - 1) * limit
+  const totalPages = Math.ceil(totalItems / limit)
+  const currentPage = Math.min(page, totalPages === 0 ? 1 : totalPages)
+  const start = (currentPage - 1) * limit
   const slice = projected.slice(start, start + limit)
   return {
-    page,
+    page: currentPage,
     limit,
+    totalPages,
     items: slice,
-    totalFetched: projected.length, // only within the fetched set
-    hasMore: start + limit < projected.length // within this server-side fetch
+    totalFetched: totalItems, // items after filtering/projection
+    hasMore: currentPage < totalPages
   }
 }
