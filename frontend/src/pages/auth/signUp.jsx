@@ -43,7 +43,7 @@ export default function SignUp() {
 			role: "user"
 		};
 		axios
-			.post("/auth/signup", formData)
+			.post("/api/auth/signup", formData)
 			.then((res) => {
 				Swal.fire({
 					title: "Success!",

@@ -26,7 +26,7 @@ export default function forgotPassword() {
 			email: data.email
 		};
 		axios
-			.post("/auth/forgot-password", formData)
+			.post("/api/auth/forgot-password", formData)
 			.then((res) => {
 				localStorage.setItem("passwordChangeRequestingEmail", res.data.user.email);
 				Swal.fire({

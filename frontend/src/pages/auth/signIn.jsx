@@ -36,7 +36,7 @@ export default function SignIn() {
 		};
 
 		axios
-			.post("/auth/signin", formData)
+			.post("/api/auth/signin", formData)
 			.then((res) => {
 				setUserLogin(res.data.user);
 				setIsLoggedIn(true);

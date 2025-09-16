@@ -39,7 +39,7 @@ export default function resetPassword() {
 			password: data.password
 		};
 		axios
-			.post("/auth/reset-password", formData)
+			.post("/api/auth/reset-password", formData)
 			.then((res) => {
 				console.log("Hi");
 				console.log(res);
