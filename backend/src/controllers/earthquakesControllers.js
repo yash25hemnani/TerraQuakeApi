@@ -545,13 +545,10 @@ export const getEarthquakesLocation = async (req, res) => {
     const urlINGV = process.env.URL_INGV
     const { lon, lat } = req.query
     const limit = getPositiveInt(req.query, 'limit')
-    
     const radiusNum = getPositiveInt(req.query, 'radius', {
       min: 0.1,
       def: 10
-   
-  
-
+    })
     if (limit === null) {
       return handleHttpError(
         res,
