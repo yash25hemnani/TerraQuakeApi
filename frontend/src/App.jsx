@@ -10,6 +10,7 @@ import createStar from '@components/utils/createStar'
 import Home from '@pages/home/home'
 import ExploreData from '@pages/exploreData/exploreData'
 import ApiAccess from '@pages/apiAccess/apiAccess'
+import Docs from './pages/docs/docs'
 import UseCases from '@pages/useCases/useCases'
 import About from '@pages/about/about'
 import NoPage from '@pages/noPage/noPage'
@@ -20,6 +21,7 @@ import ResetPassword from '@pages/auth/resetPassword'
 
 import Footer from '@components/footer/footer'
 import { AuthProvider } from '@components/modules/authProvider'
+import ScrollToTop from '@components/modules/scrollToTop'
 
 function App() {
 
@@ -34,6 +36,7 @@ function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <main>
           <div className='max-w-full min-h-screen items-center [background:radial-gradient(140%_140%_at_80%_20%,#000_40%,#63e_100%)] scrollbar-thin scrollbar-thumb-purple-700 scrollbar-track-gray-800'>
             <div className='sky'>
