@@ -3,7 +3,7 @@ import { FaLinkedin, FaGithub, FaXTwitter } from 'react-icons/fa6';
 export default function Footer() {
   return (
     <footer className='bg-gradient-to-b from-violet-950 to-black text-slate-300 py-10 mt-20'>
-      <div className='max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8'>
+      <div className='max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 overflow-hidden'>
 
         {/* Logo + Description */}
         <div>
@@ -90,21 +90,21 @@ export default function Footer() {
           <h3 className='text-white font-semibold mb-3'>Connect</h3>
           <div className='flex space-x-4'>
             <a
-              href='https://twitter.com'
+              href='https://x.com/nagcas/'
               target='_blank'
               className='hover:text-violet-400 transition'
             >
               <FaXTwitter />
             </a>
             <a
-              href='https://linkedin.com'
+              href='https://www.linkedin.com/in/gianluca-chiaravalloti-5694081a2/'
               target='_blank'
               className='hover:text-violet-400 transition'
             >
               <FaLinkedin />
             </a>
             <a
-              href='https://github.com'
+              href='https://github.com/nagcas/'
               target='_blank'
               className='hover:text-violet-400 transition'
             >
