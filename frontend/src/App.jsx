@@ -3,6 +3,7 @@ import './App.css'
 import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
+
 import NavbarMenu from '@components/navbar/navbarMenu'
 import createStar from '@components/utils/createStar'
 
@@ -43,6 +44,7 @@ function App() {
               <Route path='/' element={<Home />} />
               <Route path='/explore-data' element={<ExploreData />} />
               <Route path='/api-access' element={<ApiAccess />} />
+              <Route path='/docs' element={<Docs />} />
               <Route path='/use-cases' element={<UseCases />} />
               <Route path='/about' element={<About />} /> 
               <Route path='/signup' element={<SignUp />} /> 
