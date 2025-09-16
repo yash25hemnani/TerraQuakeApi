@@ -9,6 +9,7 @@ import createStar from './components/utils/createStar'
 import Home from './pages/home/home'
 import ExploreData from './pages/exploreData/exploreData'
 import ApiAccess from './pages/apiAccess/apiAccess'
+import Docs from './pages/docs/docs'
 import UseCases from './pages/useCases/useCases'
 import About from './pages/about/about'
 import NoPage from './pages/noPage/noPage'
@@ -41,6 +42,7 @@ function App() {
               <Route path='/' element={<Home />} />
               <Route path='/explore-data' element={<ExploreData />} />
               <Route path='/api-access' element={<ApiAccess />} />
+              <Route path='/docs' element={<Docs />} />
               <Route path='/use-cases' element={<UseCases />} />
               <Route path='/about' element={<About />} /> 
               <Route path='/signup' element={<SignUp />} /> 

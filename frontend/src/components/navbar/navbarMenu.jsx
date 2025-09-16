@@ -13,6 +13,7 @@ export default function NavbarMenu() {
 		{ name: "Home", path: "/" },
 		{ name: "Explore Data", path: "/explore-data" },
 		{ name: "Api Access", path: "/api-access" },
+		{ name: "Docs", path: "/docs" },
 		{ name: "Use Cases", path: "/use-cases" },
 		{ name: "About", path: "/about" }
 	];
