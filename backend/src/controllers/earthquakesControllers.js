@@ -135,7 +135,9 @@ export const getEarthquakesByLastWeek = async (req, res) => {
     if (limit === null) {
       return handleHttpError(
         res,
-        'The limit parameter must be a positive integer greater than 0. Example:limit=10',
+
+        'The limit parameter must be a positive integer greater than 0. Example: ?limit=10',
+
         400
       )
     }
@@ -541,10 +543,12 @@ export const getEarthquakesById = async (req, res) => {
 export const getEarthquakesLocation = async (req, res) => {
   try {
     const urlINGV = process.env.URL_INGV
-    const { lon, lat, radius } = req.query
+    const { lon, lat } = req.query
     const limit = getPositiveInt(req.query, 'limit')
-    const radiusNum = getPositiveInt(req.query, 'radius', { min: 0.1, def: 10 })
-
+    const radiusNum = getPositiveInt(req.query, 'radius', {
+      min: 0.1,
+      def: 10
+    })
     if (limit === null) {
       return handleHttpError(
         res,
