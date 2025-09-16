@@ -18,7 +18,7 @@ export default function ApiDocsEarthquakes() {
           
       - limit: (Optional) The number of earthquake events to return. Defaults to 50 if not specified.`,
 			query: "?limit=50",
-			example: "/earthquakes/recent?limit=50",
+			example: "/api/earthquakes/recent?limit=50",
 			method: "GET"
 		},
 		{
@@ -146,7 +146,7 @@ It allows users to access detailed information about a single earthquake event, 
       
       - eventId: (Required) The unique identifier of the earthquake event to retrieve.`,
 			query: "?eventId=43410122",
-			example: "/earthquakes/eventId?eventId=43410122",
+			example: "/api/earthquakes/eventId?eventId=44061482",
 			method: "GET"
 		}
 	];
