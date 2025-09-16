@@ -1,6 +1,6 @@
 import express from 'express'
-import { signIn, signUp, forgotPassword, resetPassword } from "../controllers/authControllers.js";
-import { validatorSignIn, validatorSignUp, validatorForgotPassword, validatorResetPassword } from "../validators/userValidators.js";
+import { signIn, signUp, forgotPassword, resetPassword } from '../controllers/authControllers.js'
+import { validatorSignIn, validatorSignUp, validatorForgotPassword, validatorResetPassword } from '../validators/userValidators.js'
 
 const router = express.Router()
 
@@ -13,12 +13,12 @@ router.post('/signup', validatorSignUp, signUp)
 router.post('/signin', validatorSignIn, signIn)
 
 // NOTE: password dimenticata
-router.post("/forgot-password", validatorForgotPassword, forgotPassword);
+router.post('/forgot-password', validatorForgotPassword, forgotPassword)
 
 // NOTE: reset password
 router.post('/reset-password/:token')
 
 // NOTE: cambia password
-router.post("/reset-password", validatorResetPassword, resetPassword);
+router.post('/reset-password', validatorResetPassword, resetPassword)
 
 export default router
