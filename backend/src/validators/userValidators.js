@@ -50,6 +50,23 @@ export const validatorSignIn = [
   }
 ]
 
+export const validatorForgotPassword = [
+	check("email").exists().notEmpty().isEmail().withMessage("Please enter a valid email address"),
+	(req, res, next) => {
+		return validateResults(req, res, next);
+	}
+];
+
+
+export const validatorResetPassword = [
+	check("email").exists().notEmpty().isEmail().withMessage("Please enter a valid email address"),
+	check("password").exists().notEmpty().isLength({ min: 8 }).withMessage("Password must be at least 8 characters"),
+	(req, res, next) => {
+		return validateResults(req, res, next);
+	}
+];
+
+
 export const validatorGetItem = [
   check('userId')
     .exists()

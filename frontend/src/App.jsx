@@ -3,21 +3,23 @@ import './App.css'
 import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-import NavbarMenu from './components/navbar/navbarMenu'
-import createStar from './components/utils/createStar'
 
-import Home from './pages/home/home'
-import ExploreData from './pages/exploreData/exploreData'
-import ApiAccess from './pages/apiAccess/apiAccess'
-import Docs from './pages/docs/docs'
-import UseCases from './pages/useCases/useCases'
-import About from './pages/about/about'
-import NoPage from './pages/noPage/noPage'
-import SignUp from './pages/auth/signUp'
-import SignIn from './pages/auth/signIn'
+import NavbarMenu from '@components/navbar/navbarMenu'
+import createStar from '@components/utils/createStar'
 
-import Footer from './components/footer/footer'
-import { AuthProvider } from './components/modules/authProvider'
+import Home from '@pages/home/home'
+import ExploreData from '@pages/exploreData/exploreData'
+import ApiAccess from '@pages/apiAccess/apiAccess'
+import UseCases from '@pages/useCases/useCases'
+import About from '@pages/about/about'
+import NoPage from '@pages/noPage/noPage'
+import SignUp from '@pages/auth/signUp'
+import SignIn from '@pages/auth/signIn'
+import ForgotPassword from '@pages/auth/forgotPassword'
+import ResetPassword from '@pages/auth/resetPassword'
+
+import Footer from '@components/footer/footer'
+import { AuthProvider } from '@components/modules/authProvider'
 
 function App() {
 
@@ -47,6 +49,9 @@ function App() {
               <Route path='/about' element={<About />} /> 
               <Route path='/signup' element={<SignUp />} /> 
               <Route path='/signin' element={<SignIn />} /> 
+              <Route path='/forgot-password' element={<ForgotPassword />} /> 
+              {/* Deliberately encrypted with AES-256-CBC, so that the URL is not found by anyone */}
+              <Route path='/U2FsdGVkX188Vmt4gt5JTCUT9P8HbN3TUFkNxsrwWac=' element={<ResetPassword />} /> 
               <Route path='*' element={<NoPage />} />
             </Routes>
             <Footer />

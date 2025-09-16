@@ -40,6 +40,10 @@ const app = express()
 // Abilita CORS
 // app.use(cors(corsOptions))
 
+
+// TODO: Configure CORS options for nodemailer when proper email acoount is set up
+// Reference link: https://mailtrap.io/blog/expressjs-send-email/
+
 // CORS configuration - permette qualsiasi origine
 const corsOptions = {
   origin: function (origin, callback) {
@@ -57,7 +61,7 @@ app.use(express.json())
 const port = process.env.PORT || 5000
 
 app.use('/api/test', routeGetStart)
-app.use('/auth', routeAuth)
+app.use('/api/auth', routeAuth)
 app.use('/users', routeUsers)
 app.use('/api/earthquakes', routeEarthquakes)
 // app.use('/api/station', routeStations)
