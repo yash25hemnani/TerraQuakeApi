@@ -48,11 +48,9 @@
 html {
   scrollbar-color: #6b21a8 #0f0c29; /* thumb / track */
   scrollbar-width: thin;
- 
 }
 
 body {
-  width: 100vw;
   height: 100vh;
   font-family: "Poppins", sans-serif;
   font-weight: 300;
