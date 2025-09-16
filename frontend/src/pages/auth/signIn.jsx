@@ -1,12 +1,13 @@
 import { useContext, useState } from "react";
 import { FaEye, FaEyeSlash, FaGoogle, FaGithub } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import { Context } from "../../components/modules/context";
+import { Context } from "@components/modules/context";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import axios from "../../config/axios.js";
+import axios from "@config/axios.js";
+import MetaData from "@pages/noPage/metaData";
 
 export default function SignIn() {
 	const API_URL = import.meta.env.VITE_URL_BACKEND || "http://localhost:5001";
@@ -37,7 +38,6 @@ export default function SignIn() {
 		axios
 			.post("/auth/signin", formData)
 			.then((res) => {
-				console.log(res);
 				setUserLogin(res.data.user);
 				setIsLoggedIn(true);
 
@@ -70,6 +70,34 @@ export default function SignIn() {
 	const togglePassword = () => setShowPassword((prev) => !prev);
 
 	return (
+		<>
+			<MetaData title="Sign In" description="Sign In Page of TerraQuake" />
+			<section className="min-h-screen flex items-center justify-center p-6 rounded-lg">
+				<div className="p-8 rounded-lg w-full max-w-md">
+					<h2 className="text-3xl text-center text-pink-600 font-bold mb-6">Sign In</h2>
+					<form onSubmit={handleSubmit(handleLoginSubmit)}>
+						<div className="mb-8">
+							<label className="block text-white text-sm font-semibold mb-2">Email</label>
+							<input className="w-full px-3 py-2 border rounded-2xl text-white focus:border-purple-600 focus:outline-none" name="email" autoComplete="off" {...register("email")} />
+							<p className="text-red-600 pt-1">{errors.email?.message}</p>
+						</div>
+						<div className="relative mb-8">
+							<label className="block text-white text-sm font-semibold mb-2">Password</label>
+							<input className="w-full px-3 py-2 border rounded-2xl text-white focus:border-purple-600 focus:outline-none" name="password" autoComplete="off" {...register("password")} type={showPassword ? "text" : "password"} />
+							<p className="text-red-600 pt-1">{errors.password?.message}</p>
+							<button type="button" onClick={togglePassword} className="absolute top-10 right-3 text-gray-300 hover:text-purple-600 cursor-pointer">
+								{showPassword ? <FaEyeSlash /> : <FaEye />}
+							</button>
+						</div>
+						<button className="w-full bg-purple-600 hover:bg-purple-800 text-white font-bold py-2 px-4 rounded-2xl transition duration-300 cursor-pointer" type="submit">
+							Sign In
+						</button>
+						{/* Divider */}
+						<div className="flex items-center my-8">
+							<div className="flex-grow border-t border-gray-400"></div>
+							<span className="mx-4 text-white text-sm">Or sign in through</span>
+							<div className="flex-grow border-t border-gray-400"></div>
+						</div>
 		<section className="min-h-screen flex items-center justify-center p-6 rounded-lg">
 			<div className="p-8 rounded-lg w-full max-w-md">
 				<h2 className="text-3xl text-center text-white font-bold mb-6">Sign In</h2>
@@ -97,10 +125,10 @@ export default function SignIn() {
 						<div className="flex-grow border-t border-gray-400"></div>
 					</div>
 
-					<div className="flex justify-center gap-4 mb-9">
-						<button type="button" className="text-white bg-purple-600 hover:bg-purple-800 p-2 rounded-full cursor-pointer" onClick={() => handleSocialLogin("google")}>
-							<FaGoogle className="w-5 h-5" />
-						</button>
+						<div className="flex justify-center gap-4 mb-9">
+							<button type="button" className="text-white bg-purple-600 hover:bg-purple-800 p-2 rounded-full cursor-pointer" onClick={() => handleSocialLogin("google")}>
+								<FaGoogle className="w-5 h-5" />
+							</button>
 
 						<button type="button" className="text-white bg-purple-600 hover:bg-purple-800 p-2 rounded-full cursor-pointer" onClick={() => handleSocialLogin("github")}>
 							<FaGithub classNamew="w-5 h-5" />
