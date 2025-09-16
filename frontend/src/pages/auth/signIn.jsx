@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { FaEye, FaEyeSlash, FaGoogle, FaFacebook } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaGoogle, FaGithub } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../../components/modules/context";
 import Swal from "sweetalert2";
@@ -72,7 +72,7 @@ export default function SignIn() {
 	return (
 		<section className="min-h-screen flex items-center justify-center p-6 rounded-lg">
 			<div className="p-8 rounded-lg w-full max-w-md">
-				<h2 className="text-3xl text-center text-pink-600 font-bold mb-6">Sign In</h2>
+				<h2 className="text-3xl text-center text-white font-bold mb-6">Sign In</h2>
 				<form onSubmit={handleSubmit(handleLoginSubmit)}>
 					<div className="mb-8">
 						<label className="block text-white text-sm font-semibold mb-2">Email</label>
@@ -88,7 +88,7 @@ export default function SignIn() {
 						</button>
 					</div>
 					<button className="w-full bg-purple-600 hover:bg-purple-800 text-white font-bold py-2 px-4 rounded-2xl transition duration-300 cursor-pointer" type="submit">
-						Sign In
+						Login
 					</button>
 					{/* Divider */}
 					<div className="flex items-center my-8">
@@ -102,8 +102,8 @@ export default function SignIn() {
 							<FaGoogle className="w-5 h-5" />
 						</button>
 
-						<button type="button" className="text-white bg-purple-600 hover:bg-purple-800 p-2 rounded-full cursor-pointer" onClick={() => handleSocialLogin("facebook")}>
-							<FaFacebook className="w-5 h-5" />
+						<button type="button" className="text-white bg-purple-600 hover:bg-purple-800 p-2 rounded-full cursor-pointer" onClick={() => handleSocialLogin("github")}>
+							<FaGithub classNamew="w-5 h-5" />
 						</button>
 					</div>
 					<div className="mt-6 flex flex-col items-center">

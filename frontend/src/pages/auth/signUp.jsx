@@ -79,7 +79,7 @@ export default function SignUp() {
 	return (
 		<section className="min-h-screen flex items-center justify-center p-6 rounded-lg">
 			<div className="p-8 rounded-lg w-full max-w-md">
-				<h2 className="text-3xl text-center text-pink-600 font-bold mb-6">Sign Up</h2>
+				<h2 className="text-3xl text-center text-white font-bold mb-6">Sign Up</h2>
 				<form onSubmit={handleSubmit(handleSignUp)}>
 					<div className="mb-8">
 						<label className="block text-white text-sm font-semibold mb-2">Name</label>
