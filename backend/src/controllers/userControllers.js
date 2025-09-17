@@ -1,5 +1,5 @@
 import User from '../models/userModels.js'
-import handleHttpError from '../utils/handleError.js'
+import handleHttpError from '../utils/handleHttpError.js'
 import { getPositiveInt } from '../utils/httpQuery.js'
 
 /**

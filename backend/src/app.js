@@ -50,8 +50,8 @@ app.use(express.json())
 const port = process.env.PORT || 5000
 
 app.use('/api/test', routeGetStart)
-app.use('/auth', routeAuth)
-app.use('/users', authenticateUser, routeUsers)
+app.use('/api/auth', routeAuth)
+app.use('/api/users', authenticateUser, routeUsers)
 app.use('/api/earthquakes', routeEarthquakes)
 // app.use('/api/station', routeStations)
 // app.use('/api/geospatial', routeGeospatial)

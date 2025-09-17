@@ -1,5 +1,5 @@
 import { verifyToken } from '../utils/handleJwt.js'
-import handleHttpError from '../utils/handleError.js'
+import handleHttpError from '../utils/handleHttpError.js'
 
 /**
     * Middleware to authenticate a user based on a JWT.
