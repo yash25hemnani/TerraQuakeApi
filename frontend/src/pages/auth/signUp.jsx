@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { ImSpinner9 } from "react-icons/im";
 import axios from "@config/axios.js";
 import Swal from "sweetalert2";
 import { useNavigate, Link } from "react-router";
@@ -9,6 +10,8 @@ import * as yup from "yup";
 import MetaData from "@pages/noPage/metaData";
 
 export default function SignUp() {
+	const [ loading, setLoading ] = useState(false);
+
 	const signUpSchema = yup
 		.object({
 			name: yup.string().required("Name is required!"),
@@ -36,6 +39,8 @@ export default function SignUp() {
 	const togglePassword = () => setShowPassword((prev) => !prev);
 
 	const handleSignUp = (data) => {
+		setLoading(true);
+
 		const formData = {
 			name: data.name,
 			email: data.email,
@@ -63,6 +68,7 @@ export default function SignUp() {
 					confirmButtonText: "OK"
 				}).then((result) => {
 					navigate("/signup");
+					setLoading(false);
 				});
 			});
 	};
@@ -102,7 +108,13 @@ export default function SignUp() {
 							</div>
 						</div>
 						<button className="w-full bg-purple-600 hover:bg-purple-800 text-white font-bold py-2 px-4 rounded-2xl transition duration-300 cursor-pointer" type="submit">
-							Create your account
+							{loading ? (
+								<p className="text-white">
+									<ImSpinner9 className="text-2xl mx-auto spinner" />
+								</p>
+							) : (
+								<span>Create your account</span>
+							)}
 						</button>
 
 						<div className="mt-6 flex flex-col items-center">

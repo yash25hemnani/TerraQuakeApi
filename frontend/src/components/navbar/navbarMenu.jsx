@@ -81,7 +81,7 @@ export default function NavbarMenu() {
             <span>{userLogin.name}</span>
             <button
               onClick={handleLogout}
-              className="font-semibold border-purple-500 hover:border-b-2 hover:text-purple-400"
+              className="font-semibold border-purple-500 hover:border-b-2 hover:text-purple-400 cursor-pointer"
             >
               Logout
             </button>

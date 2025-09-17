@@ -59,7 +59,7 @@ export default function Info() {
               <p className='text-slate-300 text-sm md:text-base leading-relaxed mb-6'>{item.content}</p>
               <button
                 onClick={() => window.location.href = item.link}
-                className='w-full md:w-auto bg-violet-600 hover:bg-violet-700 text-white font-medium py-2 px-6 rounded-xl text-sm md:text-base transition-colors duration-200'
+                className='w-full md:w-auto bg-violet-600 hover:bg-violet-700 text-white font-medium py-2 px-6 rounded-xl text-sm md:text-base transition-colors duration-200 cursor-pointer'
               >
                 {item.button}
               </button>
