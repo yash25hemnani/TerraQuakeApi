@@ -1,37 +1,72 @@
+import { FaRegCalendarAlt } from 'react-icons/fa';
+import { FaChartLine, FaCode, FaFilter } from 'react-icons/fa6';
+
 export default function Info() {
-	return (
-		<section className="w-3/4 mx-auto min-h-[600px] flex flex-col justify-center items-center text-center px-6 py-20 bg-gradient-to-b text-white">
-			<div className="w-full">
-				<h2 className="text-3xl md:text-6xl">Introduction to TerraQuake API</h2>
-				<p className="sm:text-sm md:text-xl mt-[56px] mx-auto">Earthquakes are natural phenomena caused by a sudden release of energy in the Earth's crust, generating seismic waves. Understanding and monitoring them is crucial for risk management and scientific research. TerraQuake API is designed to provide reliable and accessible earthquake data through a modern and developer-friendly interface.</p>
-				<p className="sm:text-sm md:text-xl mt-[56px] mx-auto">Here's what you can do with it:</p>
-				<div className="flex flex-col lg:flex-row justify-center mt-20 gap-1">
-					<div className="flex flex-col justify-between md:m-auto min-h-[30rem] lg:m-5 w-full rounded-3xl bg-gradient-to-br from-white/5 to-violet-950/10 shadow-lg hover:shadow-xl transition-transform duration-500 p-6 border border-white/10 backdrop-blur-sm scale-95 hover:scale-100 ease-in-out">
-						<h2 className="text-white text-2xl lg:text-2xl font-semibold text-center tracking-wide">Event Details</h2>
-						<p className="text-slate-300 text-lg lg:text-base leading-relaxed text-center">Access comprehensive information about seismic events, including magnitude, depth, coordinates, time, and location.</p>
-						<button className="bg-violet-600 hover:bg-violet-700 text-white font-medium py-2 px-6 rounded-xl text-sm lg:text-base transition-colors duration-200 cursor-pointer">View Events</button>
-					</div>
+  const introCard = [
+    {
+      title: 'Event Details',
+      icon: <FaRegCalendarAlt className='text-8xl text-violet-300 mx-auto' />,
+      content:
+        'Access comprehensive information about seismic events, including magnitude, depth, coordinates, time, and location.',
+      button: 'View Docs',
+      link: '/docs/event-details',
+    },
+    {
+      title: 'Advanced Filtering',
+      icon: <FaFilter className='text-8xl text-violet-300 mx-auto' />,
+      content:
+        'Query earthquakes by time range, location, magnitude interval, and distance radius to get exactly the data you need.',
+      button: 'Learn More',
+      link: '/docs/advanced-filtering',
+    },
+    {
+      title: 'Statistical Insights',
+      icon: <FaChartLine className='text-8xl text-violet-300 mx-auto' />,
+      content:
+        'Generate customized statistics and summaries to analyze seismic activity over time or in specific regions.',
+      button: 'See Stats Guide',
+      link: '/docs/statistics',
+    },
+    {
+      title: 'Easy Integration',
+      icon: <FaCode className='text-8xl text-violet-300 mx-auto' />,
+      content:
+        'Seamlessly integrate earthquake data into dashboards, monitoring tools, GIS platforms, mobile apps, or educational projects.',
+      button: 'Integration Guide',
+      link: '/docs/integration',
+    },
+  ];
 
-					<div className="flex flex-col justify-between md:m-auto min-h-[30rem] lg:m-5 w-full rounded-3xl bg-gradient-to-br from-white/5 to-violet-950/10 shadow-lg hover:shadow-xl transition-transform duration-500 p-6 border border-white/10 backdrop-blur-sm scale-95 hover:scale-100 ease-in-out">
-						<h2 className="text-white text-2xl lg:text-2xl font-semibold text-center tracking-wide">Advanced Filtering</h2>
-						<p className="text-slate-300 text-lg lg:text-base leading-relaxed text-center">Query earthquakes by time range, location, magnitude interval, and distance radius to get exactly the data you need.</p>
-						<button className="bg-violet-600 hover:bg-violet-700 text-white font-medium py-2 px-6 rounded-xl text-sm lg:text-base transition-colors duration-200 cursor-pointer">View Events</button>
-					</div>
+  return (
+    <section className='w-11/12 lg:w-3/4 mx-auto min-h-[600px] flex flex-col justify-center items-center text-center px-6 py-20 text-white'>
+      <div className='w-full'>
+        <h2 className='text-3xl md:text-5xl font-bold mb-6'>Introduction to TerraQuake API</h2>
+        <p className='sm:text-sm md:text-lg mt-6 mx-auto max-w-3xl'>
+          Earthquakes are natural phenomena caused by a sudden release of energy in the Earth's crust, generating seismic waves. Understanding and monitoring them is crucial for risk management and scientific research. TerraQuake API is designed to provide reliable and accessible earthquake data through a modern and developer-friendly interface.
+        </p>
+        <p className='sm:text-sm md:text-lg mt-6 mx-auto max-w-3xl'>
+          Here's what you can do with it:
+        </p>
 
-					<div className="flex flex-col justify-between md:m-auto min-h-[30rem] lg:m-5 w-full rounded-3xl bg-gradient-to-br from-white/5 to-violet-950/10 shadow-lg hover:shadow-xl transition-transform duration-500 p-6 border border-white/10 backdrop-blur-sm scale-95 hover:scale-100 ease-in-out">
-						<h2 className="text-white text-2xl lg:text-2xl font-semibold text-center tracking-wide">Statistical Insights</h2>
-						<p className="text-slate-300 text-lg lg:text-base leading-relaxed text-center">Generate customized statistics and summaries to analyze seismic activity over time or in specific regions.</p>
-						<button className="bg-violet-600 hover:bg-violet-700 text-white font-medium py-2 px-6 rounded-xl text-sm lg:text-base transition-colors duration-200 cursor-pointer">View Events</button>
-					</div>
-
-					<div className="flex flex-col justify-between md:m-auto min-h-[30rem] lg:m-5 w-full rounded-3xl bg-gradient-to-br from-white/5 to-violet-950/10 shadow-lg hover:shadow-xl transition-transform duration-500 p-6 border border-white/10 backdrop-blur-sm scale-95 hover:scale-100 ease-in-out">
-						<h2 className="text-white text-2xl lg:text-2xl font-semibold text-center tracking-wide">Easy Integration</h2>
-						<p className="text-slate-300 text-lg lg:text-base leading-relaxed text-center">Seamlessly integrate earthquake data into dashboards, monitoring tools, GIS platforms, mobile apps, or educational projects.</p>
-						<button className="bg-violet-600 hover:bg-violet-700 text-white font-medium py-2 px-6 rounded-xl text-sm lg:text-base transition-colors duration-200 cursor-pointer">View Events</button>
-					</div>
-				</div>
-			</div>
-		</section>
-	);
+        <div className='grid gap-6 mt-16 lg:grid-cols-2 xl:grid-cols-4'>
+          {introCard.map((item) => (
+            <div
+              key={item.title}
+              className='flex flex-col justify-between items-center bg-gradient-to-br from-white/5 to-violet-950/20 rounded-3xl p-6 border border-white/10 shadow-lg hover:shadow-xl transition-transform duration-500 transform scale-95 hover:scale-100 hover:brightness-110 ease-in-out'
+            >
+              <h3 className='text-white text-xl md:text-2xl font-semibold text-center mb-4'>{item.title}</h3>
+              <div className='mb-4'>{item.icon}</div>
+              <p className='text-slate-300 text-sm md:text-base leading-relaxed mb-6'>{item.content}</p>
+              <button
+                onClick={() => window.location.href = item.link}
+                className='w-full md:w-auto bg-violet-600 hover:bg-violet-700 text-white font-medium py-2 px-6 rounded-xl text-sm md:text-base transition-colors duration-200'
+              >
+                {item.button}
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }
-
