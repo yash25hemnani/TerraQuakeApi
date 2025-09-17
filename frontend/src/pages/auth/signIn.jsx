@@ -10,7 +10,6 @@ import axios from "@config/axios.js";
 import MetaData from "@pages/noPage/metaData";
 
 export default function SignIn() {
-	const API_URL = import.meta.env.VITE_URL_BACKEND || "http://localhost:5001";
 	let navigate = useNavigate();
 
 	const loginSchema = yup
