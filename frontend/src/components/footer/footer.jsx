@@ -11,23 +11,28 @@ export default function Footer() {
     {
       title: 'X / Twitter',
       url: 'https://x.com/nagcas/',
-      icon: <FaXTwitter className='text-xl' />,
+      icon: <FaXTwitter className='text-2xl' />,
     },
     {
       title: 'LinkedIn',
       url: 'https://www.linkedin.com/in/gianluca-chiaravalloti-5694081a2/',
-      icon: <FaLinkedin className='text-xl' />,
+      icon: <FaLinkedin className='text-2xl' />,
     },
     {
       title: 'GitHub',
       url: 'https://github.com/nagcas/',
-      icon: <FaGithub className='text-xl' />,
+      icon: <FaGithub className='text-2xl' />,
     },
     {
       title: 'Discord',
       url: 'https://discord.gg/RDBp8KJB',
-      icon: <FaDiscord className='text-xl' />,
+      icon: <FaDiscord className='text-2xl' />,
     },
+    {
+      title: "Youtube",
+      url: 'https://www.youtube.com/@TerraQuakeAPI',
+      icon: <FaYoutube className='text-2xl' />
+    }
   ];
 
   return (
