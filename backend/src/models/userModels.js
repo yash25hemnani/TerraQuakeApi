@@ -1,5 +1,6 @@
 import { Schema, model } from 'mongoose'
 import MongooseDelete from 'mongoose-delete'
+import { encrypt } from '../utils/handlePassword.js'
 
 const usersSchema = new Schema(
   {
@@ -25,6 +26,12 @@ const usersSchema = new Schema(
     collection: 'users'
   }
 )
+
+usersSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next()
+  this.password = await encrypt(this.password)
+  next()
+})
 
 usersSchema.plugin(MongooseDelete, { deletedAt: true, overrideMethods: 'all' })
 

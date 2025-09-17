@@ -1,7 +1,6 @@
 import User from '../models/userModels.js'
 import { matchedData } from 'express-validator'
 import handleHttpError from '../utils/handleError.js'
-import { encrypt } from '../utils/handlePassword.js'
 import { tokenSign } from '../utils/handleJwt.js'
 import { compare } from 'bcryptjs'
 
@@ -11,21 +10,12 @@ import { compare } from 'bcryptjs'
 // e restituisce un token JWT insieme ai dati utente (escludendo la password).
 export const signUp = async (req, res) => {
   try {
-    req = matchedData(req)
-    const password = await encrypt(req.password)
-    const data = { ...req, password }
-
-    console.log(`Encrypted password is: ${password}`)
+    const data = matchedData(req)
 
     const newUser = new User(data)
-
-    const user = await newUser.save()
-    user.set('password', undefined, { strict: false })
-
-    // const dataUser = {
-    //   token: await tokenSign(user),
-    //   user
-    // }
+    const savedUser = await newUser.save()
+    const user = savedUser.toObject()
+    delete user.password
 
     res.status(200).json(
       {
@@ -33,6 +23,7 @@ export const signUp = async (req, res) => {
         code: 200,
         status: 'OK',
         message: 'Registration successful',
+        data: user,
         meta: {
           method: req.method,
           path: req.originalUrl,

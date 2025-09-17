@@ -8,6 +8,7 @@ import routeUsers from './routes/usersRoutes.js'
 import routeGetStart from './routes/testRoutes.js'
 import routeEarthquakes from './routes/earthquakesRoutes.js'
 import dbConnect from './config/mongoConfig.js'
+import { authenticateUser } from './middleware/authMiddleware.js'
 // import routeStations from './routes/stationsRoutes.js'
 // import routeGeospatial from './routes/geospatialRoutes.js'
 // import routeStats from './routes/statisticsRoutes.js'
@@ -58,7 +59,7 @@ const port = process.env.PORT || 5000
 
 app.use('/api/test', routeGetStart)
 app.use('/auth', routeAuth)
-app.use('/users', routeUsers)
+app.use('/users', authenticateUser, routeUsers)
 app.use('/api/earthquakes', routeEarthquakes)
 // app.use('/api/station', routeStations)
 // app.use('/api/geospatial', routeGeospatial)

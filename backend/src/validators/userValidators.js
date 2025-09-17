@@ -60,3 +60,28 @@ export const validatorGetItem = [
     return validateResults(req, res, next)
   }
 ]
+
+export const validatorUpdateCurrentUserData = [
+  check('name')
+    .optional()
+    .isLength({ min: 3, max: 99 })
+    .withMessage('Please enter a valid username!'),
+
+  check('email')
+    .optional()
+    .isEmail()
+    .withMessage('Please enter a valid email address!'),
+
+  check('password')
+    .optional()
+    .isLength({ min: 8, max: 15 })
+    .withMessage('Password must be between 8 and 15 characters long!')
+    .matches(/^[A-Z]/)
+    .withMessage('Password must start with an uppercase letter!')
+    .matches(/[^A-Za-z0-9]/)
+    .withMessage('Password must contain at least one special character!'),
+
+  (req, res, next) => {
+    return validateResults(req, res, next)
+  }
+]
