@@ -14,3 +14,8 @@ Thank you for considering contributing to this project 🚀
 - Keep code clean and documented
 - Write clear commit messages
 - Respect the [Code of Conduct](CODE_OF_CONDUCT.md)
+
+
+## 💬 Community
+
+Join our community on [Discord](https://discord.gg/RDBp8KJB) to connect, share ideas, and collaborate with other contributors.

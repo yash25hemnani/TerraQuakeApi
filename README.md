@@ -80,6 +80,10 @@ Whether it’s fixing a bug, improving documentation, or adding a feature — al
 
 Please make sure to follow the [contributing guidelines](CONTRIBUTING.md).
 
+## 💬 Community
+
+Join our community on [Discord](https://discord.gg/RDBp8KJB) to connect, share ideas, and collaborate with other contributors.
+
 ## 🎉 Hacktoberfest 2025
 
 This project is participating in Hacktoberfest 2025!  
