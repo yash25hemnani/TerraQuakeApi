@@ -1,10 +1,38 @@
-import { FaLinkedin, FaGithub, FaXTwitter } from 'react-icons/fa6';
+import {
+  FaLinkedin,
+  FaGithub,
+  FaXTwitter,
+  FaDiscord,
+  FaYoutube,
+} from 'react-icons/fa6';
 
 export default function Footer() {
+  const socials = [
+    {
+      title: 'X / Twitter',
+      url: 'https://x.com/nagcas/',
+      icon: <FaXTwitter className='text-xl' />,
+    },
+    {
+      title: 'LinkedIn',
+      url: 'https://www.linkedin.com/in/gianluca-chiaravalloti-5694081a2/',
+      icon: <FaLinkedin className='text-xl' />,
+    },
+    {
+      title: 'GitHub',
+      url: 'https://github.com/nagcas/',
+      icon: <FaGithub className='text-xl' />,
+    },
+    {
+      title: 'Discord',
+      url: 'https://discord.gg/RDBp8KJB',
+      icon: <FaDiscord className='text-xl' />,
+    },
+  ];
+
   return (
     <footer className='bg-gradient-to-b from-violet-950 to-black text-slate-300 py-10 mt-20'>
       <div className='max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 overflow-hidden'>
-
         {/* Logo + Description */}
         <div>
           <h2 className='text-2xl font-bold text-white mb-3'>TerraQuake API</h2>
@@ -87,29 +115,19 @@ export default function Footer() {
 
         {/* Social / Sponsor */}
         <div>
-          <h3 className='text-white font-semibold mb-3'>Connect</h3>
+          <h3 className='text-white font-semibold mb-3'>Community & Socials</h3>
           <div className='flex space-x-4'>
-            <a
-              href='https://x.com/nagcas/'
-              target='_blank'
-              className='hover:text-violet-400 transition'
-            >
-              <FaXTwitter />
-            </a>
-            <a
-              href='https://www.linkedin.com/in/gianluca-chiaravalloti-5694081a2/'
-              target='_blank'
-              className='hover:text-violet-400 transition'
-            >
-              <FaLinkedin />
-            </a>
-            <a
-              href='https://github.com/nagcas/'
-              target='_blank'
-              className='hover:text-violet-400 transition'
-            >
-              <FaGithub />
-            </a>
+            {socials.map((item) => (
+              <div key={item.title}>
+                <a
+                  href={item.url}
+                  target='_blank'
+                  className='hover:text-violet-400 transition'
+                >
+                  {item.icon}
+                </a>
+              </div>
+            ))}
           </div>
         </div>
       </div>
