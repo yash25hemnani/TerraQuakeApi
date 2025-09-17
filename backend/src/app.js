@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
+import helmet from 'helmet'
 import expressListEndpoints from 'express-list-endpoints'
 
 import routeAuth from './routes/authRoutes.js'
@@ -19,40 +20,31 @@ dotenv.config()
 const devEnv = process.env.DEV_ENV
 const app = express()
 
-// CORS configuration
-// const corsOptions = {
-//  origin: function (origin, callback) {
-//    const whitelist = [
-//      process.env.FRONTEND_DEVELOPMENT, // Frontend in sviluppo
-// Frontend in produzione
-//      process.env.BACKEND_URL // Backend in produzione
-//    ]
-//    if (process.env.NODE_ENV === 'development') {
-//      callback(null, true)
-//    } else if (whitelist.indexOf(origin) !== -1 || !origin) {
-//      callback(null, true)
-//    } else {
-//      callback(new Error('PERMESSO NEGATO - CORS'))
-//    }
-//  },
-//  credentials: true // Permette l'invio di credenziali, come nel caso di autenticazione
-// }
+const whitelist = [
+  process.env.FRONTEND_DEVELOPMENT, // Frontend in sviluppo
+  process.env.BACKEND_URL // Backend in produzione
+]
 
-// Abilita CORS
-// app.use(cors(corsOptions))
-
-// CORS configuration - permette qualsiasi origine
+/*
+    * CORS configuration
+    * Allow all requests from the frontend or
+    * development environment
+*/
 const corsOptions = {
   origin: function (origin, callback) {
-    // Se vuoi permettere qualsiasi sito, accetta anche origin undefined (es. Postman)
-    callback(null, true)
+    if (process.env.DEV_ENV === 'development') {
+      callback(null, true)
+    } else if (whitelist.indexOf(origin) !== -1 || !origin) {
+      callback(null, true)
+    } else {
+      callback(new Error('PERMESSO NEGATO - CORS'))
+    }
   },
-  credentials: true // Permette l'invio di credenziali, utile per autenticazione
+  credentials: true
 }
 
-// Abilita CORS
 app.use(cors(corsOptions))
-
+app.use(helmet());
 app.use(express.json())
 
 const port = process.env.PORT || 5000
