@@ -16,23 +16,27 @@ import nodemailer from 'nodemailer'
 // e restituisce un token JWT insieme ai dati utente (escludendo la password).
 export const signUp = async (req, res) => {
   try {
-    req = matchedData(req)
-    const password = await encrypt(req.password)
-    const data = { ...req, password }
+    const data = matchedData(req)
+
     const newUser = new User(data)
-    const user = await newUser.save()
-    user.set('password', undefined, { strict: false })
-    res.status(200).json({
-      success: true,
-      code: 200,
-      status: 'OK',
-      message: 'Registration successful !',
-      meta: {
-        method: req.method,
-        path: req.originalUrl,
-        timestamp: new Date().toISOString()
+    const savedUser = await newUser.save()
+    const user = savedUser.toObject()
+    delete user.password
+
+    res.status(200).json(
+      {
+        success: true,
+        code: 200,
+        status: 'OK',
+        message: 'Registration successful',
+        data: user,
+        meta: {
+          method: req.method,
+          path: req.originalUrl,
+          timestamp: new Date().toISOString()
+        }
       }
-    })
+    )
   } catch (error) {
     console.error(error.message)
     handleHttpError(res, 'User with this email already exists !', 409)
