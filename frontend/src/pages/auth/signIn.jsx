@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { FaEye, FaEyeSlash, FaGoogle, FaGithub } from "react-icons/fa";
+import { ImSpinner9 } from "react-icons/im";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "@components/modules/context";
 import Swal from "sweetalert2";
@@ -11,6 +12,7 @@ import MetaData from "@pages/noPage/metaData";
 
 export default function SignIn() {
 	let navigate = useNavigate();
+	const [loading, setLoading] = useState(false);
 
 	const loginSchema = yup
 		.object({
@@ -29,6 +31,8 @@ export default function SignIn() {
 	const { userLogin, setUserLogin, isLoggedIn, setIsLoggedIn } = useContext(Context);
 
 	const handleLoginSubmit = (data) => {
+		setLoading(true);
+
 		const formData = {
 			email: data.email,
 			password: data.password
@@ -52,6 +56,7 @@ export default function SignIn() {
 					confirmButtonText: "Okay"
 				}).then((result) => {
 					navigate("/"); // navigate to home page for now.. later, when profile page is done, navigate there.
+					setLoading(false);
 				});
 			})
 			.catch((err) => {
@@ -89,7 +94,13 @@ export default function SignIn() {
 							</button>
 						</div>
 						<button className="w-full bg-purple-600 hover:bg-purple-800 text-white font-bold py-2 px-4 rounded-2xl transition duration-300 cursor-pointer" type="submit">
-							Login
+							{loading ? (
+								<p className="text-white">
+									<ImSpinner9 className="text-2xl mx-auto spinner" />
+								</p>
+							) : (
+								<span>Login</span>
+							)}							
 						</button>
 						{/* Divider */}
 						<div className="flex items-center my-8">
