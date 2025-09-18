@@ -5,19 +5,37 @@ import { encrypt } from '../utils/handlePassword.js'
 const usersSchema = new Schema(
   {
     name: {
-      type: String
+      type: String,
+      trim: true
     },
     email: {
       type: String,
-      unique: true
+      unique: true,
+      trim: true
     },
     password: {
       type: String,
       select: false
     },
+    avatar: {
+      type: String,
+      trim: true
+    },
     role: {
-      type: ['user', 'admin'],
+      type: ['user', 'admin', 'contributor'],
       default: 'user'
+    },
+    experience: {
+      type: String,
+      trim: true
+    },
+    student: {
+      type: Boolean,
+      default: false
+    },
+    terms: {
+      type: Boolean,
+      default: false
     }
   },
   {
