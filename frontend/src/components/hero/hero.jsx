@@ -17,7 +17,7 @@ export default function Hero() {
 
 					<div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">
 						{!isLoggedIn && (
-							<button className="relative z-30 bg-purple-600 hover:bg-purple-800 transition-colors duration-300 text-white font-semibold py-3 px-8 rounded-full cursor-pointer" onClick={() => navigate("/signup")}>
+							<button className="relative z-30 bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold py-3 px-8 rounded-full hover:scale-105 transform transition duration-300 cursor-pointer" onClick={() => navigate("/signup")}>
 								Sign Up
 							</button>
 						)}
