@@ -21,7 +21,7 @@ export default function Info() {
     },
     {
       title: 'Statistical Insights',
-      icon: <FaChartLine className='text-6xl my-6 text-violet-300 mx-auto' />,
+      icon: <FaChartLine className='text-6xl my-6 text-violet-200 mx-auto' />,
       content:
         'Generate customized statistics and summaries to analyze seismic activity over time or in specific regions.',
       button: 'See Stats Guide',
