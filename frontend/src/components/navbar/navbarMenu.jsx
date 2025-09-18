@@ -35,6 +35,10 @@ export default function NavbarMenu() {
     });
   };
 
+  const handleProfile = () => {
+    navigate('/profile');
+  }
+
   return (
     <header className="fixed top-0 left-0 w-full box-border backdrop-blur-2xl bg-opacity-60 text-white shadow-lg py-4 px-4 flex items-center justify-between lg:justify-around z-50">
       {/* Logo */}
@@ -76,7 +80,8 @@ export default function NavbarMenu() {
                 "https://wallpapers.com/images/hd/default-user-profile-icon-0udyg8f0x3b3qqbw.png"
               }
               alt="avatar"
-              className="w-8 h-8 rounded-full"
+              className="w-8 h-8 rounded-full cursor-pointer"
+              onClick={handleProfile}
             />
             <span>{userLogin.name}</span>
             <button

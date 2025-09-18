@@ -55,7 +55,7 @@ export default function SignIn() {
 					icon: "success",
 					confirmButtonText: "Okay"
 				}).then((result) => {
-					navigate("/"); // navigate to home page for now.. later, when profile page is done, navigate there.
+					navigate("/profile"); // navigate to profile page
 					setLoading(false);
 				});
 			})

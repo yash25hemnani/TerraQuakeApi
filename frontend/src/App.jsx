@@ -22,6 +22,7 @@ import ResetPassword from '@pages/auth/resetPassword'
 import Footer from '@components/footer/footer'
 import { AuthProvider } from '@components/modules/authProvider'
 import ScrollToTop from '@components/modules/scrollToTop'
+import Profile from './pages/profile/profile'
 
 function App() {
 
@@ -52,6 +53,7 @@ function App() {
               <Route path='/about' element={<About />} /> 
               <Route path='/signup' element={<SignUp />} /> 
               <Route path='/signin' element={<SignIn />} /> 
+              <Route path='/profile' element={<Profile />} /> 
               <Route path='/forgot-password' element={<ForgotPassword />} /> 
               {/* Deliberately encrypted with AES-256-CBC, so that the URL is not found by anyone */}
               <Route path='/U2FsdGVkX188Vmt4gt5JTCUT9P8HbN3TUFkNxsrwWac=' element={<ResetPassword />} /> 
