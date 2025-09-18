@@ -1,7 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import JsonApi2 from "@images/json-api-2.png";
+import { useContext } from "react";
+import { Context } from "../modules/context";
 
 export default function Hero() {
+	const { isLoggedIn } = useContext(Context);
 	const navigate = useNavigate();
 
 	return (
@@ -13,9 +16,11 @@ export default function Hero() {
 					<p className="lg:w-3xl mt-6 text-lg mx-auto md:text-xl text-gray-300">A training and experimentation environment powered by real seismic events from official sources. Perfect for students, developers, and technicians looking to learn by working with real-world data.</p>
 
 					<div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">
-						<button className="relative z-30 bg-purple-600 hover:bg-purple-800 transition-colors duration-300 text-white font-semibold py-3 px-8 rounded-full cursor-pointer" onClick={() => navigate("/signup")}>
-							Sign Up
-						</button>
+						{!isLoggedIn && (
+							<button className="relative z-30 bg-purple-600 hover:bg-purple-800 transition-colors duration-300 text-white font-semibold py-3 px-8 rounded-full cursor-pointer" onClick={() => navigate("/signup")}>
+								Sign Up
+							</button>
+						)}
 						<button className="relative z-30 border border-white hover:bg-white hover:text-black transition-colors duration-300 text-white font-semibold py-3 px-8 rounded-full cursor-pointer" onClick={() => navigate("/explore-data")}>
 							Explore Seismic Events
 						</button>
