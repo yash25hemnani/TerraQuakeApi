@@ -1,7 +1,6 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
-import helmet from 'helmet'
 import expressListEndpoints from 'express-list-endpoints'
 
 import routeAuth from './routes/authRoutes.js'
@@ -44,7 +43,6 @@ const corsOptions = {
 }
 
 app.use(cors(corsOptions))
-app.use(helmet())
 app.use(express.json())
 
 const port = process.env.PORT || 5000

@@ -130,7 +130,7 @@ export default function NavbarMenu() {
 
       {/* Mobile Dropdown */}
       <div
-        className={`lg:hidden absolute top-full w-full bg-[#090414] text-white overflow-hidden transition-all duration-500 ease-in-out z-40 rounded-b-xl ${
+        className={`lg:hidden absolute top-full w-[95%] left-[2.5%] bg-[#090414] text-white overflow-hidden transition-all duration-500 ease-in-out z-40 rounded-b-xl ${
           isOpen
             ? "max-h-[500px] opacity-100 pointer-events-auto py-6 px-4"
             : "max-h-0 opacity-0 pointer-events-none py-0 px-4"
@@ -144,7 +144,7 @@ export default function NavbarMenu() {
               to={item.path}
               onClick={() => setIsOpen(false)}
               className={({ isActive }) =>
-                `hover:text-purple-400 ${
+                `hover:text-purple-400 w-full ${
                   isActive
                     ? "text-purple-400 font-semibold border-b-2 border-purple-500"
                     : "text-gray-300"
