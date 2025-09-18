@@ -94,13 +94,13 @@ export default function NavbarMenu() {
         ) : (
           <>
             <button
-              className="border border-white hover:bg-white hover:text-black transition-colors duration-300 text-white font-semibold py-2 px-6 rounded-2xl cursor-pointer"
+              className="border border-white hover:bg-white hover:text-black transition-colors duration-300 text-white font-semibold py-2 px-6 rounded-full cursor-pointer"
               onClick={() => navigate("/signin")}
             >
               Sign In
             </button>
             <button
-              className="bg-purple-600 hover:bg-purple-800 py-2 px-6 rounded-2xl transition-colors duration-200 cursor-pointer"
+              className="bg-gradient-to-r from-pink-500 to-purple-600 py-2 px-6 rounded-full hover:scale-105 transform transition duration-300 cursor-pointer"
               onClick={() => navigate("/signup")}
             >
               Sign Up
