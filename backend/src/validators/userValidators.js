@@ -20,12 +20,21 @@ export const validatorSignUp = [
   check('password')
     .exists()
     .notEmpty()
-    .isLength({ min: 8, max: 15 }) // consiglio minimo 8
+    .isLength({ min: 8, max: 15 })
     .withMessage('Password must be between 8 and 15 characters long!')
     .matches(/^[A-Z]/)
     .withMessage('Password must start with an uppercase letter!')
     .matches(/[^A-Za-z0-9]/)
     .withMessage('Password must contain at least one special character!'),
+
+  check('terms')
+    .exists().withMessage('Terms field is required')
+    .custom((value) => {
+      if (value !== true && value !== 'true' && value !== 1 && value !== 'on') {
+        throw new Error('You must accept the Terms and Conditions')
+      }
+      return true
+    }),
 
   (req, res, next) => {
     return validateResults(req, res, next)
