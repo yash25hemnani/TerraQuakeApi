@@ -186,7 +186,7 @@ It allows users to access detailed information about a single earthquake event, 
 								setActiveTab(ep.title);
 								setResponseData(null);
 							}}
-							className={`py-2 px-4 rounded-xl font-semibold transition-colors ${activeTab === ep.title ? "bg-purple-700 text-white cursor-pointer" : "bg-white/10 hover:bg-purple-600 text-gray-300 cursor-pointer"}`}>
+							className={`py-2 px-4 rounded-full font-semibold transition-colors ${activeTab === ep.title ? "bg-gradient-to-r from-pink-500 to-purple-600 text-white cursor-pointer" : "bg-white/10 hover:bg-pink-500 text-white cursor-pointer"}`}>
 							{ep.title}
 						</button>
 					))}
@@ -225,7 +225,7 @@ It allows users to access detailed information about a single earthquake event, 
 							</div>
 
 							<div className="mb-6">
-								<button onClick={() => handleTest(ep.example)} className="bg-purple-600 hover:bg-purple-800 transition-colors duration-300 text-white font-semibold py-2 px-6 rounded-full cursor-pointer">
+								<button onClick={() => handleTest(ep.example)} className="bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold py-2 px-6 rounded-full hover:scale-105 transform transition duration-300 cursor-pointer">
 									Test this endpoint
 								</button>
 							</div>
