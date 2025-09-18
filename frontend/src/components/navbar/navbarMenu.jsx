@@ -18,6 +18,7 @@ export default function NavbarMenu() {
     { name: "Docs", path: "/docs" },
     { name: "Use Cases", path: "/use-cases" },
     { name: "About", path: "/about" },
+    { name: "Contact", path: "/contact" }
   ];
 
   const handleLogout = () => {

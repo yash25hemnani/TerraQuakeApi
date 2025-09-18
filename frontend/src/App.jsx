@@ -13,6 +13,7 @@ import ApiAccess from '@pages/apiAccess/apiAccess'
 import Docs from './pages/docs/docs'
 import UseCases from '@pages/useCases/useCases'
 import About from '@pages/about/about'
+import Contact from './pages/contact/contact'
 import NoPage from '@pages/noPage/noPage'
 import SignUp from '@pages/auth/signUp'
 import SignIn from '@pages/auth/signIn'
@@ -51,6 +52,7 @@ function App() {
               <Route path='/docs' element={<Docs />} />
               <Route path='/use-cases' element={<UseCases />} />
               <Route path='/about' element={<About />} /> 
+              <Route path='/contact' element={<Contact />} /> 
               <Route path='/signup' element={<SignUp />} /> 
               <Route path='/signin' element={<SignIn />} /> 
               <Route path='/profile' element={<Profile />} /> 
