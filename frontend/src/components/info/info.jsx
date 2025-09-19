@@ -60,6 +60,7 @@ export default function Info() {
               <button
                 onClick={() => window.location.href = item.link}
                 className='w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-medium py-3 px-6 rounded-full text-sm md:text-base hover:scale-105 transform transition duration-300 cursor-pointer'
+                aria-label={`Navigate to ${item.title} page`}
               >
                 {item.button}
               </button>

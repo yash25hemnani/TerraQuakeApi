@@ -138,6 +138,7 @@ export default function SignUp() {
                 type='button'
                 onClick={togglePassword}
                 className='absolute top-10 right-3 text-gray-300 hover:text-purple-400 cursor-pointer'
+                aria-label='Toggle password view'
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
@@ -160,6 +161,7 @@ export default function SignUp() {
                   type='button'
                   onClick={togglePassword}
                   className='absolute top-10 right-3 text-gray-300 hover:text-purple-400 cursor-pointer'
+                  aria-label='Toggle password view'
                 >
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
@@ -184,6 +186,7 @@ export default function SignUp() {
                     className='text-purple-400 hover:underline'
                     target='_blank'
                     rel='noopener noreferrer'
+                    aria-label='Navigate to terms and conditions page'
                   >
                     Terms and Conditions
                   </Link>
@@ -194,6 +197,7 @@ export default function SignUp() {
             <button
               className='w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold py-2 px-4 rounded-2xl hover:scale-105 transform transition duration-300 cursor-pointer'
               type='submit'
+              aria-label='Click to create a new account'
             >
               {loading ? (
                 <p className='text-white'>
@@ -211,6 +215,7 @@ export default function SignUp() {
               <Link
                 className='mt-4 text-white hover:text-purple-400 focus:text-purple-400 duration-300 ease-in-out'
                 to='/signin'
+                aria-label='Navigate to sign in page'
               >
                 Sign in
               </Link>
