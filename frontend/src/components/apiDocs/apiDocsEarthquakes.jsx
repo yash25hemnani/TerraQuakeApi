@@ -12,7 +12,8 @@ export default function ApiDocsEarthquakes() {
 	const endpoints = [
 		{
 			title: "recent",
-			description: `This endpoint retrieves all seismic events that occurred today from the TerraQuake API, based on UTC time. It provides users with real-time insight into ongoing seismic activity for the current day. The response includes detailed information such as magnitude, location, depth, time, and unique event ID.
+			description: `This endpoint retrieves all recent seismic events from the beginning of the year until today via the TerraQuake API sorted from the most recent to the least recent. It provides users with insight into ongoing seismic activity for the current year. The response includes details such as magnitude, location, depth, time, and unique event ID.
+
       
         Query Parameters:
           

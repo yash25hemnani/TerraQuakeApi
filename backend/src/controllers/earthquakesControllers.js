@@ -32,13 +32,16 @@ const fetchINGV = async (url) => {
 export const getEarthquakesByRecent = async (req, res) => {
   try {
     const urlINGV = process.env.URL_INGV
-    const limit = getPositiveInt(req.query, 'limit')
+    const limit = getPositiveInt(req.query, 'limit', { def: 50 })
 
     if (limit === null) {
-      return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=10', 400)
+      return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=50', 400)
     }
 
-    let url = `${urlINGV}?orderby=time&format=geojson`
+    const now = new Date().toISOString().split('T')[0]
+    const startOfYear = new Date(new Date().getFullYear(), 0, 1).toISOString().split('T')[0]
+
+    let url = `${urlINGV}?orderby=time&starttime=${startOfYear}&endtime=${now}&format=geojson`
     if (limit) url += `&limit=${limit}`
 
     const data = await fetchINGV(url)
