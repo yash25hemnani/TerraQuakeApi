@@ -12,7 +12,8 @@ export default function ApiDocsEarthquakes() {
 	const endpoints = [
 		{
 			title: "recent",
-			description: `This endpoint retrieves all recent seismic events from the beginning of the year until today via the TerraQuake API sorted from the most recent to the least recent. It provides users with insight into ongoing seismic activity for the current year. The response includes details such as magnitude, location, depth, time, and unique event ID.
+			description: `
+This endpoint retrieves all recent seismic events from the beginning of the year until today via the TerraQuake API sorted from the most recent to the least recent. It provides users with insight into ongoing seismic activity for the current year. The response includes details such as magnitude, location, depth, time, and unique event ID.
 
       
         Query Parameters:
@@ -24,7 +25,8 @@ export default function ApiDocsEarthquakes() {
 		},
 		{
 			title: "today",
-			description: `This endpoint retrieves all seismic events that occurred today (from 00:00 UTC to the current time) from the TerraQuake API. It allows users to monitor real-time seismic activity and provides a daily overview of ongoing earthquakes. The response includes detailed information such as magnitude, location, depth, event time, and coordinates.
+			description: `
+This endpoint retrieves all seismic events that occurred today (from 00:00 UTC to the current time) from the TerraQuake API. It allows users to monitor real-time seismic activity and provides a daily overview of ongoing earthquakes. The response includes detailed information such as magnitude, location, depth, event time, and coordinates.
       
         Query Parameters:
         
@@ -56,7 +58,7 @@ It allows users to explore historical earthquake data for a given period. The re
         
       - year: (Required) The target year (e.g., 2025).
       - month: (Required) The target month in numeric format (01 to 12).
-      - limit: (Optional) The number of events to return. Default is 10 if not specified.`,
+      - limit: (Optional) The number of events to return. Default is 50 if not specified.`,
       query: '?year=2025&month=03&limit=50',
       example: '/earthquakes/month?year=2025&month=03&limit=50',
       method: 'GET',
@@ -82,8 +84,10 @@ The response includes detailed information for each event such as magnitude, coo
     {
       title: 'region',
       description: `
-This endpoint retrieves all seismic events that occurred within a specific Italian region from the TerraQuake API.
-It allows users to filter earthquakes by regional boundaries for localized seismic analysis. The response includes key data such as magnitude, location, depth, and time.
+This endpoint retrieves all seismic events that occurred within a specific Italian region from the TerraQuake API, 
+from the start of the current year up to today. It allows users to filter earthquakes by regional boundaries 
+for localized seismic analysis. The response includes key data such as magnitude, location, depth, and time.
+
       
         Query Parameters:
         
@@ -96,7 +100,8 @@ It allows users to filter earthquakes by regional boundaries for localized seism
     {
       title: 'depth',
       description: `
-This endpoint retrieves all seismic events that occurred at a specific focal depth, measured in kilometers, from the TerraQuake API.
+This endpoint retrieves all seismic events that occurred at a specific focal depth, measured in kilometers, 
+from the TerraQuake API, from the start of the current year up to today. 
 It allows users to analyze earthquakes based on their depth, which can help assess their potential surface impact.
       
         Query parameters:
@@ -126,8 +131,9 @@ It allows users to query historical earthquake data over any desired period, mak
     {
       title: 'magnitude',
       description: `
-This endpoint retrieves all seismic events that have a specific or greater magnitude from the TerraQuake API.
-It is useful for filtering earthquakes based on their strength and analyzing seismic intensity patterns over time or regions.
+This endpoint retrieves all seismic events that have a specific or greater magnitude from the TerraQuake API, 
+from the start of the current year up to today. 
+It is useful for filtering earthquakes based on their strength and analyzing seismic intensity patterns over time or across regions.
       
         Query Parameters:
       
