@@ -106,10 +106,11 @@ export const getEarthquakesByToday = async (req, res) => {
 // NOTE: funzione per ottenere la lista completa eventi sismici dell'ultima settimana
 export const getEarthquakesByLastWeek = async (req, res) => {
   try {
-    const limit = getPositiveInt(req.query, 'limit')
+    const urlINGV = process.env.URL_INGV
+    const limit = getPositiveInt(req.query, 'limit', { def: 50 })
 
     if (limit === null) {
-      return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example:limit=10', 400)
+      return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example:limit=50', 400)
     }
 
     const today = new Date()
@@ -119,7 +120,7 @@ export const getEarthquakesByLastWeek = async (req, res) => {
     lastWeekDate.setDate(today.getDate() - 7)
     const startDate = lastWeekDate.toISOString().split('T')[0]
 
-    let url = `https://webservices.ingv.it/fdsnws/event/1/query?starttime=${startDate}&endtime=${endDate}&orderby=time&format=geojson`
+    let url = `${urlINGV}?starttime=${startDate}&endtime=${endDate}&orderby=time&format=geojson`
     if (limit) url += `&limit=${limit}`
 
     const data = await fetchINGV(url)
