@@ -6,6 +6,7 @@ import expressListEndpoints from 'express-list-endpoints'
 
 import routeAuth from './routes/authRoutes.js'
 import routeUsers from './routes/usersRoutes.js'
+import routeContact from './routes/contactRoutes.js'
 import routeGetStart from './routes/testRoutes.js'
 import routeEarthquakes from './routes/earthquakesRoutes.js'
 import dbConnect from './config/mongoConfig.js'
@@ -52,6 +53,7 @@ const port = process.env.PORT || 5000
 app.use('/test', routeGetStart)
 app.use('/auth', routeAuth)
 app.use('/users', authenticateUser, routeUsers)
+app.use('/contact', routeContact)
 app.use('/earthquakes', routeEarthquakes)
 // app.use('/station', routeStations)
 // app.use('/geospatial', routeGeospatial)
