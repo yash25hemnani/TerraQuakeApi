@@ -61,7 +61,7 @@ export default function SignUp() {
 			terms: data.terms,
     };
     axios
-      .post('/api/auth/signup', formData)
+      .post('auth/signup', formData)
       .then((res) => {
         Swal.fire({
           title: 'Success!',
