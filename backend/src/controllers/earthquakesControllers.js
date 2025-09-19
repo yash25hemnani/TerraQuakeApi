@@ -69,16 +69,17 @@ export const getEarthquakesByRecent = async (req, res) => {
 // NOTE: funzione per la lettura da endpoint INGV e la restituzione degli eventi odierni
 export const getEarthquakesByToday = async (req, res) => {
   try {
-    const limit = getPositiveInt(req.query, 'limit')
+    const urlINGV = process.env.URL_INGV
+    const limit = getPositiveInt(req.query, 'limit', { def: 50 })
 
     if (limit === null) {
-      return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=10', 400)
+      return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=50', 400)
     }
 
     const nowUTC = new Date()
     const dateStr = nowUTC.toISOString().split('T')[0]
 
-    let url = `https://webservices.ingv.it/fdsnws/event/1/query?starttime=${dateStr}T00:00:00&endtime=${dateStr}T23:59:59&orderby=time&format=geojson`
+    let url = `${urlINGV}?starttime=${dateStr}T00:00:00&endtime=${dateStr}T23:59:59&orderby=time&format=geojson`
     if (limit) url += `&limit=${limit}`
 
     const data = await fetchINGV(url)
