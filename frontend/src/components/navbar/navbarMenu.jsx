@@ -88,6 +88,7 @@ export default function NavbarMenu() {
             <button
               onClick={handleLogout}
               className="font-semibold border-purple-500 hover:border-b-2 hover:text-purple-400 cursor-pointer"
+              aria-label='Log out of your account'
             >
               Logout
             </button>
@@ -97,12 +98,14 @@ export default function NavbarMenu() {
             <button
               className="border border-white hover:bg-white hover:text-black transition-colors duration-300 text-white font-semibold py-2 px-6 rounded-full cursor-pointer"
               onClick={() => navigate("/signin")}
+              aria-label='Navigate to sign in page'
             >
               Sign In
             </button>
             <button
               className="bg-gradient-to-r from-pink-500 to-purple-600 py-2 px-6 rounded-full hover:scale-105 transform transition duration-300 cursor-pointer"
               onClick={() => navigate("/signup")}
+              aria-label='Navigate to sign up page'
             >
               Sign Up
             </button>
@@ -178,6 +181,7 @@ export default function NavbarMenu() {
               type="button"
               onClick={handleLogout}
               className="font-semibold border-purple-500 hover:border-b-2 hover:text-purple-400"
+              aria-label='Log out of your account'
             >
               Logout
             </button>
@@ -190,6 +194,7 @@ export default function NavbarMenu() {
                 navigate("/signin");
                 setIsOpen(false);
               }}
+              aria-label='Navigate to sign in page'
             >
               Sign In
             </button>
@@ -199,6 +204,7 @@ export default function NavbarMenu() {
                 navigate("/signup");
                 setIsOpen(false);
               }}
+              aria-label='Navigate to sign up page'
             >
               Sign Up
             </button>

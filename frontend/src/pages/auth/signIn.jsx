@@ -118,6 +118,7 @@ export default function SignIn() {
                 type='button'
                 onClick={togglePassword}
                 className='absolute top-10 right-3 text-gray-800 hover:text-purple-600 cursor-pointer'
+                aria-label='Toggle password view'
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
@@ -125,6 +126,7 @@ export default function SignIn() {
             <button
               className='w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold py-2 px-4 rounded-2xl hover:scale-105 transform transition duration-300 cursor-pointer'
               type='submit'
+              aria-label='Login button'
             >
               {loading ? (
                 <p className='text-white'>
@@ -148,6 +150,7 @@ export default function SignIn() {
                 type='button'
                 className='text-white bg-purple-600 hover:bg-purple-800 p-2 rounded-full cursor-pointer'
                 onClick={() => handleSocialLogin('google')}
+                aria-label='Login google button'
               >
                 <FaGoogle className='w-5 h-5' />
               </button>
@@ -156,6 +159,7 @@ export default function SignIn() {
                 type='button'
                 className='text-white bg-purple-600 hover:bg-purple-800 p-2 rounded-full cursor-pointer'
                 onClick={() => handleSocialLogin('github')}
+                aria-label='Login github button'
               >
                 <FaGithub className='w-5 h-5' />
               </button>
@@ -167,6 +171,7 @@ export default function SignIn() {
               <Link
                 className='mt-4 text-white hover:text-purple-400 focus:text-purple-400 duration-300 ease-in-out'
                 to='/signup'
+                aria-label='Navigate to sign up page'
               >
                 Sign up
               </Link>

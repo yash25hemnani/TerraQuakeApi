@@ -65,6 +65,7 @@ export default function Profile() {
               <button
                 onClick={handleLogout}
                 className='mt-6 w-full py-3 px-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-semibold text-lg shadow-lg hover:scale-105 transform transition duration-300 cursor-pointer'
+                aria-label='Log out of your account'
               >
                 Logout
               </button>
@@ -82,6 +83,7 @@ export default function Profile() {
                   <button
                     onClick={() => setActiveSection('edit')}
                     className='mt-6 w-60 border border-white hover:bg-white hover:text-black transition-colors duration-300 text-white font-semibold py-3 px-8 rounded-full cursor-pointer'
+                    aria-label='Edit profile'
                   >
                     Edit profile
                   </button>
@@ -89,6 +91,7 @@ export default function Profile() {
                   <button
                     onClick={() => setActiveSection('delete')}
                     className='mt-6 w-60 border border-white hover:bg-white hover:text-black transition-colors duration-300 text-white font-semibold py-3 px-8 rounded-full cursor-pointer'
+                    aria-label='Delete your profile'
                   >
                     Delete profile
                   </button>
@@ -96,6 +99,7 @@ export default function Profile() {
                   <button
                     onClick={() => setActiveSection('password')}
                     className='mt-6 w-60 border border-white hover:bg-white hover:text-black transition-colors duration-300 text-white font-semibold py-3 px-8 rounded-full cursor-pointer'
+                    aria-label='change password profile'
                   >
                     Change password
                   </button>
@@ -106,6 +110,7 @@ export default function Profile() {
                 <button
                   onClick={() => setActiveSection(null)}
                   className='mt-6 w-60 py-3 px-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-semibold text-lg shadow-lg hover:scale-105 transform transition duration-300 cursor-pointer'
+                  aria-label='Return to profile page'
                 >
                   Back to profile
                 </button>
@@ -157,6 +162,7 @@ export default function Profile() {
                   <button
                     onClick={handleGenerateToken}
                     className='mt-6 w-60 py-3 px-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-semibold text-lg shadow-lg hover:scale-105 transform transition duration-300 cursor-pointer'
+                    aria-label='Generate token api'
                   >
                     Generate token
                   </button>

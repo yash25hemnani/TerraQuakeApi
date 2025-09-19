@@ -55,6 +55,7 @@ export default function Footer() {
               <a
                 href='/'
                 className='hover:text-violet-400 transition'
+                aria-label='Navigate to homepage'
               >
                 Home
               </a>
@@ -63,6 +64,7 @@ export default function Footer() {
               <a
                 href='/about'
                 className='hover:text-violet-400 transition'
+                aria-label='Navigate to about page'
               >
                 About
               </a>
@@ -71,6 +73,7 @@ export default function Footer() {
               <a
                 href='/docs'
                 className='hover:text-violet-400 transition'
+                aria-label='Navigate to docs page'
               >
                 Docs
               </a>
@@ -79,6 +82,7 @@ export default function Footer() {
               <a
                 href='/contribute'
                 className='hover:text-violet-400 transition'
+                aria-label='Navigate to contribute page'
               >
                 Contribute
               </a>
@@ -95,6 +99,7 @@ export default function Footer() {
                 href='https://github.com/nagcas/TerraQuakeApi'
                 target='_blank'
                 className='hover:text-violet-400 transition'
+                aria-label='Visit the TerraQuake API GitHub repositor'
               >
                 GitHub
               </a>
@@ -103,6 +108,7 @@ export default function Footer() {
               <a
                 href='/faq'
                 className='hover:text-violet-400 transition'
+                aria-label='Navigate to faq page'
               >
                 FAQ
               </a>
@@ -111,6 +117,7 @@ export default function Footer() {
               <a
                 href='/contact'
                 className='hover:text-violet-400 transition'
+                aria-label='Navigate to contact page'
               >
                 Contact
               </a>
@@ -128,6 +135,7 @@ export default function Footer() {
                   href={item.url}
                   target='_blank'
                   className='hover:text-violet-400 transition'
+                  aria-label={`Visit the TerraQuake API ${item.title} profile`}
                 >
                   {item.icon}
                 </a>
@@ -148,6 +156,7 @@ export default function Footer() {
             target='_blank'
             rel='noopener noreferrer'
             className='hover:text-violet-400 transition'
+            aria-label='Visit the TerraQuake API licence'
           >
             GNU Affero General Public License
           </a>{' '}
