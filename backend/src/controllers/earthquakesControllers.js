@@ -402,41 +402,50 @@ export const getEarthquakesById = async (req, res) => {
   }
 }
 
-// NOTE: funzione per la lettura da endpoint INGV e la restituzione degli eventi sismici filtrati per latitudine e longitudine
+// NOTE: funzione per la lettura da endpoint INGV e la restituzione degli eventi sismici filtrati per latitudine e longitudine dall'inizio dell'anno fino ad oggi
 export const getEarthquakesLocation = async (req, res) => {
   try {
     const urlINGV = process.env.URL_INGV
-    const { lon, lat, radius } = req.query
-    const limit = getPositiveInt(req.query, 'limit')
-    const radiusNum = getPositiveInt(req.query, 'radius', { min: 0.1, def: 10 })
+    const { latitude, longitude } = req.query
+    const limit = getPositiveInt(req.query, 'limit', { def: 50 })
+    const radiusNum = getPositiveInt(req.query, 'radius', { min: 0.1, def: 50 })
 
-    if (limit === null) {
-      return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=10', 400)
+    if (!latitude || isNaN(latitude) || !longitude || isNaN(longitude)) {
+      return handleHttpError(res, 'Please provide valid latitude and longitude', 400)
     }
 
-    if (radiusNum === null) {
-      return handleHttpError(res, 'The radius parameter must be a positive number', 400)
-    }
+    const lat = parseFloat(latitude)
+    const lon = parseFloat(longitude)
 
-    let url = `${urlINGV}?orderby=time&format=geojson`
-    if (limit) url += `&limit=${limit}`
+    // Date: dall'inizio dell'anno fino ad oggi
+    const nowUTC = new Date()
+    const startOfYear = `${nowUTC.getFullYear()}-01-01T00:00:00`
+    const endOfToday = nowUTC.toISOString().split('.')[0] // YYYY-MM-DDTHH:MM:SS
 
-    const data = await fetchINGV(url)
+    // Bounding box globale ridotta per sicurezza
+    const degreeRadius = radiusNum / 111 // 1° ≈ 111 km
+    const minLat = Math.max(lat - degreeRadius, -90)
+    const maxLat = Math.min(lat + degreeRadius, 90)
+    const minLon = Math.max(lon - degreeRadius, -180)
+    const maxLon = Math.min(lon + degreeRadius, 180)
+
+    // Endpoint INGV
+    const url = `${urlINGV}?starttime=${startOfYear}&endtime=${endOfToday}&minlatitude=${minLat}&maxlatitude=${maxLat}&minlongitude=${minLon}&maxlongitude=${maxLon}&orderby=time&format=geojson&limit=${limit}`
+
+    const response = await fetch(url)
+    if (!response.ok) throw new Error(`HTTP error from INGV source: ${response.status} ${response.statusText}`)
+
+    const data = await response.json()
     let { features } = data
 
-    // Filter by geographic location if provided
-    if (lat && !isNaN(lat) && lon && !isNaN(lon)) {
-      const userLat = parseFloat(lat)
-      const userLon = parseFloat(lon)
-      const userPoint = { lat: userLat, lon: userLon }
-
-      features = features.filter(({ geometry }) => {
-        const [lonF, latF] = geometry.coordinates
-        const quakePoint = { lat: latF, lon: lonF }
-        const distanceMeters = haversine(userPoint, quakePoint)
-        return distanceMeters / 1000 <= radiusNum
-      })
-    }
+    // Filtraggio locale preciso usando haversine
+    const userPoint = { latitude: lat, longitude: lon }
+    features = features.filter(({ geometry }) => {
+      const [lonF, latF] = geometry.coordinates
+      const quakePoint = { latitude: latF, longitude: lonF }
+      const distanceKm = haversine(userPoint, quakePoint) / 1000
+      return distanceKm <= radiusNum
+    })
 
     const result = processFeatures(features, req.query, {
       defaultSort: '-time',
@@ -444,7 +453,7 @@ export const getEarthquakesLocation = async (req, res) => {
       fieldWhitelist: ['time', 'magnitude', 'depth', 'place', 'coordinates']
     })
 
-    const message = lat && lon ? `Seismic events near [${lat}, ${lon}] within ${radiusNum} km` : 'List of seismic events (not filtered by coordinates)'
+    const message = `Seismic events near [${lat}, ${lon}] within ${radiusNum} km from ${startOfYear} to today`
 
     res.status(200).json({
       ...buildResponse(req, message, result.items, result.totalFetched),
