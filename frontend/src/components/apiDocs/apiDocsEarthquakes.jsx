@@ -18,7 +18,7 @@ export default function ApiDocsEarthquakes() {
           
       - limit: (Optional) The number of earthquake events to return. Defaults to 50 if not specified.`,
 			query: "?limit=50",
-			example: "/api/earthquakes/recent?limit=50",
+			example: "/earthquakes/recent?limit=50",
 			method: "GET"
 		},
 		{
@@ -29,7 +29,7 @@ export default function ApiDocsEarthquakes() {
         
       - limit: (Optional) The number of earthquake events to return. Default is 50 if not provided.`,
       query: '?limit=50',
-      example: '/api/earthquakes/today?limit=50',
+      example: '/earthquakes/today?limit=50',
       method: 'GET',
     },
     {
@@ -42,7 +42,7 @@ It allows users to monitor and analyze recent seismic activity over the past wee
         
       - limit: (Optional) The number of earthquake events to return. Default is 50 if not specified.`,
       query: '?limit=50',
-      example: '/api/earthquakes/last-week?limit=50',
+      example: '/earthquakes/last-week?limit=50',
       method: 'GET',
     },
     {
@@ -57,7 +57,7 @@ It allows users to explore historical earthquake data for a given period. The re
       - month: (Required) The target month in numeric format (01 to 12).
       - limit: (Optional) The number of events to return. Default is 10 if not specified.`,
       query: '?year=2025&month=03&limit=50',
-      example: '/api/earthquakes/month?year=2025&month=03&limit=50',
+      example: '/earthquakes/month?year=2025&month=03&limit=50',
       method: 'GET',
     },
     {
@@ -75,7 +75,7 @@ It allows users to filter recent earthquake events based on proximity to a point
 
 The response includes detailed information for each event such as magnitude, coordinates, depth, and time of occurrence.`,
       query: '?lon=15.9577&lat=41.7142&radius=50',
-      example: '/api/earthquakes/location?lon=15.9577&lat=41.7142&radius=10&limit=50',
+      example: '/earthquakes/location?lon=15.9577&lat=41.7142&radius=10&limit=50',
       method: 'GET',
     },
     {
@@ -89,7 +89,7 @@ It allows users to filter earthquakes by regional boundaries for localized seism
       - region: (Required) The name of the Italian region to filter by (e.g., Campania, Sicilia, Lazio). Case-insensitive.
       - limit: (Optional) The number of events to return. Defaults to 50 if not specified.`,
       query: '?region=Campania&limit=50',
-      example: '/api/earthquakes/region?region=Campania&limit=50',
+      example: '/earthquakes/region?region=Campania&limit=50',
       method: 'GET',
     },
     {
@@ -103,7 +103,7 @@ It allows users to analyze earthquakes based on their depth, which can help asse
       - depth: (Required) The focal depth of the earthquakes in kilometers (e.g., 10).
       - limit: (Optional) The number of events to return. Default is 10 if not specified.`,
       query: '?depth=10&limit=50',
-      example: '/api/earthquakes/depth?depth=10&limit=50',
+      example: '/earthquakes/depth?depth=10&limit=50',
       method: 'GET',
     },
     {
@@ -119,7 +119,7 @@ It allows users to query historical earthquake data over any desired period, mak
       - limit: (Optional) The number of earthquake events to return. Default is 50 if not specified.`,
       query: '?startdate=2025-01-01&enddate=2025-03-30&limit=50',
       example:
-        '/api/earthquakes/range-time?startdate=2025-01-01&enddate=2025-03-30&limit=50',
+        '/earthquakes/range-time?startdate=2025-01-01&enddate=2025-03-30&limit=50',
       method: 'GET',
     },
     {
@@ -133,7 +133,7 @@ It is useful for filtering earthquakes based on their strength and analyzing sei
       - mag: (Required) Minimum magnitude to filter by (e.g., 2 will return all events with magnitude ≥ 2.0).
       - limit: (Optional) Number of earthquake events to return. Default is 50 if not specified.`,
       query: '?mag=1&limit=50',
-      example: '/api/earthquakes/magnitude?mag=1&limit=50',
+      example: '/earthquakes/magnitude?mag=1&limit=50',
       method: 'GET',
     },
     {
@@ -146,7 +146,7 @@ It allows users to access detailed information about a single earthquake event, 
       
       - eventId: (Required) The unique identifier of the earthquake event to retrieve.`,
 			query: "?eventId=43410122",
-			example: "/api/earthquakes/eventId?eventId=44061482",
+			example: "/earthquakes/eventId?eventId=44061482",
 			method: "GET"
 		}
 	];
