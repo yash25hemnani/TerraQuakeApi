@@ -49,14 +49,14 @@ app.use(express.json())
 
 const port = process.env.PORT || 5000
 
-app.use('/api/test', routeGetStart)
-app.use('/api/auth', routeAuth)
-app.use('/api/users', authenticateUser, routeUsers)
-app.use('/api/earthquakes', routeEarthquakes)
-// app.use('/api/station', routeStations)
-// app.use('/api/geospatial', routeGeospatial)
-// app.use('/api/statistics', routeStats)
-// app.use('/api/', routeDemo)
+app.use('/test', routeGetStart)
+app.use('/auth', routeAuth)
+app.use('/users', authenticateUser, routeUsers)
+app.use('/earthquakes', routeEarthquakes)
+// app.use('/station', routeStations)
+// app.use('/geospatial', routeGeospatial)
+// app.use('/statistics', routeStats)
+// app.use('/demo', routeDemo)
 
 const startServer = async () => {
   try {
