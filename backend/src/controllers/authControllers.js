@@ -9,6 +9,7 @@ import handleHttpError from '../utils/handleHttpError.js'
 import { encrypt, compare } from '../utils/handlePassword.js'
 import { tokenSign } from '../utils/handleJwt.js'
 import nodemailer from 'nodemailer'
+import { sendEmailRegister } from '../libs/sendEmail.js'
 
 // NOTE: funzione per la registrazione di un utente
 // Questa funzione gestisce la registrazione di un nuovo utente.
@@ -22,6 +23,8 @@ export const signUp = async (req, res) => {
     const savedUser = await newUser.save()
     const user = savedUser.toObject()
     delete user.password
+
+    await sendEmailRegister(user)
 
     res.status(200).json(
       {

@@ -1,0 +1,34 @@
+import { transporter } from '../config/mailerConfig.js'
+
+// Function to send a registration confirmation email
+export const sendEmailRegister = async (user) => {
+  const response = await transporter.sendMail({
+    from: '"TerraQuake API" <support@terraquake.com>',
+    to: user.email,
+    subject: '🎉 Welcome to TerraQuake API!',
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 24px; color: #333;">
+        <h2 style="color: #A48DC7; text-align: center;">Registration Successful!</h2>
+
+        <p>Hello <strong>${user.name}</strong>,</p>
+
+        <p>Thank you for registering with <strong>TerraQuake API</strong>! We’re excited to welcome you to our community.</p>
+
+        <p>From now on, you’ll have access to seismic data, updates, and new features designed to support developers, researchers, and enthusiasts.</p>
+
+        <p><strong>We recommend completing your profile</strong> to personalize your experience and make the most out of our platform.</p>
+
+        <p>To stay up to date with news and announcements, consider joining our official channels. It’s the fastest way to receive important updates from us.</p>
+
+        <p>Have questions or need help? Our team is always here to support you.</p>
+
+        <hr style="margin: 32px 0; border: none; border-top: 1px solid #ddd;" />
+
+        <p style="font-size: 0.9em; color: #666;">Thanks again for your trust,</p>
+        <p style="font-weight: bold; font-size: 1.1em; color: #333; text-align: center;">The <span style="color: #A48DC7;">TerraQuake API</span> Team</p>
+      </div>
+    `
+  })
+
+  console.log('Email sent:', response)
+}
