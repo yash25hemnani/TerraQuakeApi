@@ -145,29 +145,29 @@ export const getEarthquakesByLastWeek = async (req, res) => {
   }
 }
 
-// NOTE: funzione per ottenere una lista completa eventi sismici per mese specifico
+// NOTE: funzione per ottenere una lista completa eventi sismici per un mese specifico
 export const getEarthquakesByMonth = async (req, res) => {
   try {
+    const urlINGV = process.env.URL_INGV
     const { year, month } = req.query
-    const limit = getPositiveInt(req.query, 'limit')
+    const limit = getPositiveInt(req.query, 'limit', { def: 50 })
 
     if (limit === null) {
-      return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=10', 400)
+      return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=50', 400)
     }
 
     if (!parseInt(year) || !parseInt(month)) {
       return handleHttpError(res, 'Year and month are required in the URL parameters (e.g., ?year=2025&month=03)', 400)
     }
 
-    const startDate = `${year}-${month.padStart(2, '0')}-01`
+    const startDate = `${year}-${String(month).padStart(2, '0')}-01`
     const nextMonth = new Date(`${startDate}T00:00:00Z`)
     nextMonth.setMonth(nextMonth.getMonth() + 1)
-
     const yyyy = nextMonth.getFullYear()
     const mm = String(nextMonth.getMonth() + 1).padStart(2, '0')
     const endDate = `${yyyy}-${mm}-01`
 
-    let url = `https://webservices.ingv.it/fdsnws/event/1/query?starttime=${startDate}&endtime=${endDate}&orderby=time&format=geojson`
+    let url = `${urlINGV}?starttime=${startDate}&endtime=${endDate}&orderby=time&format=geojson`
     if (limit) url += `&limit=${limit}`
 
     const data = await fetchINGV(url)
@@ -178,7 +178,7 @@ export const getEarthquakesByMonth = async (req, res) => {
     })
 
     res.status(200).json({
-      ...buildResponse(req, `Seismic events of ${year}-${month.padStart(2, '0')}`, result.items, result.totalFetched),
+      ...buildResponse(req, `Seismic events of ${year}-${String(month).padStart(2, '0')}`, result.items, result.totalFetched),
       pagination: {
         page: result.page,
         totalPages: result.totalPages,
@@ -192,14 +192,15 @@ export const getEarthquakesByMonth = async (req, res) => {
   }
 }
 
-// NOTE: funzione per ottenere una lista completa eventi sismici per regione italiana
+// NOTE: funzione per ottenere eventi sismici per regione italiana dall'inizio dell'anno fino ad oggi
 export const getEarthquakesByRegion = async (req, res) => {
   try {
+    const urlINGV = process.env.URL_INGV
     const { region } = req.query
-    const limit = getPositiveInt(req.query, 'limit')
+    const limit = getPositiveInt(req.query, 'limit', { def: 50 })
 
     if (limit === null) {
-      return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=10', 400)
+      return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=50', 400)
     }
 
     if (!regionBoundingBoxes[region?.toLowerCase()?.trim()]) {
@@ -208,7 +209,12 @@ export const getEarthquakesByRegion = async (req, res) => {
 
     const { minlatitude, maxlatitude, minlongitude, maxlongitude } = regionBoundingBoxes[region.toLowerCase().trim()]
 
-    let url = `https://webservices.ingv.it/fdsnws/event/1/query?minlatitude=${minlatitude}&maxlatitude=${maxlatitude}&minlongitude=${minlongitude}&maxlongitude=${maxlongitude}&orderby=time&format=geojson`
+    const today = new Date()
+    const startOfYear = new Date(today.getFullYear(), 0, 1)
+    const startDate = startOfYear.toISOString().split('T')[0]
+    const endDate = today.toISOString().split('T')[0]
+
+    let url = `${urlINGV}?minlatitude=${minlatitude}&maxlatitude=${maxlatitude}&minlongitude=${minlongitude}&maxlongitude=${maxlongitude}&starttime=${startDate}&endtime=${endDate}&orderby=time&format=geojson`
     if (limit) url += `&limit=${limit}`
 
     const data = await fetchINGV(url)
@@ -219,7 +225,7 @@ export const getEarthquakesByRegion = async (req, res) => {
     })
 
     res.status(200).json({
-      ...buildResponse(req, `Seismic events in region ${region}`, result.items, result.totalFetched),
+      ...buildResponse(req, `Seismic events in region ${region} from ${startDate} to ${endDate}`, result.items, result.totalFetched),
       pagination: {
         page: result.page,
         totalPages: result.totalPages,
@@ -233,18 +239,23 @@ export const getEarthquakesByRegion = async (req, res) => {
   }
 }
 
-// NOTE: funzione per la lettura da endpoint INGV e la restituzione degli eventi sismici filtrati per profondità
+// NOTE: funzione per la lettura da endpoint INGV e la restituzione degli eventi sismici filtrati per profondità dall'inizio dell'anno fino ad oggi
 export const getEarthquakesByDepth = async (req, res) => {
   try {
     const urlINGV = process.env.URL_INGV
     const { depth } = req.query
-    const limit = getPositiveInt(req.query, 'limit')
+    const limit = getPositiveInt(req.query, 'limit', { def: 50 })
 
     if (limit === null) {
-      return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=10', 400)
+      return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=50', 400)
     }
 
-    let url = `${urlINGV}?orderby=time&format=geojson`
+    const today = new Date()
+    const startOfYear = new Date(today.getFullYear(), 0, 1)
+    const startDate = startOfYear.toISOString().split('T')[0]
+    const endDate = today.toISOString().split('T')[0]
+
+    let url = `${urlINGV}?starttime=${startDate}&endtime=${endDate}&orderby=time&format=geojson`
     if (limit) url += `&limit=${limit}`
 
     const data = await fetchINGV(url)
@@ -282,12 +293,12 @@ export const getEarthquakesByDepth = async (req, res) => {
 // NOTE: funzione per la lettura da endpoint INGV e la restituzione degli eventi sismici filtrati per un intervallo di tempo
 export const getEarthquakesByDateRange = async (req, res) => {
   try {
-    const { startdate, enddate } = req.query
-    const limit = getPositiveInt(req.query, 'limit')
     const urlINGV = process.env.URL_INGV
+    const { startdate, enddate } = req.query
+    const limit = getPositiveInt(req.query, 'limit', { def: 50 })
 
     if (limit === null) {
-      return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=10', 400)
+      return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=50', 400)
     }
 
     if (!startdate || !enddate) {
@@ -324,32 +335,28 @@ export const getEarthquakesByDateRange = async (req, res) => {
   }
 }
 
-// NOTE: funzione per la lettura da endpoint INGV e la restituzione degli eventi sismici filtrati per magnitudo
+// NOTE: funzione per la lettura da endpoint INGV e la restituzione degli eventi sismici filtrati per magnitudo dall'inizio dell'anno fino ad oggi
 export const getEarthquakesByMagnitude = async (req, res) => {
   try {
     const urlINGV = process.env.URL_INGV
     const { mag } = req.query
-    const limit = getPositiveInt(req.query, 'limit')
+    const limit = getPositiveInt(req.query, 'limit', { def: 50 })
 
     if (limit === null) {
-      return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=10', 400)
+      return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=50', 400)
     }
 
-    let url = `${urlINGV}?orderby=time&format=geojson`
-    if (limit) url += `&limit=${limit}`
+    const today = new Date()
+    const startOfYear = new Date(today.getFullYear(), 0, 1)
+    const startDate = startOfYear.toISOString().split('T')[0]
+    const endDate = today.toISOString().split('T')[0]
+
+    let url = `${urlINGV}?starttime=${startDate}&endtime=${endDate}&orderby=time&format=geojson&limit=${limit}`
+    if (mag && !isNaN(mag)) url += `&minmagnitude=${parseFloat(mag)}`
 
     const data = await fetchINGV(url)
-    let { features } = data
 
-    // Filter by minimum magnitude if provided
-    if (mag && !isNaN(mag)) {
-      features = features.filter((feature) => {
-        const quakeMag = feature.properties.mag
-        return quakeMag >= parseFloat(mag)
-      })
-    }
-
-    const result = processFeatures(features, req.query, {
+    const result = processFeatures(data.features, req.query, {
       defaultSort: '-time',
       sortWhitelist: ['time', 'magnitude', 'depth'],
       fieldWhitelist: ['time', 'magnitude', 'depth', 'place', 'coordinates']
@@ -376,7 +383,12 @@ export const getEarthquakesById = async (req, res) => {
     const urlINGV = process.env.URL_INGV
     const { eventId } = req.query
 
-    const url = `${urlINGV}?orderby=time&format=geojson`
+    const today = new Date()
+    const startOfYear = new Date(today.getFullYear(), 0, 1)
+    const startDate = startOfYear.toISOString().split('T')[0]
+    const endDate = today.toISOString().split('T')[0]
+
+    const url = `${urlINGV}?starttime=${startDate}&endtime=${endDate}&format=geojson`
     const data = await fetchINGV(url)
     const { features } = data
 
@@ -387,19 +399,12 @@ export const getEarthquakesById = async (req, res) => {
     }
 
     const result = processFeatures(filteredEvent, req.query, {
-      defaultSort: '-time',
       sortWhitelist: ['time', 'magnitude', 'depth'],
       fieldWhitelist: ['time', 'magnitude', 'depth', 'place', 'coordinates']
     })
 
     res.status(200).json({
-      ...buildResponse(req, `Seismic event with id ${eventId}`, result.items, result.totalFetched),
-      pagination: {
-        page: result.page,
-        totalPages: result.totalPages,
-        limit: result.limit,
-        hasMore: result.hasMore
-      }
+      ...buildResponse(req, `Seismic event with id ${eventId}`, result.items, result.totalFetched)
     })
   } catch (error) {
     console.error('Error in the earthquakes/eventId controller:', error.message)
