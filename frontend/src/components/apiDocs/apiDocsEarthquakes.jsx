@@ -146,8 +146,8 @@ It allows users to access detailed information about a single earthquake event, 
         Query Parameters:
       
       - eventId: (Required) The unique identifier of the earthquake event to retrieve.`,
-			query: "?eventId=43410122",
-			example: "/earthquakes/eventId?eventId=44061482",
+			query: "?eventId=44085192",
+			example: "/earthquakes/eventId?eventId=44085192",
 			method: "GET"
 		}
 	];
