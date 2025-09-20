@@ -37,7 +37,7 @@ export const sendEmailRegister = async (user) => {
 export const sendForgotPassword = async (user, token) => {
   let resetUrl
   if (process.env.DEV_ENV === 'development') {
-    resetUrl = `${process.env.FRONTEND_URL}/reset-password/${token}`
+    resetUrl = `${process.env.FRONTEND_DEVELOPMENT}/reset-password/${token}`
   } else {
     resetUrl = `${process.env.FRONTEND_PRODUCTION}/reset-password/${token}`
   }
