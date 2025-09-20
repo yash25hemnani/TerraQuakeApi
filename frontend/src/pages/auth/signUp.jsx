@@ -68,7 +68,7 @@ export default function SignUp() {
           text: 'User Registered Successfully!',
           icon: 'success',
           confirmButtonText: 'Log In',
-        }).then((result) => {
+        }).then(() => {
           navigate('/signin');
         });
       })
@@ -78,8 +78,8 @@ export default function SignUp() {
           title: 'Error!',
           text: `${err.message}`,
           icon: 'error',
-          confirmButtonText: 'OK',
-        }).then((result) => {
+          confirmButtonText: 'Ok',
+        }).then(() => {
           navigate('/signup');
           setLoading(false);
         });

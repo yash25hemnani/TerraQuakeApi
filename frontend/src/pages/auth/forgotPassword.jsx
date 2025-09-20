@@ -37,6 +37,8 @@ export default function forgotPassword() {
           text: 'If the email exists in our system, a password reset link has been sent.',
           icon: 'success',
           confirmButtonText: 'Ok',
+        }).then(() => {
+          navigate('/');
         });
       })
       .catch((err) => {

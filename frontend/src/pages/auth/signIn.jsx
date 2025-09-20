@@ -57,8 +57,8 @@ export default function SignIn() {
           title: 'Success!',
           text: `${res.data.message}`,
           icon: 'success',
-          confirmButtonText: 'Okay',
-        }).then((result) => {
+          confirmButtonText: 'Ok',
+        }).then(() => {
           navigate('/profile'); // navigate to profile page
           setLoading(false);
         });
@@ -68,8 +68,8 @@ export default function SignIn() {
           title: 'Error!',
           text: `${err?.response?.data?.message}`,
           icon: 'error',
-          confirmButtonText: 'OK',
-        }).then((result) => {
+          confirmButtonText: 'Ok',
+        }).then(() => {
           navigate('/signin');
           setLoading(false);
         });
