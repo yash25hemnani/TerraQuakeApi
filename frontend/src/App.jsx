@@ -58,7 +58,7 @@ function App() {
               <Route path='/profile' element={<Profile />} /> 
               <Route path='/forgot-password' element={<ForgotPassword />} /> 
               {/* Deliberately encrypted with AES-256-CBC, so that the URL is not found by anyone */}
-              <Route path='/U2FsdGVkX188Vmt4gt5JTCUT9P8HbN3TUFkNxsrwWac=' element={<ResetPassword />} /> 
+              <Route path='/reset-password/:token' element={<ResetPassword />} /> 
               <Route path='*' element={<NoPage />} />
             </Routes>
             <Footer />
