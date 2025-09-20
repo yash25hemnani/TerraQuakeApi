@@ -109,3 +109,14 @@ export const validatorUpdateCurrentUserData = [
     return validateResults(req, res, next)
   }
 ]
+
+export const validatorUpdateRoleById = [
+  check('role')
+    .exists()
+    .isIn(['admin', 'user'])
+    .withMessage('Roles must be either admin or user'),
+
+  (req, res, next) => {
+    return validateResults(req, res, next)
+  }
+]
