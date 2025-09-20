@@ -31,8 +31,8 @@ export default function Profile() {
   };
 
   const handleGenerateToken = () => {
-    alert('Generate token')
-  }
+    alert('Generate token');
+  };
 
   return (
     <>
@@ -171,19 +171,28 @@ export default function Profile() {
             )}
           </div>
         ) : (
-          <div className='flex flex-col gap-4'>
-            <button
-              onClick={() => navigate('/signin')}
-              className='py-2 px-8 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold shadow-lg hover:scale-105 transition-transform cursor-pointer'
-            >
-              Sign In
-            </button>
-            <button
-              onClick={() => navigate('/signup')}
-              className='py-2 px-8 rounded-xl bg-gradient-to-r from-pink-600 to-purple-700 text-white font-bold shadow-lg hover:scale-105 transition-transform cursor-pointer'
-            >
-              Sign Up
-            </button>
+          <div className='flex flex-col items-center gap-4'>
+            <p className='text-2xl text-center text-gray-300 max-w-lg'>
+              To access your profile page, you need to be registered. If you
+              already have an account, please sign in. Otherwise, create a new
+              account to get started.
+            </p>
+            <div className='flex gap-4 mt-4'>
+              <button
+                onClick={() => navigate('/signin')}
+                className='py-3 px-8 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold shadow-lg hover:scale-105 transition-transform cursor-pointer'
+                aria-label='Navigate to sign in page'
+              >
+                Sign In
+              </button>
+              <button
+                onClick={() => navigate('/signup')}
+                className='py-3 px-8 rounded-full bg-gradient-to-r from-pink-600 to-purple-700 text-white font-bold shadow-lg hover:scale-105 transition-transform cursor-pointer'
+                aria-label='Navigate to sign up page'
+              >
+                Sign Up
+              </button>
+            </div>
           </div>
         )}
       </section>

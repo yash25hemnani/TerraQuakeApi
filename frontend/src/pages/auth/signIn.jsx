@@ -122,6 +122,16 @@ export default function SignIn() {
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
+              {/* Forgot Password link immediately below the password input */}
+              <div className='mt-2 text-right'>
+                <Link
+                  to='/forgot-password'
+                  className='text-sm text-purple-400 hover:text-purple-600 transition duration-300'
+                  aria-label='Navigate to forgot password page'
+                >
+                  Forgot Password?
+                </Link>
+              </div>
             </div>
             <button
               className='w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold py-2 px-4 rounded-2xl hover:scale-105 transform transition duration-300 cursor-pointer'
@@ -165,15 +175,15 @@ export default function SignIn() {
               </button>
             </div>
             <div className='mt-6 flex flex-col items-center'>
-              <p className='text-white cursor-default'>
-                Don't have an account?
+              <p className='text-gray-200 text-sm cursor-default'>
+                Don’t have an account yet?
               </p>
               <Link
-                className='mt-4 text-white hover:text-purple-400 focus:text-purple-400 duration-300 ease-in-out'
                 to='/signup'
+                className='mt-2 text-purple-400 hover:text-purple-600 font-semibold transition duration-300'
                 aria-label='Navigate to sign up page'
               >
-                Sign up
+                Create Account
               </Link>
             </div>
           </form>

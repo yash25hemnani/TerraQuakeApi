@@ -58,7 +58,7 @@ export default function SignUp() {
       email: data.email,
       password: data.password,
       role: 'user',
-			terms: data.terms,
+      terms: data.terms,
     };
     axios
       .post('auth/signup', formData)
@@ -95,7 +95,7 @@ export default function SignUp() {
       <section className='min-h-screen flex items-center justify-center p-6 rounded-lg'>
         <div className='p-8 rounded-lg w-full max-w-md'>
           <h2 className='text-3xl text-center text-white font-bold mb-6'>
-            Sign Up
+            Create account
           </h2>
           <form onSubmit={handleSubmit(handleSignUp)}>
             <div className='mb-8'>
@@ -178,7 +178,7 @@ export default function SignUp() {
                 />
                 <label
                   htmlFor='terms'
-                  className='ml-3 text-sm my-auto text-white cursor-pointer select-none'
+                  className='mt-1 ml-4 text-sm text-white cursor-pointer select-none'
                 >
                   I accept the{' '}
                   <Link
@@ -207,17 +207,16 @@ export default function SignUp() {
                 <span>Create your account</span>
               )}
             </button>
-
             <div className='mt-6 flex flex-col items-center'>
-              <p className='text-white cursor-default'>
+              <p className='text-gray-200 text-sm cursor-default'>
                 Already have an account?
               </p>
               <Link
-                className='mt-4 text-white hover:text-purple-400 focus:text-purple-400 duration-300 ease-in-out'
                 to='/signin'
+                className='mt-2 text-purple-400 hover:text-purple-600 font-semibold transition duration-300'
                 aria-label='Navigate to sign in page'
               >
-                Sign in
+                Sign In
               </Link>
             </div>
           </form>

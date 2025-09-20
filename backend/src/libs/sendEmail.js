@@ -1,6 +1,6 @@
 import { transporter } from '../config/mailerConfig.js'
 
-// Function to send a registration confirmation email
+// NOTE: Function to send a registration confirmation email
 export const sendEmailRegister = async (user) => {
   const response = await transporter.sendMail({
     from: '"TerraQuake API" <support@terraquake.com>',
@@ -31,4 +31,50 @@ export const sendEmailRegister = async (user) => {
   })
 
   console.log('Email sent:', response)
+}
+
+// NOTE: Function to send a forgot password email
+export const sendForgotPassword = async (user, token) => {
+  const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${token}`
+
+  const response = await transporter.sendMail({
+    from: '"TerraQuake API" <support@terraquake.com>',
+    to: user.email,
+    subject: '🔑 Reset Your TerraQuake API Password',
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 24px; color: #333;">
+        <h2 style="color: #A48DC7; text-align: center;">Password Reset Request</h2>
+
+        <p>Hello <strong>${user.name}</strong>,</p>
+
+        <p>We received a request to reset the password for your <strong>TerraQuake API</strong> account.</p>
+
+        <p>If you made this request, please click the button below to reset your password:</p>
+
+        <div style="text-align: center; margin: 24px 0;">
+          <a href="${resetUrl}" target="_blank" 
+             style="background: #A48DC7; color: #fff; padding: 12px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">
+            Reset Password
+          </a>
+        </div>
+
+        <p>This link will expire in <strong>15 minutes</strong> for your security.  
+        If you did not request a password reset, you can safely ignore this email and your password will remain unchanged.</p>
+
+        <p>If the button above does not work, copy and paste the following link into your browser:</p>
+        <p style="word-break: break-all; color: #0066cc;">${resetUrl}</p>
+
+        <hr style="margin: 32px 0; border: none; border-top: 1px solid #ddd;" />
+
+        <p style="font-size: 0.9em; color: #666;">Need help or have questions?  
+        Contact our support team at <a href="mailto:support@terraquake.com">support@terraquake.com</a>.</p>
+
+        <p style="font-weight: bold; font-size: 1.1em; color: #333; text-align: center;">
+          The <span style="color: #A48DC7;">TerraQuake API</span> Team
+        </p>
+      </div>
+    `
+  })
+
+  console.log('Forgot password email sent:', response.messageId)
 }
