@@ -12,8 +12,8 @@ export const buildResponse = (req, message, data, total = null, { ...rest }) => 
   code: 200,
   status: 'OK',
   message,
-  total: total ?? data?.features?.length ?? data?.length ?? 0,
-  data,
+  total: total ?? (Array.isArray(data) ? data.length : 1),
+  user: data,
   meta: {
     method: req.method.toUpperCase(),
     path: req.originalUrl,
