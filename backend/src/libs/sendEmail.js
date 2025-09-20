@@ -3,7 +3,7 @@ import { transporter } from '../config/mailerConfig.js'
 // NOTE: Function to send a registration confirmation email
 export const sendEmailRegister = async (user) => {
   const response = await transporter.sendMail({
-    from: '"TerraQuake API" <support@terraquake.com>',
+    from: '"TerraQuake API" <support@terraquakeapi.com>',
     to: user.email,
     subject: '🎉 Welcome to TerraQuake API!',
     html: `
@@ -35,10 +35,15 @@ export const sendEmailRegister = async (user) => {
 
 // NOTE: Function to send a forgot password email
 export const sendForgotPassword = async (user, token) => {
-  const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${token}`
+  let resetUrl
+  if (process.env.DEV_ENV === 'development') {
+    resetUrl = `${process.env.FRONTEND_URL}/reset-password/${token}`
+  } else {
+    resetUrl = `${process.env.FRONTEND_PRODUCTION}/reset-password/${token}`
+  }
 
   const response = await transporter.sendMail({
-    from: '"TerraQuake API" <support@terraquake.com>',
+    from: '"TerraQuake API" <support@terraquakeapi.com>',
     to: user.email,
     subject: '🔑 Reset Your TerraQuake API Password',
     html: `
@@ -67,7 +72,7 @@ export const sendForgotPassword = async (user, token) => {
         <hr style="margin: 32px 0; border: none; border-top: 1px solid #ddd;" />
 
         <p style="font-size: 0.9em; color: #666;">Need help or have questions?  
-        Contact our support team at <a href="mailto:support@terraquake.com">support@terraquake.com</a>.</p>
+        Contact our support team at <a href="mailto:support@terraquake.com">support@terraquakeapi.com</a>.</p>
 
         <p style="font-weight: bold; font-size: 1.1em; color: #333; text-align: center;">
           The <span style="color: #A48DC7;">TerraQuake API</span> Team
