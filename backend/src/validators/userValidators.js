@@ -31,7 +31,7 @@ export const validatorSignUp = [
     .exists().withMessage('Terms field is required')
     .custom((value) => {
       if (value !== true && value !== 'true' && value !== 1 && value !== 'on') {
-        throw new Error('You must accept the Terms and Conditions')
+        throw new Error('You must accept the Terms and Conditions!')
       }
       return true
     }),
@@ -60,15 +60,25 @@ export const validatorSignIn = [
 ]
 
 export const validatorForgotPassword = [
-  check('email').exists().notEmpty().isEmail().withMessage('Please enter a valid email address'),
+  check('email').exists().notEmpty().isEmail().withMessage('Please enter a valid email address!'),
   (req, res, next) => {
     return validateResults(req, res, next)
   }
 ]
 
 export const validatorResetPassword = [
-  check('email').exists().notEmpty().isEmail().withMessage('Please enter a valid email address'),
-  check('password').exists().notEmpty().isLength({ min: 8 }).withMessage('Password must be at least 8 characters'),
+  check('password1')
+    .exists().withMessage('Password is required!')
+    .notEmpty().withMessage('Password cannot be empty!')
+    .isLength({ min: 8 }).withMessage('Password must be at least 8 characters!')
+    .matches(/[A-Z]/).withMessage('Must contain an uppercase letter!')
+    .matches(/\d/).withMessage('Must contain a number!'),
+
+  check('password2')
+    .exists().withMessage('Confirm password is required!')
+    .custom((value, { req }) => value === req.body.password1)
+    .withMessage('Passwords must match!'),
+
   (req, res, next) => {
     return validateResults(req, res, next)
   }
@@ -113,8 +123,8 @@ export const validatorUpdateCurrentUserData = [
 export const validatorUpdateRoleById = [
   check('role')
     .exists()
-    .isIn(['admin', 'user'])
-    .withMessage('Roles must be either admin or user'),
+    .isIn(['admin', 'user', 'contributor'])
+    .withMessage('Roles must be either admin or user!'),
 
   (req, res, next) => {
     return validateResults(req, res, next)
