@@ -10,7 +10,7 @@ export default function Hero() {
   return (
     <section className='relative z-30 w-full min-h-screen flex flex-col justify-center items-center text-center px-6 py-20 bg-gradient-to-b text-white'>
       {/* Contenuto */}
-      <div className='flex-col md:flex-row justify-center items-center'>
+      <div className="flex flex-col 2xl:flex-row justify-center items-center">
         <div className='flex flex-col'>
           <h1 className='lg:w-3xl text-4xl mx-auto md:text-7xl font-extrabold leading-tight mt-[50px]'>
             Practice with Real Seismic Data
@@ -44,7 +44,7 @@ export default function Hero() {
           <img
             src={JsonApi2}
             alt='Image json api postman'
-            className='border border-gray-600 p-2 rounded-2xl md:w-auto md-h-auto lg:w-[860px] lg:h-[400px] shadow-2xl filter brightness-120 contrast-160'
+           className='border border-gray-600 p-2 rounded-2xl w-full max-w-[860px] h-auto shadow-2xl filter brightness-120 contrast-160'
           />
         </div>
       </div>

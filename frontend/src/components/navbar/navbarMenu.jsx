@@ -38,6 +38,7 @@ export default function NavbarMenu() {
       icon: 'success',
       confirmButtonText: 'Ok',
     }).then(() => {
+      setIsOpen(false);
       navigate('/');
     });
   };
@@ -55,7 +56,7 @@ export default function NavbarMenu() {
       </div>
 
       {/* Menu Desktop */}
-      <nav className='hidden lg:flex justify-center gap-8 text-[14px] lg:text-[16px]'>
+      <nav className='hidden lg:flex justify-center gap-6 gap-lg-8 text-[14px] xl:text-[16px]'>
         {listItems.map((item) => (
           <NavLink
             key={item.name}
@@ -196,10 +197,10 @@ export default function NavbarMenu() {
 
       {/* Mobile Dropdown */}
       <div
-        className={`lg:hidden absolute top-full w-full bg-[#090414] text-white overflow-hidden transition-all duration-500 ease-in-out z-40 rounded-b-xl ${
+        className={`lg:hidden absolute top-full left-0 min-h-screen w-full bg-[#090414] text-white overflow-hidden transition-all duration-500 ease-in-out z-40 rounded-b-xl ${
           isOpen
-            ? 'max-h-[500px] opacity-100 pointer-events-auto py-6 px-4'
-            : 'max-h-0 opacity-0 pointer-events-none py-0 px-4'
+            ? 'max-h-[500px] opacity-100 pointer-events-auto py-6 px-6'
+            : 'max-h-0 opacity-0 pointer-events-none py-0 px-0'
         }`}
       >
         {/* Mobile Links */}
