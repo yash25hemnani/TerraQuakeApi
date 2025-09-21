@@ -7,9 +7,9 @@ export default function NoPage() {
     <>
       <MetaData
         title='404 Not Found'
-        description='Page Not Found'
+        description='Page Not Found of TerraQuake API'
       />
-      <section className='z-30 w-full min-h-screen mt-30 flex flex-col items-center justify-center text-center px-6 py-20 bg-gradient-to-b text-white'>
+      <section className='z-30 w-full min-h-screen flex flex-col items-center justify-center text-center px-6 py-20 bg-gradient-to-b text-white'>
         <TbError404 className='text-9xl text-purple-600' />
         <h1 className='text-3xl md:text-6xl lg:text-9xl mx-auto font-extrabold leading-tight mt-[50px] select-none'>
           Page Not Found
