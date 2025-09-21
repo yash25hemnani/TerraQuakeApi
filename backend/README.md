@@ -9,12 +9,12 @@
 
 A modern, open-source seismic data platform providing real-time earthquake information through a RESTful API and interactive visualization interface.
 
-[Getting Started](#-overview) • [Features](#project-overview) • [API Reference](#api-features) • [Use Cases](#frontend-features) • [Contributing](#-contributing)
+[Getting Started](#overview) • [Features](#project-overview) • [API Reference](#api-features) • [Use Cases](#frontend-features) • [Contributing](#contributing)
 
 
 </div>
 
-## 📑 Overview
+## Overview
 
 TerraQuake is a comprehensive seismic data platform that combines a powerful REST API with an intuitive web interface. It provides researchers, developers, and organizations with easy access to real-time earthquake data, advanced filtering capabilities, and interactive visualizations.
 
@@ -246,7 +246,7 @@ Dr. Gianluca Chiaravalloti
 Web Developer & Geologist
 [Linkedin]() [Portfolio](https://portfolio-gianluca-phi.vercel.app/)
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome!  
 If you’d like to improve TerraQuake API, please fork the repository and open a pull request.  
@@ -254,16 +254,16 @@ Whether it’s fixing a bug, improving documentation, or adding a feature — al
 
 Please make sure to follow the [contributing guidelines](CONTRIBUTING.md).
 
-## 💬 Community
+## Community
 
 Join our community on [Discord](https://discord.gg/RDBp8KJB) to connect, share ideas, and collaborate with other contributors.
 
-## 🎉 Hacktoberfest 2025
+## Hacktoberfest 2025
 
 This project is participating in Hacktoberfest 2025!  
 Contributions count toward the event. Feel free to submit PRs and join us in building TerraQuake API together 🌍
 
-## � Credits
+## Credits
 
 ### Core Team
 
@@ -308,7 +308,7 @@ Contributions count toward the event. Feel free to submit PRs and join us in bui
 - Bug Reporters & Feature Requesters
 - Documentation Contributors
 
-## �💖 Support the Project
+## Support the Project
 
 TerraQuake API is an open-source initiative aimed at making real-time seismic data accessible for developers, researchers, and communities.
 
