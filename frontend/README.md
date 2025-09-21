@@ -39,8 +39,8 @@ A developer-friendly REST API for exploring seismic events across Italy and beyo
 1. **Clone the repo**:
 
 ```bash
-git clone https://github.com/your-username/terraquake-frontend.git
-cd terraquake-frontend
+git clone https://github.com/nagcas/TerraQuakeApi.git
+cd frontend
 ```
 
 2. **Install dependencies**:
