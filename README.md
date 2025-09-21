@@ -9,7 +9,7 @@
 
 A modern, open-source seismic data platform providing real-time earthquake information through a RESTful API and interactive visualization interface.
 
-[Getting Started](#getting-started) • [Features](#features) • [API Reference](#api-reference) • [Use Cases](#use-cases) • [Contributing](#contributing)
+[Getting Started](#getting-started) • [Frontend Features](#frontend-features) • [API Reference](#api-reference) • [Use Cases](#use-cases) • [Contributing](#contributing)
 
 </div>
 
@@ -47,36 +47,95 @@ TerraQuake is a comprehensive seismic data platform that combines a powerful RES
 - **Hero sections, maps, charts** (via Leaflet, Chart.js – if added)
 
 ---
-<!-- 
-## API Features
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js (v18+ recommended)
+- Git
+
+### Installation
+1. Clone the repository:
+   ```
+   git clone https://github.com/nagcas/TerraQuakeApi.git
+   cd TerraQuakeApi
+   ```
+2. Install backend dependencies:
+   ```
+   cd backend
+   npm install
+   ```
+3. Install frontend dependencies:
+   ```
+   cd ../frontend
+   npm install
+   ```
+4. Set up environment variables:
+   - Copy `backend/.env-example` to `backend/.env` and fill in required values (e.g., database URL, API keys).
+   - Copy `frontend/.env-example` to `frontend/.env` if needed.
+
+5. Run the backend:
+   ```
+   cd backend
+   npm run dev
+   ```
+6. Run the frontend (in a new terminal):
+   ```
+   cd frontend
+   npm run dev
+   ```
+
+Visit `http://localhost:3000` for the frontend interface and `http://localhost:5000` for the API endpoints.
+
+---
+
+## 📚 API Reference
+
+The TerraQuake API provides various endpoints for querying earthquake data. For detailed usage, examples, and testing, visit the [API Docs](http://localhost:3000/docs) in the running frontend.
 
 ### Available Endpoints
 
-#### `GET /v1/earthquakes`
+#### `GET /v1/earthquakes/recent`
+Fetches recent earthquakes from the start of the year to today.
+- Query: `?limit=50` (optional)
 
-Returns all recorded earthquakes.
+#### `GET /v1/earthquakes/today`
+Fetches earthquakes that occurred today.
+- Query: `?limit=50` (optional)
 
-#### `GET /v1/earthquakes/month/:year/:month`
+#### `GET /v1/earthquakes/last-week`
+Fetches earthquakes from the last 7 days.
+- Query: `?limit=50` (optional)
 
-Filter earthquakes by year and month.
+#### `GET /v1/earthquakes/month`
+Fetches earthquakes for a specific month and year.
+- Query: `?year=2025&month=03&limit=50` (year and month required)
 
-#### `GET /v1/earthquakes/range-time?starttime=YYYY-MM-DD&endtime=YYYY-MM-DD`
+#### `GET /v1/earthquakes/location`
+Fetches earthquakes near a latitude/longitude.
+- Query: `?latitude=40.835&longitude=14.117&radius=50&limit=50` (lat/lon required)
 
-Filter earthquakes within a time range.
+#### `GET /v1/earthquakes/region`
+Fetches earthquakes in a specific Italian region.
+- Query: `?region=Campania&limit=50` (region required)
 
-#### `GET /v1/earthquakes/demo`
+#### `GET /v1/earthquakes/depth`
+Fetches earthquakes at or below a specific depth.
+- Query: `?depth=10&limit=50` (depth required)
 
-Returns 100 demo earthquakes (randomized for testing and UI display).
+#### `GET /v1/earthquakes/range-time`
+Fetches earthquakes within a date range.
+- Query: `?startdate=2025-01-01&enddate=2025-03-30&limit=50` (dates required)
 
-#### `GET /v1/earthquakes/stats`
+#### `GET /v1/earthquakes/magnitude`
+Fetches earthquakes of a specific magnitude or higher.
+- Query: `?mag=2&limit=50` (mag required)
 
-Returns statistics such as:
+#### `GET /v1/earthquakes/eventId`
+Fetches details of a specific earthquake by ID.
+- Query: `?eventId=12345` (eventId required)
 
-- Total earthquakes
-- Strongest event
-- Average magnitude
-
---- -->
+---
 
 ## Frontend Features
 
@@ -92,7 +151,7 @@ Returns statistics such as:
 
 Dr. Gianluca Chiaravalloti
 Web Developer & Geologist
-[Linkedin]() [Portfolio](https://portfolio-gianluca-phi.vercel.app/)
+[LinkedIn]() [Portfolio](https://portfolio-gianluca-phi.vercel.app/)
 
 ## 🤝 Contributing
 
@@ -111,7 +170,7 @@ Join our community on [Discord](https://discord.gg/RDBp8KJB) to connect, share i
 This project is participating in Hacktoberfest 2025!  
 Contributions count toward the event. Feel free to submit PRs and join us in building TerraQuake API together 🌍
 
-## � Credits
+## 🎉 Credits
 
 ### Core Team
 
@@ -156,7 +215,7 @@ Contributions count toward the event. Feel free to submit PRs and join us in bui
 - Bug Reporters & Feature Requesters
 - Documentation Contributors
 
-## �💖 Support the Project
+## 💖 Support the Project
 
 TerraQuake API is an open-source initiative aimed at making real-time seismic data accessible for developers, researchers, and communities.
 
