@@ -24,6 +24,7 @@ import Footer from '@components/footer/footer'
 import { AuthProvider } from '@components/modules/authProvider'
 import ScrollToTop from '@components/modules/scrollToTop'
 import Profile from './pages/profile/profile'
+import ChangePassword from './pages/auth/changePassword'
 
 function App() {
 
@@ -57,6 +58,7 @@ function App() {
               <Route path='/signin' element={<SignIn />} /> 
               <Route path='/profile' element={<Profile />} /> 
               <Route path='/forgot-password' element={<ForgotPassword />} /> 
+              <Route path='/change-password' element={<ChangePassword />} /> 
               {/* Deliberately encrypted with AES-256-CBC, so that the URL is not found by anyone */}
               <Route path='/reset-password/:token' element={<ResetPassword />} /> 
               <Route path='*' element={<NoPage />} />
