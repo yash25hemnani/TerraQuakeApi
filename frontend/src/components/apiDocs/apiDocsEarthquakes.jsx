@@ -20,7 +20,7 @@ This endpoint retrieves all recent seismic events from the beginning of the year
           
       - limit: (Optional) The number of earthquake events to return. Defaults to 50 if not specified.`,
 			query: "?limit=50",
-			example: "/earthquakes/recent?limit=50",
+			example: "/v1/earthquakes/recent?limit=50",
 			method: "GET"
 		},
 		{
@@ -32,7 +32,7 @@ This endpoint retrieves all seismic events that occurred today (from 00:00 UTC t
         
       - limit: (Optional) The number of earthquake events to return. Default is 50 if not provided.`,
       query: '?limit=50',
-      example: '/earthquakes/today?limit=50',
+      example: '/v1/earthquakes/today?limit=50',
       method: 'GET',
     },
     {
@@ -45,7 +45,7 @@ It allows users to monitor and analyze recent seismic activity over the past wee
         
       - limit: (Optional) The number of earthquake events to return. Default is 50 if not specified.`,
       query: '?limit=50',
-      example: '/earthquakes/last-week?limit=50',
+      example: '/v1/earthquakes/last-week?limit=50',
       method: 'GET',
     },
     {
@@ -60,7 +60,7 @@ It allows users to explore historical earthquake data for a given period. The re
       - month: (Required) The target month in numeric format (01 to 12).
       - limit: (Optional) The number of events to return. Default is 50 if not specified.`,
       query: '?year=2025&month=03&limit=50',
-      example: '/earthquakes/month?year=2025&month=03&limit=50',
+      example: '/v1/earthquakes/month?year=2025&month=03&limit=50',
       method: 'GET',
     },
     {
@@ -78,7 +78,7 @@ This endpoint fetches seismic events close to a given geographical location, def
 
 The response includes detailed information for each event such as magnitude, coordinates, depth, and time of occurrence.`,
       query: '?latitude=40.835459&longitude=14.117358&radius=50&limit=50',
-      example: '/earthquakes/location?latitude=40.835459&longitude=14.117358&radius=50&limit=50',
+      example: '/v1/earthquakes/location?latitude=40.835459&longitude=14.117358&radius=50&limit=50',
       method: 'GET',
     },
     {
@@ -94,7 +94,7 @@ for localized seismic analysis. The response includes key data such as magnitude
       - region: (Required) The name of the Italian region to filter by (e.g., Campania, Sicilia, Lazio). Case-insensitive.
       - limit: (Optional) The number of events to return. Defaults to 50 if not specified.`,
       query: '?region=Campania&limit=50',
-      example: '/earthquakes/region?region=Campania&limit=50',
+      example: '/v1/earthquakes/region?region=Campania&limit=50',
       method: 'GET',
     },
     {
@@ -109,7 +109,7 @@ It allows users to analyze earthquakes based on their depth, which can help asse
       - depth: (Required) The focal depth of the earthquakes in kilometers (e.g., 10).
       - limit: (Optional) The number of events to return. Default is 10 if not specified.`,
       query: '?depth=10&limit=50',
-      example: '/earthquakes/depth?depth=10&limit=50',
+      example: '/v1/earthquakes/depth?depth=10&limit=50',
       method: 'GET',
     },
     {
@@ -125,7 +125,7 @@ It allows users to query historical earthquake data over any desired period, mak
       - limit: (Optional) The number of earthquake events to return. Default is 50 if not specified.`,
       query: '?startdate=2025-01-01&enddate=2025-03-30&limit=50',
       example:
-        '/earthquakes/range-time?startdate=2025-01-01&enddate=2025-03-30&limit=50',
+        '/v1/earthquakes/range-time?startdate=2025-01-01&enddate=2025-03-30&limit=50',
       method: 'GET',
     },
     {
@@ -153,7 +153,7 @@ It allows users to access detailed information about a single earthquake event, 
       
       - eventId: (Required) The unique identifier of the earthquake event to retrieve.`,
 			query: "?eventId=44085192",
-			example: "/earthquakes/eventId?eventId=44085192",
+			example: "/v1/earthquakes/eventId?eventId=44085192",
 			method: "GET"
 		}
 	];
