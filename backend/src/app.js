@@ -22,8 +22,8 @@ const devEnv = process.env.DEV_ENV
 const app = express()
 
 const whitelist = [
-  process.env.FRONTEND_DEVELOPMENT, // Frontend in sviluppo
-  process.env.BACKEND_URL // Backend in produzione
+  process.env.FRONTEND_DEVELOPMENT, // dev
+  process.env.FRONTEND_PRODUCTION // production
 ]
 
 /*
@@ -33,7 +33,7 @@ const whitelist = [
 */
 const corsOptions = {
   origin: function (origin, callback) {
-    if (process.env.DEV_ENV === 'development') {
+    if (devEnv === 'development') {
       callback(null, true)
     } else if (whitelist.indexOf(origin) !== -1 || !origin) {
       callback(null, true)
