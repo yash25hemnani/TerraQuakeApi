@@ -11,6 +11,7 @@ import routeGetStart from './routes/testRoutes.js'
 import routeEarthquakes from './routes/earthquakesRoutes.js'
 import dbConnect from './config/mongoConfig.js'
 import { authenticateUser } from './middleware/authMiddleware.js'
+import { apiLimiter, authLimiter } from './middleware/rateLimiter.js'
 // import routeStations from './routes/stationsRoutes.js'
 // import routeGeospatial from './routes/geospatialRoutes.js'
 // import routeStats from './routes/statisticsRoutes.js'
@@ -21,23 +22,24 @@ dotenv.config()
 const devEnv = process.env.DEV_ENV
 const app = express()
 
+/*
+* CORS configuration
+* Allow all requests from the frontend or
+* development environment
+*/
 const whitelist = [
   process.env.FRONTEND_DEVELOPMENT, // dev
   process.env.FRONTEND_PRODUCTION // production
 ]
 
-/*
-    * CORS configuration
-    * Allow all requests from the frontend or
-    * development environment
-*/
 const corsOptions = {
   origin: function (origin, callback) {
     if (devEnv === 'development') {
       callback(null, true)
-    } else if (whitelist.indexOf(origin) !== -1 || !origin) {
+    } else if (whitelist.includes(origin) || !origin) {
       callback(null, true)
     } else {
+      console.log('❌ CORS blocked:', origin)
       callback(new Error('PERMESSO NEGATO - CORS'))
     }
   },
@@ -50,16 +52,27 @@ app.use(express.json())
 
 const port = process.env.PORT || 5000
 
-app.use('/test', routeGetStart)
-app.use('/auth', routeAuth)
-app.use('/users', authenticateUser, routeUsers)
+// ===== ROUTES =====
+app.use('/v1/test', apiLimiter, routeGetStart)
+app.use('/auth', authLimiter, routeAuth)
+app.use('/users', authLimiter, authenticateUser, routeUsers)
 app.use('/contact', routeContact)
-app.use('/earthquakes', routeEarthquakes)
-// app.use('/station', routeStations)
-// app.use('/geospatial', routeGeospatial)
-// app.use('/statistics', routeStats)
-// app.use('/demo', routeDemo)
+app.use('/v1/earthquakes', apiLimiter, routeEarthquakes)
+// app.use('/v1/station', apiLimiter, routeStations)
+// app.use('/v1/geospatial', apiLimiter, routeGeospatial)
+// app.use('/v1/statistics', apiLimiter, routeStats)
+// app.use('/v1/demo', apiLimiter, routeDemo)
 
+// ===== ERROR HANDLER GLOBALE =====
+app.use((err, req, res, next) => {
+  console.error('🔥 Error:', err.message)
+  res.status(err.status || 500).json({
+    success: false,
+    message: err.message || 'Internal Server Error'
+  })
+})
+
+// ===== START SERVER =====
 const startServer = async () => {
   try {
     console.clear()
@@ -69,6 +82,7 @@ const startServer = async () => {
       console.log(`Server running in ${devEnv || 'production'} environment`)
       console.log(`Started at: http://localhost:${port}`)
       console.log(`Test: http://localhost:${port}/api/test`)
+
       const endPoints = expressListEndpoints(app)
       console.log('List of available endpoints:')
       console.table(endPoints)
