@@ -3,8 +3,8 @@
 <div align="center">
 
 [![License](https://img.shields.io/badge/License-AGPL%203.0-blue.svg)](https://github.com/nagcas/TerraQuakeApi/blob/main/LICENSE.md)
-[![GitHub Stars](https://img.shields.io/github/stars/Deepak0320Singhal/TerraQuakeApi)](https://github.com/Deepak0320Singhal/TerraQuakeApi/stargazers)
-[![GitHub Issues](https://img.shields.io/github/issues/Deepak0320Singhal/TerraQuakeApi)](https://github.com/Deepak0320Singhal/TerraQuakeApi/issues)
+[![GitHub Stars](https://img.shields.io/github/stars/nagcas/TerraQuakeApi)](https://github.com/nagcas/TerraQuakeApi/stargazers)
+[![GitHub Issues](https://img.shields.io/github/issues/nagcas/TerraQuakeApi)](https://github.com/nagcas/TerraQuakeApi/issues)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](./CONTRIBUTING.md)
 
 A modern, open-source seismic data platform providing real-time earthquake information through a RESTful API and interactive visualization interface.
@@ -52,23 +52,23 @@ TerraQuake is a comprehensive seismic data platform that combines a powerful RES
 
 ### Available Endpoints
 
-#### `GET /api/earthquakes`
+#### `GET /v1/earthquakes`
 
 Returns all recorded earthquakes.
 
-#### `GET /api/earthquakes/month/:year/:month`
+#### `GET /v1/earthquakes/month/:year/:month`
 
 Filter earthquakes by year and month.
 
-#### `GET /api/earthquakes/range-time?starttime=YYYY-MM-DD&endtime=YYYY-MM-DD`
+#### `GET /v1/earthquakes/range-time?starttime=YYYY-MM-DD&endtime=YYYY-MM-DD`
 
 Filter earthquakes within a time range.
 
-#### `GET /api/earthquakes/demo`
+#### `GET /v1/earthquakes/demo`
 
 Returns 100 demo earthquakes (randomized for testing and UI display).
 
-#### `GET /api/earthquakes/stats`
+#### `GET /v1/earthquakes/stats`
 
 Returns statistics such as:
 
