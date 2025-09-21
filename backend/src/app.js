@@ -81,8 +81,8 @@ const startServer = async () => {
     app.listen(port, () => {
       console.log(`Server running in ${devEnv || 'production'} environment`)
       console.log(`Started at: http://localhost:${port}`)
-      console.log(`Test: http://localhost:${port}/api/test`)
-
+      console.log(`Test: http://localhost:${port}/v1/test`)
+      
       const endPoints = expressListEndpoints(app)
       console.log('List of available endpoints:')
       console.table(endPoints)
