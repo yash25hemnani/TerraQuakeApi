@@ -140,7 +140,7 @@ It is useful for filtering earthquakes based on their strength and analyzing sei
       - mag: (Required) Minimum magnitude to filter by (e.g., 2 will return all events with magnitude ≥ 2.0).
       - limit: (Optional) Number of earthquake events to return. Default is 50 if not specified.`,
       query: '?mag=1&limit=50',
-      example: '/earthquakes/magnitude?mag=1&limit=50',
+      example: '/v1/earthquakes/magnitude?mag=1&limit=50',
       method: 'GET',
     },
     {
