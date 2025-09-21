@@ -9,12 +9,12 @@
 
 A developer-friendly REST API for exploring seismic events across Italy and beyond. Built with Express.js and MongoDB, this API provides structured access to real-time earthquake data, making it perfect for researchers, developers, and applications focused on seismic monitoring and analysis.
 
-[Getting Started](#getting-started) • [Features](#features) • [API Reference](#api-reference) • [Use Cases](#use-cases) • [Contributing](#contributing)
+ [Features](#features) • [Installation](#installation) • [API Reference](#api) • [Technologies](#technologies) • [Contributing](#contributing)
 
 </div>
 
 
-## 🚀 Features & Tech Stack
+## Features & Tech Stack
 
 ### Core Features
 
@@ -111,7 +111,7 @@ Whether it’s fixing a bug, improving documentation, or adding a feature — al
 
 Please make sure to follow the [contributing guidelines](CONTRIBUTING.md).
 
-## 💬 Community
+## Community
 
 Join our community on [Discord](https://discord.gg/RDBp8KJB) to connect, share ideas, and collaborate with other contributors.
 
@@ -143,7 +143,7 @@ Contributions count toward the event. Feel free to submit PRs and join us in bui
   - Primary source of seismic data
   - Technical consultation on seismological aspects
 
-### Technologies & Resources
+### Technologies
 
 - **Frontend Technologies**
 
@@ -165,7 +165,7 @@ Contributions count toward the event. Feel free to submit PRs and join us in bui
 - Bug Reporters & Feature Requesters
 - Documentation Contributors
 
-## 💖 Support the Project
+## Support the Project
 
 TerraQuake API is an open-source initiative aimed at making real-time seismic data accessible for developers, researchers, and communities.
 
