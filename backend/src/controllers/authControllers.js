@@ -151,3 +151,69 @@ export const resetPassword = ({ User, handleHttpError, buildResponse }) => {
     }
   }
 }
+
+/**
+ * Controller: Change user password.
+ *
+ * - Retrieves the logged-in user from JWT payload (req.user.id).
+ * - Validates that all password fields are present.
+ * - Checks if new password and confirmation match.
+ * - Verifies the current password.
+ * - Ensures the new password is different from the old one.
+ * - Updates the user's password and saves it.
+ * - Excludes the password from the response.
+ * - Returns 200 with a success message on success.
+ * - Returns appropriate status codes and messages for errors.
+ */
+export const changePassword = ({ User, handleHttpError, buildResponse }) => {
+  return async (req, res) => {
+    try {
+      const { passwordOld, passwordNew, confirmPassword } = req.body
+
+      // Check that all password fields are provided
+      if (!passwordOld || !passwordNew || !confirmPassword) {
+        return handleHttpError(res, 'All password fields are required', 400)
+      }
+
+      // Check if new password and confirmation match
+      if (passwordNew !== confirmPassword) {
+        return handleHttpError(res, 'Passwords must match', 400)
+      }
+
+      // Get logged-in user from JWT payload
+      const userId = req.user._id || req.user.id
+      const user = await User.findById(userId).select('+password')
+      if (!user) {
+        return handleHttpError(res, 'User not found', 404)
+      }
+
+      // Verify current password
+      const isMatch = await bcrypt.compare(passwordOld, user.password)
+      if (!isMatch) {
+        return handleHttpError(res, 'Current password is incorrect', 400)
+      }
+
+      // Check that new password is different from the old password
+      const isSame = await bcrypt.compare(passwordNew, user.password)
+      if (isSame) {
+        return handleHttpError(res, 'New password cannot be the same as the old one!', 409)
+      }
+
+      // Update user's password
+      user.password = passwordNew
+      await user.save()
+
+      // Remove password field from response object
+      const userResponseObject = user.toObject()
+      delete userResponseObject.password
+
+      // Send success response
+      res.status(200).json(
+        buildResponse(req, 'Password successfully changed!', userResponseObject, null, {})
+      )
+    } catch (error) {
+      console.error(error)
+      handleHttpError(res, 'Error changing password, please try again later', 500)
+    }
+  }
+}

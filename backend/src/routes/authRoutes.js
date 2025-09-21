@@ -3,13 +3,15 @@ import {
   signIn,
   signUp,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  changePassword
 } from '../controllers/authControllers.js'
 import {
   validatorSignIn,
   validatorSignUp,
   validatorForgotPassword,
-  validatorResetPassword
+  validatorResetPassword,
+  validatorChangePassword
 } from '../validators/userValidators.js'
 
 import User from '../models/userModels.js'
@@ -19,11 +21,12 @@ import { compare } from '../utils/handlePassword.js'
 import { buildResponse } from '../utils/buildResponse.js'
 import handleHttpError from '../utils/handleHttpError.js'
 import { sendEmailRegister, sendForgotPassword } from '../libs/sendEmail.js'
+import { authenticateUser } from '../middleware/authMiddleware.js'
 const router = express.Router()
 
 // NOTE: AUTH
 
-// NOTE: registrazione utente
+// NOTE: register user
 router.post(
   '/signup',
   validatorSignUp,
@@ -36,7 +39,7 @@ router.post(
   })
 )
 
-// NOTE: login utente
+// NOTE: login user
 router.post(
   '/signin',
   validatorSignIn,
@@ -50,7 +53,7 @@ router.post(
   })
 )
 
-// NOTE: password dimenticata
+// NOTE: forgot password
 router.post(
   '/forgot-password',
   validatorForgotPassword,
@@ -63,11 +66,19 @@ router.post(
   })
 )
 
-// NOTE: cambia password
+// NOTE: reset password
 router.post(
   '/reset-password/:token',
   validatorResetPassword,
   resetPassword({ User, handleHttpError, buildResponse, matchedData })
+)
+
+// NOTE: change password
+router.post(
+  '/change-password',
+  authenticateUser,
+  validatorChangePassword,
+  changePassword({ User, handleHttpError, buildResponse, matchedData })
 )
 
 export default router

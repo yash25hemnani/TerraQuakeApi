@@ -9,14 +9,15 @@ import handleHttpError from '../utils/handleHttpError.js'
 */
 export const authenticateUser = async (req, res, next) => {
   const token = req.get('Authorization')?.split(' ')[1]
+
+  if (!token) {
+    return handleHttpError(res, 'Authorization token missing', 401)
+  }
+
   const decoded = await verifyToken(token)
 
-  if (decoded === null) {
-    return handleHttpError(
-      res,
-      'Invalid JWT token',
-      400
-    )
+  if (!decoded) {
+    return handleHttpError(res, 'Invalid or expired JWT token', 401)
   }
 
   req.user = decoded
