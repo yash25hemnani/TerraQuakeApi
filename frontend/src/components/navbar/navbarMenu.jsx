@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import Sismic from '@images/tracciato.png';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -11,6 +11,11 @@ export default function NavbarMenu() {
   const [isOpenDropdown, setIsOpenDropdown] = useState(false); // user dropdown desktop
   const { userLogin, isLoggedIn, setIsLoggedIn, setUserLogin } =
     useContext(Context);
+
+  // Reset dropdown on login state change
+  useEffect(() => {
+    setIsOpenDropdown(false);
+  }, [isLoggedIn]);
 
   const listItems = [
     { name: 'Home', path: '/' },
@@ -83,7 +88,7 @@ export default function NavbarMenu() {
                   'https://wallpapers.com/images/hd/default-user-profile-icon-0udyg8f0x3b3qqbw.png'
                 }
                 alt='avatar'
-                className='w-8 h-8 rounded-full cursor-pointer'
+                className='w-10 h-10 rounded-full cursor-pointer'
               />
               <span className='text-purple-500'>{userLogin.name}</span>
             </button>

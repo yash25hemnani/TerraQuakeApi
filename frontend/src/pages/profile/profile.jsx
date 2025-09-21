@@ -64,7 +64,7 @@ export default function Profile() {
 
               <button
                 onClick={handleLogout}
-                className='mt-6 w-full py-3 px-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-semibold text-lg shadow-lg hover:scale-105 transform transition duration-300 cursor-pointer'
+                className='mt-6 w-auto py-3 px-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-semibold text-lg shadow-lg hover:scale-105 transform transition duration-300 cursor-pointer'
                 aria-label='Log out of your account'
               >
                 Logout
@@ -95,14 +95,6 @@ export default function Profile() {
                   >
                     Delete profile
                   </button>
-
-                  <button
-                    onClick={() => setActiveSection('password')}
-                    className='mt-6 w-60 border border-white hover:bg-white hover:text-black transition-colors duration-300 text-white font-semibold py-3 px-8 rounded-full cursor-pointer'
-                    aria-label='change password profile'
-                  >
-                    Change password
-                  </button>
                 </>
               )}
 
@@ -122,12 +114,6 @@ export default function Profile() {
               <EditProfile setEditProfile={() => setActiveSection(null)} />
             ) : activeSection === 'delete' ? (
               <DeleteProfile />
-            ) : activeSection === 'password' ? (
-              <div className='text-left py-4'>
-                <p className='text-xl text-yellow-400'>
-                  🔑 Change your password here...
-                </p>
-              </div>
             ) : (
               <>
                 {/* Info profile user */}
@@ -157,11 +143,11 @@ export default function Profile() {
                 </div>
 
                 {/* Generate a token for accessing the TerraQuake API */}
-                <div className='text-left py-4'>
+                <div className='text-center py-4 flex flex-col items-center'>
                   <h2 className='text-xl'>Generate Token for accessing API</h2>
                   <button
                     onClick={handleGenerateToken}
-                    className='mt-6 w-60 py-3 px-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-semibold text-lg shadow-lg hover:scale-105 transform transition duration-300 cursor-pointer'
+                    className='mt-6 w-auto py-3 px-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-semibold text-lg shadow-lg hover:scale-105 transform transition duration-300 cursor-pointer'
                     aria-label='Generate token api'
                   >
                     Generate token
