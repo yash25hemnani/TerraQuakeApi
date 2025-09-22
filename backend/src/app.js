@@ -15,42 +15,35 @@ import { apiLimiter, authLimiter } from './middleware/rateLimiter.js'
 
 dotenv.config()
 
-const devEnv = process.env.DEV_ENV
+const devEnv = process.env.DEV_ENV || 'development'
 const app = express()
 
-// === CORS configuration ===
-// Allow requests from any origin in development or Postman
-const corsOptions = {
-  origin: (origin, callback) => {
-    if (!origin || devEnv === 'development') {
-      // Server-side requests or fetch from browser in development
-      callback(null, true)
-    } else if (origin === process.env.FRONTEND_PRODUCTION) {
-      // Requests from the production domain
-      callback(null, true)
-    } else {
-      callback(new Error('CORS: Access denied'))
-    }
-  },
-  credentials: true
-}
-
-app.use(cors(corsOptions))
+// === MIDDLEWARE ===
 app.use(helmet())
 app.use(express.json())
 
-const port = process.env.PORT || 5000
+// === CORS ===
+// Only /v1/earthquakes is public
+app.use(
+  '/v1/earthquakes',
+  cors(), // Allow requests from any origin
+  apiLimiter,
+  routeEarthquakes
+)
 
-// ===== ROUTES =====
-app.use('/v1/test', apiLimiter, routeGetStart)
-app.use('/auth', authLimiter, routeAuth)
-app.use('/users', authLimiter, authenticateUser, routeUsers)
-app.use('/contact', routeContact)
-app.use('/v1/earthquakes', apiLimiter, routeEarthquakes)
-// app.use('/v1/station', apiLimiter, routeStations);
-// app.use('/v1/geospatial', apiLimiter, routeGeospatial);
-// app.use('/v1/statistics', apiLimiter, routeStats);
-// app.use('/v1/demo', apiLimiter, routeDemo);
+// Authenticated routes
+const corsAuthOptions = {
+  origin: [
+    process.env.FRONTEND_PRODUCTION,
+    'http://localhost:3000' // Dev frontend
+  ],
+  credentials: true
+}
+
+app.use('/v1/test', cors(corsAuthOptions), apiLimiter, routeGetStart)
+app.use('/auth', cors(corsAuthOptions), authLimiter, routeAuth)
+app.use('/users', cors(corsAuthOptions), authLimiter, authenticateUser, routeUsers)
+app.use('/contact', cors(corsAuthOptions), routeContact)
 
 // ===== ERROR HANDLER =====
 app.use((err, req, res, next) => {
@@ -62,13 +55,15 @@ app.use((err, req, res, next) => {
 })
 
 // ===== START SERVER =====
+const port = process.env.PORT || 5000
+
 const startServer = async () => {
   try {
     console.clear()
     await dbConnect()
 
     app.listen(port, () => {
-      console.log(`Server running in ${devEnv || 'production'} environment`)
+      console.log(`Server running in ${devEnv} environment`)
       console.log(`Started at: http://localhost:${port}`)
       console.log(`Test endpoint: http://localhost:${port}/v1/test`)
 
