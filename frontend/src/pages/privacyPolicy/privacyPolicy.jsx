@@ -86,7 +86,7 @@ export default function PrivacyPolicy() {
             <p>
               To exercise these rights, contact us at{' '}
               <span className='text-pink-400 font-semibold'>
-                support@terraquakeapi.com
+                terraquakeapi@gmail.com
               </span>
               .
             </p>
@@ -151,7 +151,7 @@ export default function PrivacyPolicy() {
             <p>
               Questions or requests regarding privacy? Contact us at{' '}
               <span className='text-pink-400 font-semibold'>
-                support@terraquakeapi.com
+                terraquakeapi@gmail.com
               </span>
               .
             </p>

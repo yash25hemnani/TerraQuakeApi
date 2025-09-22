@@ -179,7 +179,7 @@ export default function TermsAndConditions() {
             <p>
               Questions about these Terms? Contact us at{' '}
               <span className='text-pink-400 font-semibold'>
-                support@terraquakeapi.com
+                terraquakeapi@gmail.com
               </span>
               .
             </p>
