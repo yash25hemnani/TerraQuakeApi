@@ -122,6 +122,24 @@ export default function Footer() {
                 Contact
               </a>
             </li>
+            <li>
+              <a
+                href='/terms-and-conditions'
+                className='hover:text-violet-400 transition'
+                aria-label='Navigate to contact page'
+              >
+                Terms and conditios
+              </a>
+            </li>
+            <li>
+              <a
+                href='/privacy-policy'
+                className='hover:text-violet-400 transition'
+                aria-label='Navigate to contact page'
+              >
+                Privacy Policy
+              </a>
+            </li>
           </ul>
         </div>
 

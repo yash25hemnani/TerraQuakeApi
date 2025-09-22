@@ -58,7 +58,7 @@ export default function forgotPassword() {
     <>
       <MetaData
         title='Forgot Password'
-        description='Forgot Password page of TerraQuake'
+        description='Forgot Password Page of TerraQuake'
       />
       <section className='min-h-screen flex items-center justify-center p-6 rounded-lg'>
         <div className='p-8 rounded-lg w-full max-w-md'>
