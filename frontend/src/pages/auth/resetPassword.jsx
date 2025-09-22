@@ -9,15 +9,11 @@ import * as yup from 'yup';
 import { useParams } from 'react-router';
 import MetaData from '../noPage/metaData';
 
-// NOTE: No SEO here, as we want to hide this page from users
-
 export default function resetPassword() {
   const [showPassword, setShowPassword] = useState(false);
   const togglePassword = () => setShowPassword((prev) => !prev);
 
   const { token } = useParams();
-
-  console.log(token);
 
   const resetPasswordSchema = yup
     .object()
