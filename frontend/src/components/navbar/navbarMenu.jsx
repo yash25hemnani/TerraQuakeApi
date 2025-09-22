@@ -1,12 +1,15 @@
 import { useState, useContext, useEffect } from 'react';
 import Sismic from '@images/tracciato.png';
 import { FaBars, FaTimes } from 'react-icons/fa';
+import { FiGithub } from 'react-icons/fi';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { Context } from '@components/modules/context';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 
 export default function NavbarMenu() {
   const navigate = useNavigate();
+  const [star, setStar] = useState('');
   const [isOpen, setIsOpen] = useState(false); // hamburger mobile
   const [isOpenDropdown, setIsOpenDropdown] = useState(false); // user dropdown desktop
   const { userLogin, isLoggedIn, setIsLoggedIn, setUserLogin } =
@@ -43,6 +46,26 @@ export default function NavbarMenu() {
     });
   };
 
+  // Api github
+  const urlGitHub = 'https://api.github.com/repos/nagcas/TerraQuakeApi';
+
+  useEffect(() => {
+    const fetchGitHub = async () => {
+      try {
+        const { data } = await axios.get(urlGitHub);
+        setStar(data.stargazers_count);
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          console.error('Error Axios:', error.response?.status, error.message);
+        } else {
+          console.error('Error server:', error);
+        }
+      }
+    };
+
+    fetchGitHub();
+  }, []);
+
   return (
     <header className='fixed top-0 left-0 w-full backdrop-blur-2xl bg-black/60 text-white shadow-lg py-4 px-4 flex items-center justify-between lg:justify-around z-50'>
       {/* Logo */}
@@ -76,6 +99,21 @@ export default function NavbarMenu() {
 
       {/* Auth Desktop */}
       <div className='lg:flex items-center ml-2 gap-4 text-[14px] lg:text-[16px] relative'>
+        {/* Star GitHub */}
+<a
+  href="https://github.com/nagcas/TerraQuakeApi"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="hidden lg:flex items-center gap-3 bg-gradient-to-r from-gray-900 to-gray-800 border border-gray-700 rounded-2xl px-5 py-1 shadow-lg transition hover:scale-105 transform duration-200"
+>
+  <span className="flex items-center gap-2 text-gray-200 font-medium">
+    <FiGithub className="text-purple-400 text-xl" /> Star
+  </span>
+  <span className="bg-purple-600 text-white font-semibold px-3 py-1 rounded-full shadow-md">
+    {star}
+  </span>
+</a>
+
         {isLoggedIn ? (
           <>
             <button
@@ -91,11 +129,13 @@ export default function NavbarMenu() {
                 alt='avatar'
                 className='w-8 h-8 rounded-full cursor-pointer'
               />
-              <span className='text-purple-500'>{userLogin.name.split(' ')[0].trim()}</span>
+              <span className='text-purple-500'>
+                {userLogin.name.split(' ')[0].trim()}
+              </span>
             </button>
 
             {isOpenDropdown && (
-              <div className='flex flex-col gap-3 bg-black/90 backdrop-blur-xl border border-purple-500/50 rounded-2xl absolute w-[200px] top-full right-0 p-3 mt-2 shadow-md z-50'>
+              <div className='flex flex-col gap-3 bg-black/95 backdrop-blur-xl border border-purple-500/50 rounded-2xl absolute w-[200px] top-full right-0 p-3 mt-2 shadow-md z-50'>
                 <button
                   onClick={() => {
                     setIsOpenDropdown(false);
