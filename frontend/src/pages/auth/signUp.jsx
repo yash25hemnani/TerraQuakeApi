@@ -65,7 +65,7 @@ export default function SignUp() {
       .then((res) => {
         Swal.fire({
           title: 'Success!',
-          text: 'User Registered Successfully!',
+          text: `${res.data.message}`,
           icon: 'success',
           confirmButtonText: 'Log In',
         }).then(() => {
@@ -76,7 +76,7 @@ export default function SignUp() {
         console.log(err);
         Swal.fire({
           title: 'Error!',
-          text: `${err.message}`,
+          text: `${err?.response?.data?.errors[0].msg}`,
           icon: 'error',
           confirmButtonText: 'Ok',
         }).then(() => {
