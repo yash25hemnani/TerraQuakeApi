@@ -35,7 +35,7 @@ app.use(
 const corsAuthOptions = {
   origin: [
     process.env.FRONTEND_PRODUCTION,
-    'http://localhost:3000' // Dev frontend
+    process.env.FRONTEND_DEVELOPMENT
   ],
   credentials: true
 }
