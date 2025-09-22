@@ -10,6 +10,6 @@ export const apiLimiter = rateLimit({
 // NOTE: Dedicated configuration only for authentication endpoints
 export const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 10, // stricter limit for login to prevent brute force
+  max: 50, // stricter limit for login to prevent brute force
   message: { message: 'Too many login attempts, please try again later.' }
 })
