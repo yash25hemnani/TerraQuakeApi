@@ -184,8 +184,6 @@ export default function SignUp() {
                   <Link
                     to='/terms'
                     className='text-purple-400 hover:underline'
-                    target='_blank'
-                    rel='noopener noreferrer'
                     aria-label='Navigate to terms and conditions page'
                   >
                     Terms and Conditions
