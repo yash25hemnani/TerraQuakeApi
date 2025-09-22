@@ -75,7 +75,7 @@ export default function NavbarMenu() {
       </nav>
 
       {/* Auth Desktop */}
-      <div className='lg:flex items-center gap-4 text-[14px] lg:text-[16px] relative'>
+      <div className='lg:flex items-center ml-2 gap-4 text-[14px] lg:text-[16px] relative'>
         {isLoggedIn ? (
           <>
             <button
@@ -89,9 +89,9 @@ export default function NavbarMenu() {
                   'https://wallpapers.com/images/hd/default-user-profile-icon-0udyg8f0x3b3qqbw.png'
                 }
                 alt='avatar'
-                className='w-10 h-10 rounded-full cursor-pointer'
+                className='w-8 h-8 rounded-full cursor-pointer'
               />
-              <span className='text-purple-500'>{userLogin.name}</span>
+              <span className='text-purple-500'>{userLogin.name.split(' ')[0].trim()}</span>
             </button>
 
             {isOpenDropdown && (
@@ -229,7 +229,7 @@ export default function NavbarMenu() {
             <hr className='border-t border-purple-200 my-2' />
             <button
               onClick={handleLogout}
-              className='text-left hover:text-purple-500'
+              className='text-left hover:text-purple-500 border px-8 py-3 hover:bg-white rounded-full'
             >
               Log Out
             </button>
