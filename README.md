@@ -93,47 +93,25 @@ Visit `http://localhost:3000` for the frontend interface and `http://localhost:5
 
 The TerraQuake API provides various endpoints for querying earthquake data. For detailed usage, examples, and testing, visit the [API Docs](http://localhost:3000/docs) in the running frontend.
 
-### Available Endpoints
+## 🌍 Earthquake API Endpoints
 
-#### `GET /v1/earthquakes/recent`
-Fetches recent earthquakes from the start of the year to today.
-- Query: `?limit=50` (optional)
+All endpoints support **pagination**:  
+- `page` *(optional, default: 1)* → Page number  
+- `limit` *(optional, default: 50)* → Number of results per page  
 
-#### `GET /v1/earthquakes/today`
-Fetches earthquakes that occurred today.
-- Query: `?limit=50` (optional)
+| Method | Endpoint                    | Description                                    | Query Parameters                                                                 |
+|--------|-----------------------------|------------------------------------------------|----------------------------------------------------------------------------------|
+| GET    | `/v1/earthquakes/recent`    | Fetches recent earthquakes from the start of the year to today. | `page`, `limit` |
+| GET    | `/v1/earthquakes/today`     | Fetches earthquakes that occurred today.       | `page`, `limit` |
+| GET    | `/v1/earthquakes/last-week` | Fetches earthquakes from the last 7 days.      | `page`, `limit` |
+| GET    | `/v1/earthquakes/month`     | Fetches earthquakes for a specific month/year. | `year` *(required)*, `month` *(required)*, `page`, `limit` |
+| GET    | `/v1/earthquakes/location`  | Fetches earthquakes near a latitude/longitude. | `latitude` *(required)*, `longitude` *(required)*, `radius`, `page`, `limit` |
+| GET    | `/v1/earthquakes/region`    | Fetches earthquakes in a specific Italian region. | `region` *(required)*, `page`, `limit` |
+| GET    | `/v1/earthquakes/depth`     | Fetches earthquakes at or below a specific depth. | `depth` *(required)*, `page`, `limit` |
+| GET    | `/v1/earthquakes/range-time`| Fetches earthquakes within a date range.       | `startdate` *(required)*, `enddate` *(required)*, `page`, `limit` |
+| GET    | `/v1/earthquakes/magnitude` | Fetches earthquakes of a specific magnitude or higher. | `mag` *(required)*, `page`, `limit` |
+| GET    | `/v1/earthquakes/eventId`   | Fetches details of a specific earthquake by ID. | `eventId` *(required)* |
 
-#### `GET /v1/earthquakes/last-week`
-Fetches earthquakes from the last 7 days.
-- Query: `?limit=50` (optional)
-
-#### `GET /v1/earthquakes/month`
-Fetches earthquakes for a specific month and year.
-- Query: `?year=2025&month=03&limit=50` (year and month required)
-
-#### `GET /v1/earthquakes/location`
-Fetches earthquakes near a latitude/longitude.
-- Query: `?latitude=40.835&longitude=14.117&radius=50&limit=50` (lat/lon required)
-
-#### `GET /v1/earthquakes/region`
-Fetches earthquakes in a specific Italian region.
-- Query: `?region=Campania&limit=50` (region required)
-
-#### `GET /v1/earthquakes/depth`
-Fetches earthquakes at or below a specific depth.
-- Query: `?depth=10&limit=50` (depth required)
-
-#### `GET /v1/earthquakes/range-time`
-Fetches earthquakes within a date range.
-- Query: `?startdate=2025-01-01&enddate=2025-03-30&limit=50` (dates required)
-
-#### `GET /v1/earthquakes/magnitude`
-Fetches earthquakes of a specific magnitude or higher.
-- Query: `?mag=2&limit=50` (mag required)
-
-#### `GET /v1/earthquakes/eventId`
-Fetches details of a specific earthquake by ID.
-- Query: `?eventId=12345` (eventId required)
 
 ---
 
