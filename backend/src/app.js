@@ -27,21 +27,23 @@ const app = express()
 * Allow all requests from the frontend or
 * development environment
 */
-const whitelist = [
-  process.env.FRONTEND_DEVELOPMENT, // dev
-  process.env.FRONTEND_PRODUCTION // production
-]
+// const whitelist = [
+//   process.env.FRONTEND_DEVELOPMENT, // dev
+//   process.env.FRONTEND_PRODUCTION // production
+// ]
 
 const corsOptions = {
   origin: function (origin, callback) {
-    if (devEnv === 'development') {
-      callback(null, true)
-    } else if (whitelist.includes(origin) || !origin) {
-      callback(null, true)
-    } else {
-      console.log('❌ CORS blocked:', origin)
-      callback(new Error('PERMESSO NEGATO - CORS'))
+    // Permetti tutto se origin non è definito (fetch da Postman, server-side) o in sviluppo
+    if (!origin || devEnv === 'development') {
+      return callback(null, true)
     }
+    // Permetti il tuo dominio di produzione
+    if (origin === process.env.FRONTEND_PRODUCTION) {
+      return callback(null, true)
+    }
+    // Altrimenti blocca
+    callback(new Error('PERMESSO NEGATO - CORS'))
   },
   credentials: true
 }
