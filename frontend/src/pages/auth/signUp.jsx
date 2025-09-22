@@ -182,7 +182,7 @@ export default function SignUp() {
                 >
                   I accept the{' '}
                   <Link
-                    to='/terms'
+                    to='/terms-and-conditions'
                     className='text-purple-400 hover:underline'
                     aria-label='Navigate to terms and conditions page'
                   >

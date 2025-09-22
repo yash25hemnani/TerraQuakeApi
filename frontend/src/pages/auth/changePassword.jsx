@@ -103,7 +103,7 @@ export default function ChangePassword() {
 
   return (
     <>
-      <MetaData title='Change Password' description='Change password page of TerraQuake' />
+      <MetaData title='Change Password' description='Change password Page of TerraQuake' />
       <section className='min-h-screen flex items-center justify-center p-6 rounded-lg'>
         {isLoggedIn ? (
           <div className='p-8 rounded-lg w-full max-w-md'>

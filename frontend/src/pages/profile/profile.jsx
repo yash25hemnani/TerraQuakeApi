@@ -38,7 +38,7 @@ export default function Profile() {
     <>
       <MetaData
         title='Profile'
-        description='Profile page of TerraQuake'
+        description='Profile Page of TerraQuake'
       />
 
       <section className='relative z-30 w-full flex flex-col items-center justify-center text-center px-6 py-30 text-white'>
