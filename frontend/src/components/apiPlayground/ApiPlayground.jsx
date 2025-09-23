@@ -64,7 +64,7 @@ export default function ApiPlayground({ title = "API Playground", endpoints = []
       let data;
       try { data = JSON.parse(text); } catch { data = { raw: text }; }
       if (!res.ok) {
-        setErrorMessage(`${res.status} ${res.statusText}`);
+        setErrorMessage(`status: ${res.status} - message: ${data.message}` || `${res.status} - ${res.statusText}`);
       }
       setResponseData(data);
     } catch (err) {
