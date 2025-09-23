@@ -23,7 +23,11 @@ const buildResponse = (req, message, data, total = null) => ({
 const fetchINGV = async (url) => {
   const response = await fetch(url)
   if (!response.ok) {
-    throw new Error(`HTTP error from the INGV source: ${response.status} ${response.statusText || ''}`.trim())
+    throw new Error(
+      `HTTP error from the INGV source: ${response.status} ${
+        response.statusText || ''
+      }`.trim()
+    )
   }
   return response.json()
 }
@@ -35,11 +39,17 @@ export const getEarthquakesByRecent = async (req, res) => {
     const limit = getPositiveInt(req.query, 'limit', { def: 50 })
 
     if (limit === null) {
-      return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=50', 400)
+      return handleHttpError(
+        res,
+        'The limit parameter must be a positive integer greater than 0. Example: ?limit=50',
+        400
+      )
     }
 
     const now = new Date().toISOString().split('T')[0]
-    const startOfYear = new Date(new Date().getFullYear(), 0, 1).toISOString().split('T')[0]
+    const startOfYear = new Date(new Date().getFullYear(), 0, 1)
+      .toISOString()
+      .split('T')[0]
 
     let url = `${urlINGV}?orderby=time&starttime=${startOfYear}&endtime=${now}&format=geojson`
     if (limit) url += `&limit=${limit}`
@@ -52,7 +62,12 @@ export const getEarthquakesByRecent = async (req, res) => {
     })
 
     res.status(200).json({
-      ...buildResponse(req, 'Recent seismic events', result.items, result.totalFetched),
+      ...buildResponse(
+        req,
+        'Recent seismic events',
+        result.items,
+        result.totalFetched
+      ),
       pagination: {
         page: result.page,
         totalPages: result.totalPages,
@@ -62,7 +77,10 @@ export const getEarthquakesByRecent = async (req, res) => {
     })
   } catch (error) {
     console.error('Error in the earthquakes/recent controller:', error.message)
-    handleHttpError(res, error.message.includes('HTTP error') ? error.message : undefined)
+    handleHttpError(
+      res,
+      error.message.includes('HTTP error') ? error.message : undefined
+    )
   }
 }
 
@@ -73,7 +91,11 @@ export const getEarthquakesByToday = async (req, res) => {
     const limit = getPositiveInt(req.query, 'limit', { def: 50 })
 
     if (limit === null) {
-      return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=50', 400)
+      return handleHttpError(
+        res,
+        'The limit parameter must be a positive integer greater than 0. Example: ?limit=50',
+        400
+      )
     }
 
     const nowUTC = new Date()
@@ -90,7 +112,12 @@ export const getEarthquakesByToday = async (req, res) => {
     })
 
     res.status(200).json({
-      ...buildResponse(req, 'Seismic events for today', result.items, result.totalFetched),
+      ...buildResponse(
+        req,
+        'Seismic events for today',
+        result.items,
+        result.totalFetched
+      ),
       pagination: {
         page: result.page,
         limit: result.limit,
@@ -99,7 +126,10 @@ export const getEarthquakesByToday = async (req, res) => {
     })
   } catch (error) {
     console.error('Error in the earthquakes/today controller:', error.message)
-    handleHttpError(res, error.message.includes('HTTP error') ? error.message : undefined)
+    handleHttpError(
+      res,
+      error.message.includes('HTTP error') ? error.message : undefined
+    )
   }
 }
 
@@ -110,7 +140,11 @@ export const getEarthquakesByLastWeek = async (req, res) => {
     const limit = getPositiveInt(req.query, 'limit', { def: 50 })
 
     if (limit === null) {
-      return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example:limit=50', 400)
+      return handleHttpError(
+        res,
+        'The limit parameter must be a positive integer greater than 0. Example:limit=50',
+        400
+      )
     }
 
     const today = new Date()
@@ -131,7 +165,12 @@ export const getEarthquakesByLastWeek = async (req, res) => {
     })
 
     res.status(200).json({
-      ...buildResponse(req, `Seismic events from ${startDate} to ${endDate}`, result.items, result.totalFetched),
+      ...buildResponse(
+        req,
+        `Seismic events from ${startDate} to ${endDate}`,
+        result.items,
+        result.totalFetched
+      ),
       pagination: {
         page: result.page,
         totalPages: result.totalPages,
@@ -140,8 +179,14 @@ export const getEarthquakesByLastWeek = async (req, res) => {
       }
     })
   } catch (error) {
-    console.error('Error in the earthquakes/last-week controller:', error.message)
-    handleHttpError(res, error.message.includes('HTTP error') ? error.message : undefined)
+    console.error(
+      'Error in the earthquakes/last-week controller:',
+      error.message
+    )
+    handleHttpError(
+      res,
+      error.message.includes('HTTP error') ? error.message : undefined
+    )
   }
 }
 
@@ -153,11 +198,19 @@ export const getEarthquakesByMonth = async (req, res) => {
     const limit = getPositiveInt(req.query, 'limit', { def: 50 })
 
     if (limit === null) {
-      return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=50', 400)
+      return handleHttpError(
+        res,
+        'The limit parameter must be a positive integer greater than 0. Example: ?limit=50',
+        400
+      )
     }
 
     if (!parseInt(year) || !parseInt(month)) {
-      return handleHttpError(res, 'Year and month are required in the URL parameters (e.g., ?year=2025&month=03)', 400)
+      return handleHttpError(
+        res,
+        'Year and month are required in the URL parameters (e.g., ?year=2025&month=03)',
+        400
+      )
     }
 
     const startDate = `${year}-${String(month).padStart(2, '0')}-01`
@@ -178,7 +231,12 @@ export const getEarthquakesByMonth = async (req, res) => {
     })
 
     res.status(200).json({
-      ...buildResponse(req, `Seismic events of ${year}-${String(month).padStart(2, '0')}`, result.items, result.totalFetched),
+      ...buildResponse(
+        req,
+        `Seismic events of ${year}-${String(month).padStart(2, '0')}`,
+        result.items,
+        result.totalFetched
+      ),
       pagination: {
         page: result.page,
         totalPages: result.totalPages,
@@ -188,7 +246,10 @@ export const getEarthquakesByMonth = async (req, res) => {
     })
   } catch (error) {
     console.error('Error in the earthquakes/month controller:', error.message)
-    handleHttpError(res, error.message.includes('HTTP error') ? error.message : undefined)
+    handleHttpError(
+      res,
+      error.message.includes('HTTP error') ? error.message : undefined
+    )
   }
 }
 
@@ -200,14 +261,19 @@ export const getEarthquakesByRegion = async (req, res) => {
     const limit = getPositiveInt(req.query, 'limit', { def: 50 })
 
     if (limit === null) {
-      return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=50', 400)
+      return handleHttpError(
+        res,
+        'The limit parameter must be a positive integer greater than 0. Example: ?limit=50',
+        400
+      )
     }
 
     if (!regionBoundingBoxes[region?.toLowerCase()?.trim()]) {
       return handleHttpError(res, `Region ${region} not supported`, 400)
     }
 
-    const { minlatitude, maxlatitude, minlongitude, maxlongitude } = regionBoundingBoxes[region.toLowerCase().trim()]
+    const { minlatitude, maxlatitude, minlongitude, maxlongitude } =
+      regionBoundingBoxes[region.toLowerCase().trim()]
 
     const today = new Date()
     const startOfYear = new Date(today.getFullYear(), 0, 1)
@@ -225,7 +291,12 @@ export const getEarthquakesByRegion = async (req, res) => {
     })
 
     res.status(200).json({
-      ...buildResponse(req, `Seismic events in region ${region} from ${startDate} to ${endDate}`, result.items, result.totalFetched),
+      ...buildResponse(
+        req,
+        `Seismic events in region ${region} from ${startDate} to ${endDate}`,
+        result.items,
+        result.totalFetched
+      ),
       pagination: {
         page: result.page,
         totalPages: result.totalPages,
@@ -235,7 +306,10 @@ export const getEarthquakesByRegion = async (req, res) => {
     })
   } catch (error) {
     console.error('Error in the earthquakes/region controller:', error.message)
-    handleHttpError(res, error.message.includes('HTTP error') ? error.message : undefined)
+    handleHttpError(
+      res,
+      error.message.includes('HTTP error') ? error.message : undefined
+    )
   }
 }
 
@@ -244,8 +318,18 @@ export const getEarthquakesByDepth = async (req, res) => {
   try {
     const urlINGV = process.env.URL_INGV
     const { depth } = req.query
-    const limit = getPositiveInt(req.query, 'limit', { def: 50 })
 
+    // Depth è obbligatorio
+    if (depth === undefined) {
+      return handleHttpError(res, 'The depth parameter is required and must be a positive number greater than 0', 400)
+    }
+
+    const depthValue = parseFloat(depth)
+    if (isNaN(depthValue) || depthValue <= 0) {
+      return handleHttpError(res, 'The depth parameter must be a positive number greater than 0', 400)
+    }
+
+    const limit = getPositiveInt(req.query, 'limit', { def: 50 })
     if (limit === null) {
       return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=50', 400)
     }
@@ -255,19 +339,15 @@ export const getEarthquakesByDepth = async (req, res) => {
     const startDate = startOfYear.toISOString().split('T')[0]
     const endDate = today.toISOString().split('T')[0]
 
+    // Costruzione URL
     let url = `${urlINGV}?starttime=${startDate}&endtime=${endDate}&orderby=time&format=geojson`
     if (limit) url += `&limit=${limit}`
 
     const data = await fetchINGV(url)
     let { features } = data
 
-    // Filter by minimum depth if provided
-    if (depth && !isNaN(depth)) {
-      features = features.filter((feature) => {
-        const quakeDepth = feature.geometry.coordinates[2]
-        return quakeDepth > parseFloat(depth)
-      })
-    }
+    // Filtro per profondità maggiore di depthValue
+    features = features.filter(feature => feature.geometry.coordinates[2] > depthValue)
 
     const result = processFeatures(features, req.query, {
       defaultSort: '-time',
@@ -276,7 +356,7 @@ export const getEarthquakesByDepth = async (req, res) => {
     })
 
     res.status(200).json({
-      ...buildResponse(req, `Seismic events with depth > ${depth || 0} km`, result.items, result.totalFetched),
+      ...buildResponse(req, `Seismic events with depth > ${depthValue} km`, result.items, result.totalFetched),
       pagination: {
         page: result.page,
         totalPages: result.totalPages,
@@ -298,16 +378,28 @@ export const getEarthquakesByDateRange = async (req, res) => {
     const limit = getPositiveInt(req.query, 'limit', { def: 50 })
 
     if (limit === null) {
-      return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=50', 400)
+      return handleHttpError(
+        res,
+        'The limit parameter must be a positive integer greater than 0. Example: ?limit=50',
+        400
+      )
     }
 
     if (!startdate || !enddate) {
-      return handleHttpError(res, 'The parameters startdate and enddate are required. Example: ?startdate=2024-01-01&enddate=2024-01-31', 400)
+      return handleHttpError(
+        res,
+        'The parameters startdate and enddate are required. Example: ?startdate=2024-01-01&enddate=2024-01-31',
+        400
+      )
     }
 
     const isoRegex = /^\d{4}-\d{2}-\d{2}$/
     if (!isoRegex.test(startdate) || !isoRegex.test(enddate)) {
-      return handleHttpError(res, 'Use the ISO date format: YYYY-MM-DD. Example: ?starttime=2024-01-01', 400)
+      return handleHttpError(
+        res,
+        'Use the ISO date format: YYYY-MM-DD. Example: ?starttime=2024-01-01',
+        400
+      )
     }
 
     let url = `${urlINGV}?starttime=${startdate}&endtime=${enddate}&orderby=time&format=geojson`
@@ -321,7 +413,12 @@ export const getEarthquakesByDateRange = async (req, res) => {
     })
 
     res.status(200).json({
-      ...buildResponse(req, `Seismic events between ${startdate} and ${enddate}`, result.items, result.totalFetched),
+      ...buildResponse(
+        req,
+        `Seismic events between ${startdate} and ${enddate}`,
+        result.items,
+        result.totalFetched
+      ),
       pagination: {
         page: result.page,
         totalPages: result.totalPages,
@@ -330,8 +427,14 @@ export const getEarthquakesByDateRange = async (req, res) => {
       }
     })
   } catch (error) {
-    console.error('Error in the earthquakes/range-time controller:', error.message)
-    handleHttpError(res, error.message.includes('HTTP error') ? error.message : undefined)
+    console.error(
+      'Error in the earthquakes/range-time controller:',
+      error.message
+    )
+    handleHttpError(
+      res,
+      error.message.includes('HTTP error') ? error.message : undefined
+    )
   }
 }
 
@@ -340,10 +443,32 @@ export const getEarthquakesByMagnitude = async (req, res) => {
   try {
     const urlINGV = process.env.URL_INGV
     const { mag } = req.query
-    const limit = getPositiveInt(req.query, 'limit', { def: 50 })
 
+    // Magnitude è obbligatoria
+    if (mag === undefined) {
+      return handleHttpError(
+        res,
+        'The mag parameter is required and must be a positive number greater than 0',
+        400
+      )
+    }
+
+    const magValue = parseFloat(mag)
+    if (isNaN(magValue) || magValue <= 0) {
+      return handleHttpError(
+        res,
+        'The mag parameter must be a positive number greater than 0',
+        400
+      )
+    }
+
+    const limit = getPositiveInt(req.query, 'limit', { def: 50 })
     if (limit === null) {
-      return handleHttpError(res, 'The limit parameter must be a positive integer greater than 0. Example: ?limit=50', 400)
+      return handleHttpError(
+        res,
+        'The limit parameter must be a positive integer greater than 0. Example: ?limit=50',
+        400
+      )
     }
 
     const today = new Date()
@@ -351,8 +476,9 @@ export const getEarthquakesByMagnitude = async (req, res) => {
     const startDate = startOfYear.toISOString().split('T')[0]
     const endDate = today.toISOString().split('T')[0]
 
+    // Costruzione URL
     let url = `${urlINGV}?starttime=${startDate}&endtime=${endDate}&orderby=time&format=geojson&limit=${limit}`
-    if (mag && !isNaN(mag)) url += `&minmagnitude=${parseFloat(mag)}`
+    url += `&minmagnitude=${magValue}`
 
     const data = await fetchINGV(url)
 
@@ -363,7 +489,12 @@ export const getEarthquakesByMagnitude = async (req, res) => {
     })
 
     res.status(200).json({
-      ...buildResponse(req, `Seismic events with magnitude >= ${mag || 0}`, result.items, result.totalFetched),
+      ...buildResponse(
+        req,
+        `Seismic events with magnitude > ${magValue}`,
+        result.items,
+        result.totalFetched
+      ),
       pagination: {
         page: result.page,
         totalPages: result.totalPages,
@@ -372,8 +503,14 @@ export const getEarthquakesByMagnitude = async (req, res) => {
       }
     })
   } catch (error) {
-    console.error('Error in the earthquakes/magnitude controller:', error.message)
-    handleHttpError(res, error.message.includes('HTTP error') ? error.message : undefined)
+    console.error(
+      'Error in the earthquakes/magnitude controller:',
+      error.message
+    )
+    handleHttpError(
+      res,
+      error.message.includes('HTTP error') ? error.message : undefined
+    )
   }
 }
 
@@ -392,7 +529,9 @@ export const getEarthquakesById = async (req, res) => {
     const data = await fetchINGV(url)
     const { features } = data
 
-    const filteredEvent = features.filter((feature) => feature.properties.eventId === parseInt(eventId))
+    const filteredEvent = features.filter(
+      (feature) => feature.properties.eventId === parseInt(eventId)
+    )
 
     if (filteredEvent.length === 0) {
       return handleHttpError(res, `No event found with ID ${eventId}`, 404)
@@ -404,11 +543,22 @@ export const getEarthquakesById = async (req, res) => {
     })
 
     res.status(200).json({
-      ...buildResponse(req, `Seismic event with id ${eventId}`, result.items, result.totalFetched)
+      ...buildResponse(
+        req,
+        `Seismic event with id ${eventId}`,
+        result.items,
+        result.totalFetched
+      )
     })
   } catch (error) {
-    console.error('Error in the earthquakes/eventId controller:', error.message)
-    handleHttpError(res, error.message.includes('HTTP error') ? error.message : undefined)
+    console.error(
+      'Error in the earthquakes/eventId controller:',
+      error.message
+    )
+    handleHttpError(
+      res,
+      error.message.includes('HTTP error') ? error.message : undefined
+    )
   }
 }
 
@@ -418,10 +568,17 @@ export const getEarthquakesLocation = async (req, res) => {
     const urlINGV = process.env.URL_INGV
     const { latitude, longitude } = req.query
     const limit = getPositiveInt(req.query, 'limit', { def: 50 })
-    const radiusNum = getPositiveInt(req.query, 'radius', { min: 0.1, def: 50 })
+    const radiusNum = getPositiveInt(req.query, 'radius', {
+      min: 0.1,
+      def: 50
+    })
 
     if (!latitude || isNaN(latitude) || !longitude || isNaN(longitude)) {
-      return handleHttpError(res, 'Please provide valid latitude and longitude', 400)
+      return handleHttpError(
+        res,
+        'Please provide valid latitude and longitude',
+        400
+      )
     }
 
     const lat = parseFloat(latitude)
@@ -443,7 +600,11 @@ export const getEarthquakesLocation = async (req, res) => {
     const url = `${urlINGV}?starttime=${startOfYear}&endtime=${endOfToday}&minlatitude=${minLat}&maxlatitude=${maxLat}&minlongitude=${minLon}&maxlongitude=${maxLon}&orderby=time&format=geojson&limit=${limit}`
 
     const response = await fetch(url)
-    if (!response.ok) throw new Error(`HTTP error from INGV source: ${response.status} ${response.statusText}`)
+    if (!response.ok) {
+      throw new Error(
+        `HTTP error from INGV source: ${response.status} ${response.statusText}`
+      )
+    }
 
     const data = await response.json()
     let { features } = data
@@ -475,7 +636,13 @@ export const getEarthquakesLocation = async (req, res) => {
       }
     })
   } catch (error) {
-    console.error('Error in the earthquakes/location controller:', error.message)
-    handleHttpError(res, error.message.includes('HTTP error') ? error.message : undefined)
+    console.error(
+      'Error in the earthquakes/location controller:',
+      error.message
+    )
+    handleHttpError(
+      res,
+      error.message.includes('HTTP error') ? error.message : undefined
+    )
   }
 }
