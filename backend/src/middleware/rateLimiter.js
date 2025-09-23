@@ -1,3 +1,4 @@
+import rateLimit from 'express-rate-limit'
 
 const WINDOW_MS = 1000
 const LIMIT = 100
@@ -22,7 +23,7 @@ const rateLimiter = (req, res, next) => {
   const resetAt = Math.ceil((now + Math.max(resetInMs, 0)) / 1000)
   const remaining = Math.max(LIMIT - bucket.count, 0)
 
-  //rate limit headers
+  // NOTE: Rate limit headers
   res.setHeader('X-RateLimit-Limit', String(LIMIT))
   res.setHeader('X-RateLimit-Remaining', String(remaining))
   res.setHeader('X-RateLimit-Reset', String(resetAt))
@@ -45,10 +46,6 @@ const rateLimiter = (req, res, next) => {
 
 export default rateLimiter
 
-
-
-import rateLimit from 'express-rate-limit'
-
 // NOTE: Generic configuration for APIs
 export const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -61,4 +58,17 @@ export const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 50, // stricter limit for login to prevent brute force
   message: { message: 'Too many login attempts, please try again later.' }
+})
+
+// NOTE: Contact form rate limiter
+export const contactLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15-minute window
+  max: 20, // limit each IP to 20 requests per window
+  standardHeaders: true, // send rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // disable the `X-RateLimit-*` headers
+  message: {
+    success: false,
+    status: 429,
+    message: 'Too many contact requests. Please try again later.'
+  }
 })
