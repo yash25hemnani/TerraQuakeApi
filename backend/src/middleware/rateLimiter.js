@@ -1,10 +1,8 @@
-// Fixed-window rate limiting per IP
-// Window: 1 second, Limit: 100 requests
 
 const WINDOW_MS = 1000
 const LIMIT = 100
 
-// In-memory store: { ip: { count: number, windowStart: number } }
+// Fixed window approach using HashMap { ip: { count: number, windowStart: number } }
 const buckets = new Map()
 
 const rateLimiter = (req, res, next) => {
@@ -24,18 +22,18 @@ const rateLimiter = (req, res, next) => {
   const resetAt = Math.ceil((now + Math.max(resetInMs, 0)) / 1000)
   const remaining = Math.max(LIMIT - bucket.count, 0)
 
-  // Expose basic rate limit headers
+  //rate limit headers
   res.setHeader('X-RateLimit-Limit', String(LIMIT))
   res.setHeader('X-RateLimit-Remaining', String(remaining))
   res.setHeader('X-RateLimit-Reset', String(resetAt))
 
   if (bucket.count > LIMIT) {
-    // Too Many Requests
+    // rejecting the requests of people who abuse the ratelimts
     res.setHeader('Retry-After', String(Math.ceil(resetInMs / 1000)))
     return res.status(429).json({
       success: false,
       status: 429,
-      message: 'Rate limit exceeded: max 100 requests per second. Please slow down, cache responses where possible, and retry after the reset window.',
+      message: 'Rate limit exceeded: max 100 requests per second. Please slow down boi, cache responses where possible, and retry after the reset window.',
       meta: {
         timestamp: new Date().toISOString()
       }
