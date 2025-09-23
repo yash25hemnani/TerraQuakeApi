@@ -114,6 +114,16 @@ Integration with INGV & USGS data feeds
 
 - **Safer region handling**:
   - Guards against missing/unsupported `region` before `.toLowerCase()`.
+
+## 3) Rate Limiting
+- **Policy**: Fixed-window rate limit of **100 requests per second per IP** across all `/api/*` routes.
+- **Headers**: Responses include `X-RateLimit-Limit`, `X-RateLimit-Remaining`, and `X-RateLimit-Reset` to help clients self-throttle. When the limit is exceeded, server returns `429 Too Many Requests` with `Retry-After`.
+- **Best practices**:
+  - Cache responses whenever possible (HTTP caches, CDN, or local memoization) to reduce repeated calls.
+  - Prefer bulk queries over many small ones.
+  - Implement client-side exponential backoff and respect `Retry-After`.
+  - Only poll as frequently as needed; avoid tight loops.
+
   
 ## Author
 Dr. Gianluca Chiaravalloti

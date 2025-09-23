@@ -10,6 +10,7 @@ import routeGetStart from './routes/testRoutes.js'
 import routeEarthquakes from './routes/earthquakesRoutes.js'
 import dbConnect from './config/mongoConfig.js'
 import { authenticateUser } from './middleware/authMiddleware.js'
+import rateLimiter from './middleware/rateLimiter.js'
 // import routeStations from './routes/stationsRoutes.js'
 // import routeGeospatial from './routes/geospatialRoutes.js'
 // import routeStats from './routes/statisticsRoutes.js'
@@ -46,6 +47,7 @@ const corsOptions = {
 app.use(cors(corsOptions))
 app.use(helmet())
 app.use(express.json())
+app.use('/api', rateLimiter)
 
 const port = process.env.PORT || 5000
 
