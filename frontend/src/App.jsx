@@ -8,18 +8,23 @@ import NavbarMenu from '@components/navbar/navbarMenu'
 import createStar from '@components/utils/createStar'
 
 import Home from '@pages/home/home'
+import Footer from '@components/footer/footer'
 import ExploreData from '@pages/exploreData/exploreData'
 import ApiAccess from '@pages/apiAccess/apiAccess'
 import Docs from './pages/docs/docs'
 import UseCases from '@pages/useCases/useCases'
 import About from '@pages/about/about'
+import Contact from './pages/contact/contact'
 import NoPage from '@pages/noPage/noPage'
 import SignUp from '@pages/auth/signUp'
 import SignIn from '@pages/auth/signIn'
+import Profile from './pages/profile/profile'
 import ForgotPassword from '@pages/auth/forgotPassword'
 import ResetPassword from '@pages/auth/resetPassword'
+import ChangePassword from './pages/auth/changePassword'
+import TermsAndConditions from './pages/termsAndConditions/termsAndConditions'
+import PrivacyPolicy from './pages/privacyPolicy/privacyPolicy'
 
-import Footer from '@components/footer/footer'
 import { AuthProvider } from '@components/modules/authProvider'
 import ScrollToTop from '@components/modules/scrollToTop'
 
@@ -50,11 +55,15 @@ function App() {
               <Route path='/docs' element={<Docs />} />
               <Route path='/use-cases' element={<UseCases />} />
               <Route path='/about' element={<About />} /> 
+              <Route path='/contact' element={<Contact />} /> 
               <Route path='/signup' element={<SignUp />} /> 
               <Route path='/signin' element={<SignIn />} /> 
+              <Route path='/profile' element={<Profile />} /> 
               <Route path='/forgot-password' element={<ForgotPassword />} /> 
-              {/* Deliberately encrypted with AES-256-CBC, so that the URL is not found by anyone */}
-              <Route path='/U2FsdGVkX188Vmt4gt5JTCUT9P8HbN3TUFkNxsrwWac=' element={<ResetPassword />} /> 
+              <Route path='/change-password' element={<ChangePassword />} /> 
+              <Route path='/reset-password/:token' element={<ResetPassword />} /> 
+              <Route path='/terms-and-conditions' element={<TermsAndConditions />} />
+              <Route path='/privacy-policy' element={<PrivacyPolicy />} />
               <Route path='*' element={<NoPage />} />
             </Routes>
             <Footer />

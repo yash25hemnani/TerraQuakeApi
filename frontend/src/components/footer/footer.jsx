@@ -36,7 +36,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className='bg-gradient-to-b from-violet-950 to-black text-slate-300 py-10 mt-20'>
+    <footer className='bg-gradient-to-b from-violet-950 to-black text-slate-300 py-10 mt-20 text-center'>
       <div className='max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 overflow-hidden'>
         {/* Logo + Description */}
         <div>
@@ -55,6 +55,7 @@ export default function Footer() {
               <a
                 href='/'
                 className='hover:text-violet-400 transition'
+                aria-label='Navigate to homepage'
               >
                 Home
               </a>
@@ -63,6 +64,7 @@ export default function Footer() {
               <a
                 href='/about'
                 className='hover:text-violet-400 transition'
+                aria-label='Navigate to about page'
               >
                 About
               </a>
@@ -71,6 +73,7 @@ export default function Footer() {
               <a
                 href='/docs'
                 className='hover:text-violet-400 transition'
+                aria-label='Navigate to docs page'
               >
                 Docs
               </a>
@@ -79,6 +82,7 @@ export default function Footer() {
               <a
                 href='/contribute'
                 className='hover:text-violet-400 transition'
+                aria-label='Navigate to contribute page'
               >
                 Contribute
               </a>
@@ -95,6 +99,7 @@ export default function Footer() {
                 href='https://github.com/nagcas/TerraQuakeApi'
                 target='_blank'
                 className='hover:text-violet-400 transition'
+                aria-label='Visit the TerraQuake API GitHub repositor'
               >
                 GitHub
               </a>
@@ -103,6 +108,7 @@ export default function Footer() {
               <a
                 href='/faq'
                 className='hover:text-violet-400 transition'
+                aria-label='Navigate to faq page'
               >
                 FAQ
               </a>
@@ -111,8 +117,27 @@ export default function Footer() {
               <a
                 href='/contact'
                 className='hover:text-violet-400 transition'
+                aria-label='Navigate to contact page'
               >
                 Contact
+              </a>
+            </li>
+            <li>
+              <a
+                href='/terms-and-conditions'
+                className='hover:text-violet-400 transition'
+                aria-label='Navigate to contact page'
+              >
+                Terms and conditios
+              </a>
+            </li>
+            <li>
+              <a
+                href='/privacy-policy'
+                className='hover:text-violet-400 transition'
+                aria-label='Navigate to contact page'
+              >
+                Privacy Policy
               </a>
             </li>
           </ul>
@@ -120,14 +145,15 @@ export default function Footer() {
 
         {/* Social / Sponsor */}
         <div>
-          <h3 className='text-white font-semibold mb-3'>Community & Socials</h3>
-          <div className='flex space-x-4'>
+          <h3 className='text-white font-semibold mb-6'>Community & Socials</h3>
+          <div className='flex space-x-4 justify-center'>
             {socials.map((item) => (
               <div key={item.title}>
                 <a
                   href={item.url}
                   target='_blank'
                   className='hover:text-violet-400 transition'
+                  aria-label={`Visit the TerraQuake API ${item.title} profile`}
                 >
                   {item.icon}
                 </a>
@@ -138,8 +164,8 @@ export default function Footer() {
       </div>
 
       {/* Copyright + Extended License */}
-      <div className='border-t border-white/10 mt-10 pt-6 text-center text-sm text-slate-400 space-y-4'>
-        <p>© {new Date().getFullYear()} TerraQuake API · All rights reserved</p>
+      <div className='border-t border-white/10 mt-10 pt-6 px-6 text-center text-sm text-slate-400 space-y-4'>
+        <p>&copy; {new Date().getFullYear()} TerraQuake API · All rights reserved</p>
         <p className='max-w-3xl mx-auto leading-relaxed px-4'>
           TerraQuake API is free software: you can redistribute it and/or modify
           it under the terms of the{' '}
@@ -148,6 +174,7 @@ export default function Footer() {
             target='_blank'
             rel='noopener noreferrer'
             className='hover:text-violet-400 transition'
+            aria-label='Visit the TerraQuake API licence'
           >
             GNU Affero General Public License
           </a>{' '}

@@ -1,29 +1,4 @@
-import User from '../models/userModels.js'
-import handleHttpError from '../utils/handleHttpError.js'
 import { getPositiveInt } from '../utils/httpQuery.js'
-
-/**
- * Utility to standardize API responses.
- *
- * @param {import("express").Request} req - Express request object
- * @param {string} message - Human-readable message
- * @param {Object|Object[]} data - Response payload
- * @param {number|null} [total=null] - Optional total count (defaults to data length)
- * @returns {Object} A consistent response object with metadata
- */
-const buildResponse = (req, message, data, total = null) => ({
-  success: true,
-  code: 200,
-  status: 'OK',
-  message,
-  total: total ?? data.length ?? 0,
-  data,
-  meta: {
-    method: req.method.toUpperCase(),
-    path: req.originalUrl,
-    timestamp: new Date().toISOString()
-  }
-})
 
 /**
  * Controller: List all users.
@@ -33,40 +8,44 @@ const buildResponse = (req, message, data, total = null) => ({
  * - Returns all users up to `limit`, excluding password field.
  * - Responds with `400 Unauthorized` if requester is not admin.
  */
-export const listAllUsers = async (req, res) => {
-  if (req.user === null || req.user.role.length === 0 || req.user.role[0] !== 'admin') {
-    return handleHttpError(
-      res,
-      'Unauthorized',
-      400
-    )
-  }
+export const listAllUsers = ({
+  User,
+  buildResponse,
+  handleHttpError
+}) => {
+  return async (req, res) => {
+    if (!req.user || req.user.role.length === 0 || req.user.role[0] !== 'admin') {
+      return handleHttpError(
+        res,
+        'Unauthorized',
+        400
+      )
+    }
+    const limit = getPositiveInt(req.query, 'limit', {
+      max: 100,
+      def: 50
+    })
 
-  const limit = getPositiveInt(req.query, 'limit', {
-    max: 100,
-    def: 50
-  })
+    if (!limit) {
+      return handleHttpError(
+        res,
+        'Not Found',
+        400
+      )
+    }
+    try {
+      const documents = await User.find({})
+        .limit(limit)
+        .lean()
 
-  if (!limit) {
-    return handleHttpError(
-      res,
-      'Not Found',
-      400
-    )
-  }
-
-  try {
-    const documents = await User.find({})
-      .select('-password')
-      .limit(limit)
-
-    return res.status(200).json(buildResponse(req, '', documents))
-  } catch (error) {
-    console.error('Error in the userControllers/listAllUsers controller:', error.message)
-    return handleHttpError(
-      res,
-      error.message.includes('HTTP error') ? error.message : undefined
-    )
+      res.status(200).json(buildResponse(req, '', documents, null, {}))
+    } catch (error) {
+      console.error('Error in the userControllers/listAllUsers controller:', error.message)
+      handleHttpError(
+        res,
+        error.message.includes('HTTP error') ? error.message : undefined
+      )
+    }
   }
 }
 
@@ -78,44 +57,42 @@ export const listAllUsers = async (req, res) => {
  * - Returns user document without password.
  * - Responds with `400 Not Found` if no such user exists.
  */
-export const updateRoleById = async (req, res) => {
-  if (req.user === null || req.user.role.length === 0 || req.user.role[0] !== 'admin') {
-    return handleHttpError(
-      res,
-      'Unauthorized',
-      400
-    )
-  }
-
-  if (!req.body.role || (req.body.role !== 'admin' && req.body.role !== 'user')) {
-    return handleHttpError(
-      res,
-      'Bad Request',
-      400
-    )
-  }
-
-  const { id } = req.params
-
-  try {
-    const user = await User.findById(id)
-    if (!user) {
+export const updateRoleById = ({
+  User,
+  buildResponse,
+  handleHttpError
+}) => {
+  return async (req, res) => {
+    if (!req.user || req.user.role.length === 0 || req.user.role[0] !== 'admin') {
       return handleHttpError(
         res,
-        'Not Found',
+        'Unauthorized',
         400
       )
     }
-    user.role = [req.body.role]
-    await user.save()
 
-    return res.status(200).json(buildResponse(req, '', user))
-  } catch (error) {
-    console.error('Error in the userControllers/getRoleById controller:', error.message)
-    return handleHttpError(
-      res,
-      error.message.includes('HTTP error') ? error.message : undefined
-    )
+    const { id } = req.params
+
+    try {
+      const user = await User.findById(id)
+      if (!user) {
+        return handleHttpError(
+          res,
+          'Not Found',
+          400
+        )
+      }
+      user.role = [req.body.role]
+      await user.save()
+
+      res.status(200).json(buildResponse(req, '', user, null, {}))
+    } catch (error) {
+      console.error('Error in the userControllers/getRoleById controller:', error.message)
+      handleHttpError(
+        res,
+        error.message.includes('HTTP error') ? error.message : undefined
+      )
+    }
   }
 }
 
@@ -127,31 +104,37 @@ export const updateRoleById = async (req, res) => {
  * - Responds with `400 Unauthorized` if no user is attached to request.
  * - Responds with `400 Not Found` if the user record does not exist.
  */
-export const getCurrentUserData = async (req, res) => {
-  if (req.user === null || req.user.role.length === 0) {
-    return handleHttpError(
-      res,
-      'Unauthorized',
-      400
-    )
-  }
-
-  try {
-    const user = await User.findById(req.user._id).select('-password')
-    if (!user) {
+export const getCurrentUserData = ({
+  User,
+  buildResponse,
+  handleHttpError
+}) => {
+  return async (req, res) => {
+    if (!req.user || req.user?.role.length === 0) {
       return handleHttpError(
         res,
-        'Not Found',
+        'Unauthorized',
         400
       )
     }
-    return res.status(200).json(buildResponse(req, '', user))
-  } catch (error) {
-    console.error('Error in the userControllers/getCurrentUserData controller:', error.message)
-    return handleHttpError(
-      res,
-      error.message.includes('HTTP error') ? error.message : undefined
-    )
+
+    try {
+      const user = await User.findById(req.user._id).lean()
+      if (!user) {
+        return handleHttpError(
+          res,
+          'Not Found',
+          400
+        )
+      }
+      res.status(200).json(buildResponse(req, '', user, null, {}))
+    } catch (error) {
+      console.error('Error in the userControllers/getCurrentUserData controller:', error.message)
+      handleHttpError(
+        res,
+        error.message.includes('HTTP error') ? error.message : undefined
+      )
+    }
   }
 }
 
@@ -164,44 +147,45 @@ export const getCurrentUserData = async (req, res) => {
  * - Excludes password field in response.
  * - Responds with `400` if user not found or validation fails.
  */
-export const updateCurrentUserData = async (req, res) => {
-  if (req.user === null || req.user.role.length === 0) {
-    return handleHttpError(
-      res,
-      'Unauthorized',
-      400
-    )
-  }
-
-  const allowedUpdates = ['name', 'email', 'password']
-  const updates = {}
-  for (const key of allowedUpdates) {
-    if (req.body[key] !== undefined) {
-      updates[key] = req.body[key]
-    }
-  }
-
-  try {
-    const user = await User.findById(req.user._id)
-
-    if (!user) {
+export const updateCurrentUserData = ({
+  User,
+  buildResponse,
+  handleHttpError,
+  matchedData
+}) => {
+  return async (req, res) => {
+    if (!req.user || req.user.role.length === 0) {
       return handleHttpError(
         res,
-        'Could not find user',
+        'Unauthorized',
         400
       )
     }
+    const updates = matchedData(req)
+    try {
+      const user = await User.findById(req.user._id).select('+password')
 
-    user.set(updates)
-    await user.save()
+      if (!user) {
+        return handleHttpError(
+          res,
+          'Not Found',
+          400
+        )
+      }
 
-    return res.status(200).json(buildResponse(req, '', user))
-  } catch (error) {
-    console.error('Error in the userControllers/updateCurrentUserData controller:', error.message)
-    return handleHttpError(
-      res,
-      error.message.includes('HTTP error') ? error.message : undefined
-    )
+      user.set(updates)
+      const savedUser = await user.save()
+      const userResponse = savedUser.toObject()
+      delete userResponse.password
+
+      res.status(200).json(buildResponse(req, '', userResponse, null, {}))
+    } catch (error) {
+      console.error('Error in the userControllers/updateCurrentUserData controller:', error.message)
+      handleHttpError(
+        res,
+        error.message.includes('HTTP error') ? error.message : undefined
+      )
+    }
   }
 }
 
@@ -213,30 +197,35 @@ export const updateCurrentUserData = async (req, res) => {
  * - Responds with deletion result.
  * - Responds with `400 Not Found` if user does not exist.
  */
-export const deleteCurrentUser = async (req, res) => {
-  if (req.user === null || req.user.role.length === 0) {
-    return handleHttpError(
-      res,
-      'Unauthorized',
-      400
-    )
-  }
-
-  try {
-    const user = await User.deleteOne({ _id: req.user._id })
-    if (!user) {
+export const deleteCurrentUser = ({
+  User,
+  buildResponse,
+  handleHttpError
+}) => {
+  return async (req, res) => {
+    if (!req.user || req.user.role.length === 0) {
       return handleHttpError(
         res,
-        'Not Found',
+        'Unauthorized',
         400
       )
     }
-    return res.status(200).json(buildResponse(req, '', user))
-  } catch (error) {
-    console.error('Error in the userControllers/getCurrentUserData controller:', error.message)
-    return handleHttpError(
-      res,
-      error.message.includes('HTTP error') ? error.message : undefined
-    )
+    try {
+      const user = await User.deleteOne({ _id: req.user._id })
+      if (!user) {
+        return handleHttpError(
+          res,
+          'Not Found',
+          400
+        )
+      }
+      res.status(200).json(buildResponse(req, '', user, null, {}))
+    } catch (error) {
+      console.error('Error in the userControllers/getCurrentUserData controller:', error.message)
+      handleHttpError(
+        res,
+        error.message.includes('HTTP error') ? error.message : undefined
+      )
+    }
   }
 }

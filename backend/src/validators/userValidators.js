@@ -6,30 +6,37 @@ export const validatorSignUp = [
     .exists()
     .notEmpty()
     .isLength({ min: 3, max: 99 })
-    .withMessage('Please enter a valid username!'),
+    .withMessage('Please enter a valid username (3–99 characters).'),
 
   check('email')
     .exists()
     .notEmpty()
     .isEmail()
-    .withMessage('Please enter a valid email address!'),
+    .withMessage('Please enter a valid email address.'),
 
-  check('role')
-    .notEmpty(),
+  check('role').notEmpty(),
 
   check('password')
     .exists()
     .notEmpty()
-    .isLength({ min: 8, max: 15 }) // consiglio minimo 8
-    .withMessage('Password must be between 8 and 15 characters long!')
+    .isLength({ min: 8, max: 64 })
+    .withMessage('Password must be between 8 and 64 characters long.')
     .matches(/^[A-Z]/)
-    .withMessage('Password must start with an uppercase letter!')
+    .withMessage('Password must start with an uppercase letter.')
     .matches(/[^A-Za-z0-9]/)
-    .withMessage('Password must contain at least one special character!'),
+    .withMessage('Password must contain at least one special character.'),
 
-  (req, res, next) => {
-    return validateResults(req, res, next)
-  }
+  check('terms')
+    .exists()
+    .withMessage('Terms field is required.')
+    .custom((value) => {
+      if (value !== true && value !== 'true' && value !== 1 && value !== 'on') {
+        throw new Error('You must accept the Terms and Conditions.')
+      }
+      return true
+    }),
+
+  (req, res, next) => validateResults(req, res, next)
 ]
 
 export const validatorSignIn = [
@@ -37,66 +44,116 @@ export const validatorSignIn = [
     .exists()
     .notEmpty()
     .isEmail()
-    .withMessage('Please enter a valid email address!'),
+    .withMessage('Please enter a valid email address.'),
 
   check('password')
     .exists()
     .notEmpty()
-    .isLength({ min: 3, max: 15 })
-    .withMessage('Please enter a valid password!'),
+    .isLength({ min: 8, max: 64 })
+    .withMessage('Password must be between 8 and 64 characters long.'),
 
-  (req, res, next) => {
-    return validateResults(req, res, next)
-  }
+  (req, res, next) => validateResults(req, res, next)
 ]
 
 export const validatorForgotPassword = [
-  check('email').exists().notEmpty().isEmail().withMessage('Please enter a valid email address'),
-  (req, res, next) => {
-    return validateResults(req, res, next)
-  }
+  check('email')
+    .exists()
+    .notEmpty()
+    .isEmail()
+    .withMessage('Please enter a valid email address.'),
+  (req, res, next) => validateResults(req, res, next)
 ]
 
 export const validatorResetPassword = [
-  check('email').exists().notEmpty().isEmail().withMessage('Please enter a valid email address'),
-  check('password').exists().notEmpty().isLength({ min: 8 }).withMessage('Password must be at least 8 characters'),
-  (req, res, next) => {
-    return validateResults(req, res, next)
-  }
+  check('password1')
+    .exists()
+    .withMessage('Password is required.')
+    .notEmpty()
+    .withMessage('Password cannot be empty.')
+    .isLength({ min: 8, max: 64 })
+    .withMessage('Password must be between 8 and 64 characters long.')
+    .matches(/[A-Z]/)
+    .withMessage('Password must contain at least one uppercase letter.')
+    .matches(/\d/)
+    .withMessage('Password must contain at least one number.'),
+
+  check('password2')
+    .exists()
+    .withMessage('Confirm password is required.')
+    .custom((value, { req }) => value === req.body.password1)
+    .withMessage('Passwords must match.'),
+
+  (req, res, next) => validateResults(req, res, next)
+]
+
+export const validatorChangePassword = [
+  check('passwordOld')
+    .exists()
+    .withMessage('Current password is required.')
+    .notEmpty()
+    .withMessage('Current password cannot be empty.')
+    .isLength({ min: 8, max: 64 })
+    .withMessage('Current password must be between 8 and 64 characters long.')
+    .matches(/[A-Z]/)
+    .withMessage('Current password must contain at least one uppercase letter.')
+    .matches(/\d/)
+    .withMessage('Current password must contain at least one number.'),
+
+  check('passwordNew')
+    .exists()
+    .withMessage('New password is required.')
+    .notEmpty()
+    .withMessage('New password cannot be empty.')
+    .isLength({ min: 8, max: 64 })
+    .withMessage('New password must be between 8 and 64 characters long.')
+    .matches(/[A-Z]/)
+    .withMessage('New password must contain at least one uppercase letter.')
+    .matches(/\d/)
+    .withMessage('New password must contain at least one number.'),
+
+  check('confirmPassword')
+    .exists()
+    .withMessage('Confirm password is required.')
+    .custom((value, { req }) => value === req.body.passwordNew)
+    .withMessage('Passwords must match.'),
+
+  (req, res, next) => validateResults(req, res, next)
 ]
 
 export const validatorGetItem = [
-  check('userId')
-    .exists()
-    .notEmpty()
-    .isMongoId(),
+  check('userId').exists().notEmpty().isMongoId(),
 
-  (req, res, next) => {
-    return validateResults(req, res, next)
-  }
+  (req, res, next) => validateResults(req, res, next)
 ]
 
 export const validatorUpdateCurrentUserData = [
   check('name')
     .optional()
     .isLength({ min: 3, max: 99 })
-    .withMessage('Please enter a valid username!'),
+    .withMessage('Please enter a valid username (3–99 characters).'),
 
   check('email')
     .optional()
     .isEmail()
-    .withMessage('Please enter a valid email address!'),
+    .withMessage('Please enter a valid email address.'),
 
   check('password')
     .optional()
-    .isLength({ min: 8, max: 15 })
-    .withMessage('Password must be between 8 and 15 characters long!')
+    .isLength({ min: 8, max: 64 })
+    .withMessage('Password must be between 8 and 64 characters long.')
     .matches(/^[A-Z]/)
-    .withMessage('Password must start with an uppercase letter!')
+    .withMessage('Password must start with an uppercase letter.')
     .matches(/[^A-Za-z0-9]/)
-    .withMessage('Password must contain at least one special character!'),
+    .withMessage('Password must contain at least one special character.'),
 
-  (req, res, next) => {
-    return validateResults(req, res, next)
-  }
+  (req, res, next) => validateResults(req, res, next)
+]
+
+export const validatorUpdateRoleById = [
+  check('role')
+    .exists()
+    .isIn(['admin', 'user', 'contributor'])
+    .withMessage('Role must be either admin, user, or contributor.'),
+
+  (req, res, next) => validateResults(req, res, next)
 ]

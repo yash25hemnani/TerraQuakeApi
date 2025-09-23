@@ -1,196 +1,219 @@
-import fs from 'fs'
-import path, { dirname } from 'path'
+import dotenv from 'dotenv'
+import jwt from 'jsonwebtoken'
+import bcrypt from 'bcryptjs'
 
-import { fileURLToPath } from 'url'
-import { UAParser } from 'ua-parser-js'
-import User from '../models/userModels.js'
-import { matchedData } from 'express-validator'
-import handleHttpError from '../utils/handleHttpError.js'
-import { encrypt, compare } from '../utils/handlePassword.js'
-import { tokenSign } from '../utils/handleJwt.js'
-import nodemailer from 'nodemailer'
+dotenv.config()
 
-// NOTE: funzione per la registrazione di un utente
-// Questa funzione gestisce la registrazione di un nuovo utente.
-// Valida i dati ricevuti, cifra la password, salva l'utente nel database
-// e restituisce un token JWT insieme ai dati utente (escludendo la password).
-export const signUp = async (req, res) => {
-  try {
-    const data = matchedData(req)
+/**
+ * Controller: Register a new user.
+ *
+ * - Creates a new user document in the database.
+ * - Returns the newly created user data without the password.
+ * - Responds with `400 Bad Request` if validation fails or user already exists.
+ * - Sends a mail to user on registration
+ */
+export const signUp = ({ User, buildResponse, handleHttpError, matchedData, sendEmailRegister }) => {
+  return async (req, res) => {
+    try {
+      const data = matchedData(req)
+      const newUser = new User(data)
+      const savedUser = await newUser.save()
+      const user = savedUser.toObject()
+      delete user.password
 
-    const newUser = new User(data)
-    const savedUser = await newUser.save()
-    const user = savedUser.toObject()
-    delete user.password
+      await sendEmailRegister(user)
 
-    res.status(200).json(
-      {
-        success: true,
-        code: 200,
-        status: 'OK',
-        message: 'Registration successful',
-        data: user,
-        meta: {
-          method: req.method,
-          path: req.originalUrl,
-          timestamp: new Date().toISOString()
-        }
-      }
-    )
-  } catch (error) {
-    console.error(error.message)
-    handleHttpError(res, 'User with this email already exists !', 409)
+      res.status(200).json(buildResponse(req, 'Registration successful', user, null, {}))
+    } catch (error) {
+      console.error(error.message)
+      handleHttpError(res, 'User with this email already exists !', 409)
+    }
   }
 }
 
-// NOTE: funzione per il login di un utente
-// Questa funzione consente a un utente registrato di effettuare il login.
-// Verifica l'esistenza dell'email nel database, confronta la password fornita
-// con quella salvata (cifrata), e se i dati sono validi restituisce un token JWT
-// insieme alle informazioni dell'utente (escludendo la password).
-export const signIn = async (req, res) => {
-  try {
-    req = matchedData(req)
+/**
+ * Controller: Authenticate user (sign in).
+ *
+ * - Looks up the user by email in the database.
+ * - Responds with `404 Not Found` if no user exists with the given email.
+ * - Compares the provided password with the stored hashed password.
+ * - Responds with `401 Unauthorized` if the password is incorrect.
+ * - Removes password field from the user object before returning.
+ * - Generates a signed authentication token and includes it in the response.
+ * - Responds with `200 OK` and user data + token on successful login.
+ * - Responds with `500 Internal Server Error` if an unexpected error occurs.
+ */
+export const signIn = ({ User, buildResponse, handleHttpError, tokenSign, matchedData, compare }) => {
+  return async (req, res) => {
+    try {
+      req.body = matchedData(req)
 
-    const user = await User.findOne({ email: req.email }).select('password name email role')
-
-    if (!user) {
-      handleHttpError(res, 'User not found. Please check the email address or register to create an account', 404)
-      return
-    }
-
-    const hashPassword = user.password
-    const check = await compare(req.password, hashPassword)
-
-    if (!check) {
-      handleHttpError(res, 'Incorrect password. Please check and try again, or use the password recovery feature', 401)
-      return
-    }
-
-    user.set('password', undefined, { strict: false })
-
-    res.status(200).json({
-      success: true,
-      code: 200,
-      status: 'OK',
-      message: 'Logged in successfully !',
-      user,
-      token: await tokenSign(user),
-      meta: {
-        method: req.method,
-        path: req.originalUrl,
-        timestamp: new Date().toISOString()
+      const user = await User.findOne({ email: req.body.email }).select('password name email role').lean()
+      if (!user) {
+        handleHttpError(res, 'User not found. Please check the email address or register to create an account', 404)
+        return
       }
-    })
-  } catch (error) {
-    console.error(error.message)
-    handleHttpError(res, 'An internal server error occurred. Please try again later or contact support if the problem persists')
+
+      const check = await compare(req.body.password, user.password)
+      if (!check) {
+        handleHttpError(res, 'Incorrect password. Please check and try again, or use the password recovery feature', 401)
+        return
+      }
+      delete user.password
+
+      res.status(200).json(buildResponse(req, 'Logged in successfully!', user, null, {
+        token: await tokenSign(user)
+      }))
+    } catch (error) {
+      console.error(error.message)
+      handleHttpError(res, 'An internal server error occurred. Please try again later or contact support if the problem persists')
+    }
   }
 }
 
 // NOTE: Funzione per il recupero della password
-export const forgotPassword = async (req, res) => {
-  try {
-    const validatedData = matchedData(req)
-    const user = await User.findOne({ email: validatedData.email })
-    const userAgent = req.header('User-Agent')
-    const parser = new UAParser(userAgent)
+export const forgotPassword = ({ User, buildResponse, matchedData, handleHttpError, sendForgotPassword }) => {
+  return async (req, res) => {
+    try {
+      req.body = matchedData(req)
 
-    // Create a test account or replace with real credentials. (replace it with actual email in production)
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.ethereal.email',
-      port: 587,
-      auth: {
-        user: 'lonnie.mante78@ethereal.email',
-        pass: 'pvjJDsQyt34Yf5aasx'
+      const user = await User.findOne({ email: req.body.email }).select('email').lean()
+      if (!user) {
+        handleHttpError(res, 'User not found. Please check the email address or register to create an account', 404)
+        return
       }
-    })
 
-    // Emulate __dirname
-    const __filename = fileURLToPath(import.meta.url)
-    const __dirname = dirname(__filename)
-
-    // TODO: CHANGE 'Action URL' to replace the entire URL of password reset when email is set up.
-    // TODO: Update references to support url and other variables in password reset html form as well as text form
-    // Read the HTML file content
-    const htmlPath = path.join(__dirname, '../config/PasswordResetEmailFormat.html')
-    let htmlContent = await fs.promises.readFile(htmlPath, 'utf-8')
-    htmlContent = htmlContent
-      .replace('{{username}}', validatedData.email)
-      .replace('{{operating_system}}', parser.getResult().os.name)
-      .replace('{{browser_name}}', parser.getResult().browser.name)
-      .replace('{{action_url}}', req.originalUrl)
-      .replace('{{support_url}}', 'support@terraquake.com')
-      .replace('{{full_url}}', `${req.protocol}://${req.get('host')}${req.originalUrl}`);
-
-    // Wrap in an async IIFE so we can use await.
-    (async () => {
-      const info = await transporter.sendMail({
-        from: '"TerraQuake Support" <support@terraquake.com>',
-        to: `${req.body.email}`,
-        subject: 'Password Change Request',
-        html: htmlContent // HTML body
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+        expiresIn: '15m'
       })
 
-      console.log('Message sent:', info.messageId)
-      console.log(nodemailer.getTestMessageUrl(info))
-    })()
+      await sendForgotPassword(user, token)
 
-    res.status(200).json({
-      success: true,
-      code: 200,
-      status: 'OK',
-      message: 'Redirect',
-      user,
-      meta: {
-        method: req.method,
-        path: req.originalUrl,
-        timestamp: new Date().toISOString()
-      }
-    })
-  } catch (error) {
-    console.error(error.message)
-    handleHttpError(res, null, 400)
+      res.status(200).json(buildResponse(req, 'We’ve sent you an email with instructions to reset your password', user, null, {}))
+    } catch (error) {
+      console.error(error.message)
+      handleHttpError(res, null, 400)
+    }
   }
 }
 
-export const resetPassword = async (req, res) => {
-  try {
-    const data = matchedData(req)
-    const { email, password: newUserPassword } = data
+/**
+ * Controller: Reset user password.
+ *
+ * - Finds the user by email in the database.
+ * - Returns 404 if the user is not found.
+ * - Checks if the new password matches the old one; returns 409 if it does.
+ * - Updates the user's password and saves it.
+ * - Excludes the password field from the response.
+ * - Returns 200 with success message on success.
+ * - Returns 500 if an unexpected error occurs.
+ */
+export const resetPassword = ({ User, handleHttpError, buildResponse }) => {
+  return async (req, res) => {
+    try {
+      const { token } = req.params
+      const { password1, password2 } = req.body
 
-    const user = await User.findOne({ email })
-    if (!user) {
-      return handleHttpError(res, 'User not found', 404)
-    }
-
-    // confronto con la vecchia password
-    const isSame = await compare(newUserPassword, user.password)
-    if (isSame) {
-      return handleHttpError(
-        res,
-        'New password cannot be the same as the old password!',
-        409
-      )
-    }
-
-    // genera la nuova password hashata con la funzione encrypt
-    user.password = await encrypt(newUserPassword)
-    await user.save()
-
-    res.status(200).json({
-      success: true,
-      code: 200,
-      status: 'Success',
-      message: 'Password changed successfully!',
-      meta: {
-        method: req.method,
-        path: req.originalUrl,
-        timestamp: new Date().toISOString()
+      if (password1 !== password2) {
+        return handleHttpError(res, 'Passwords must match', 400)
       }
-    })
-  } catch (error) {
-    console.error(error)
-    handleHttpError(res, 'Error resetting password', 500)
+
+      let decoded
+      try {
+        decoded = jwt.verify(token, process.env.JWT_SECRET)
+      } catch (err) {
+        if (err.name === 'TokenExpiredError') {
+          return handleHttpError(res, 'Reset link expired. Please request a new one.', 401)
+        }
+        return handleHttpError(res, 'Invalid or missing token', 400)
+      }
+
+      const user = await User.findById(decoded.id).select('+password')
+      if (!user) {
+        return handleHttpError(res, 'User not found', 404)
+      }
+
+      const isSame = await bcrypt.compare(password1, user.password)
+      if (isSame) {
+        return handleHttpError(res, 'New password cannot be the same as the old one!', 409)
+      }
+
+      user.password = password1
+      await user.save()
+
+      const userResponseObject = user.toObject()
+      delete userResponseObject.password
+
+      res.status(200).json(buildResponse(req, 'Password successfully reset!', userResponseObject, null, {}))
+    } catch (error) {
+      console.error(error.message)
+      handleHttpError(res, 'Error resetting password', 500)
+    }
+  }
+}
+
+/**
+ * Controller: Change user password.
+ *
+ * - Retrieves the logged-in user from JWT payload (req.user.id).
+ * - Validates that all password fields are present.
+ * - Checks if new password and confirmation match.
+ * - Verifies the current password.
+ * - Ensures the new password is different from the old one.
+ * - Updates the user's password and saves it.
+ * - Excludes the password from the response.
+ * - Returns 200 with a success message on success.
+ * - Returns appropriate status codes and messages for errors.
+ */
+export const changePassword = ({ User, handleHttpError, buildResponse }) => {
+  return async (req, res) => {
+    try {
+      const { passwordOld, passwordNew, confirmPassword } = req.body
+
+      // Check that all password fields are provided
+      if (!passwordOld || !passwordNew || !confirmPassword) {
+        return handleHttpError(res, 'All password fields are required', 400)
+      }
+
+      // Check if new password and confirmation match
+      if (passwordNew !== confirmPassword) {
+        return handleHttpError(res, 'Passwords must match', 400)
+      }
+
+      // Get logged-in user from JWT payload
+      const userId = req.user._id || req.user.id
+      const user = await User.findById(userId).select('+password')
+      if (!user) {
+        return handleHttpError(res, 'User not found', 404)
+      }
+
+      // Verify current password
+      const isMatch = await bcrypt.compare(passwordOld, user.password)
+      if (!isMatch) {
+        return handleHttpError(res, 'Current password is incorrect', 400)
+      }
+
+      // Check that new password is different from the old password
+      const isSame = await bcrypt.compare(passwordNew, user.password)
+      if (isSame) {
+        return handleHttpError(res, 'New password cannot be the same as the old one!', 409)
+      }
+
+      // Update user's password
+      user.password = passwordNew
+      await user.save()
+
+      // Remove password field from response object
+      const userResponseObject = user.toObject()
+      delete userResponseObject.password
+
+      // Send success response
+      res.status(200).json(
+        buildResponse(req, 'Password successfully changed!', userResponseObject, null, {})
+      )
+    } catch (error) {
+      console.error(error)
+      handleHttpError(res, 'Error changing password, please try again later', 500)
+    }
   }
 }

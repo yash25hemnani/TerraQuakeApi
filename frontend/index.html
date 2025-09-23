@@ -1,38 +1,181 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <!-- Charset & Viewport -->
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <!-- App Identity -->
-    <meta name="application-name" content="Terraquake" />
-    <meta name="author" content="Gianluca Chiaravalloti" />
-    <meta name="description"
-      content="A training and experimentation environment powered by real seismic events from official sources." />
-    
-    <!-- SEO Basics -->
-    <meta name="robots" content="index, follow" />
-    <meta name="keywords"
-      content="Terraquake, Seismic Training, Earthquake Data, Real Earthquake Events, Seismology, Machine Learning, Training Environment" />
-    
-    <!-- Theme & Mobile -->
-    <meta name="theme-color" content="#0f172a" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="Terraquake" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
 
-    <!-- Open Graph and Twitter images -->
-    <meta property="og:image" content="/images/tracciato.png" />
-    <meta name="twitter:image" content="/images/tracciato.png" />
-    
-    <!-- Favicon (example paths, customize) -->
-    <link rel="icon" type="image/png" href="/images/favicon.ico" />
-    <link rel="apple-touch-icon" href="/images/favicon.ico" />
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-NPXZHH6D');
+    </script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Title TerraQuake API -->
+    <title>TerraQuake API - Real Seismic Events & Training Environment</title>
+
+    <!-- App Identity -->
+    <meta
+      name="application-name"
+      content="TerraQuake API"
+    />
+    <meta
+      name="author"
+      content="Gianluca Chiaravalloti"
+    />
+    <meta
+      name="description"
+      content="TerraQuake is a training and experimentation environment powered by real seismic events from official sources. Explore earthquake data and seismology tools."
+    />
+
+    <!-- SEO Basics -->
+    <meta
+      name="robots"
+      content="index, follow"
+    />
+    <meta
+      name="keywords"
+      content="TerraQuake, api, Seismic Training, Earthquake Data, Real Earthquake Events, Seismology, Machine Learning, Training Environment"
+    />
+
+    <!-- Open Graph -->
+    <meta
+      property="og:title"
+      content="TerraQuake API - Real Seismic Events & Training Environment"
+    />
+    <meta
+      property="og:description"
+      content="Explore real earthquake events from official sources. TerraQuake API is designed for training and experimentation with seismic data."
+    />
+    <meta
+      property="og:type"
+      content="website"
+    />
+    <meta
+      property="og:url"
+      content="https://terraquakeapi.com/"
+    />
+    <meta
+      property="og:image"
+      content="/images/tracciato.png"
+    />
+
+    <!-- Twitter -->
+    <meta
+      name="twitter:card"
+      content="summary_large_image"
+    />
+    <meta
+      name="twitter:title"
+      content="TerraQuake API - Real Seismic Events & Training Environment"
+    />
+    <meta
+      name="twitter:description"
+      content="Explore real earthquake events from official sources with TerraQuake API, a seismic training and experimentation platform."
+    />
+    <meta
+      name="twitter:image"
+      content="/images/tracciato.png"
+    />
+    <meta
+      name="twitter:site"
+      content="@nagcas"
+    />
+    <meta
+      name="twitter:creator"
+      content="@nagcas"
+    />
+
+    <!-- Canonical URL -->
+    <link
+      rel="canonical"
+      href="https://terraquakeapi.com"
+    />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "TerraQuake API",
+        "url": "https://terraquakeapi.com",
+        "description": "A training and experimentation environment powered by real seismic events from official sources.",
+        "author": {
+          "@type": "Person",
+          "name": "Gianluca Chiaravalloti"
+        }
+      }
+    </script>
+
+    <!-- Theme & Mobile -->
+    <meta
+      name="theme-color"
+      content="#0f172a"
+    />
+    <meta
+      name="mobile-web-app-capable"
+      content="yes"
+    />
+    <meta
+      name="apple-mobile-web-app-title"
+      content="TerraQuake API"
+    />
+    <meta
+      name="apple-mobile-web-app-capable"
+      content="yes"
+    />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/images/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="48x48"
+      href="/images/favicon-48x48.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/images/apple-touch-icon.png"
+    />
   </head>
   <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-NPXZHH6D"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+     
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <script
+      type="module"
+      src="/src/main.jsx"
+    ></script>
   </body>
 </html>

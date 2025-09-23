@@ -12,24 +12,27 @@ export default function ApiDocsEarthquakes() {
 	const endpoints = [
 		{
 			title: "recent",
-			description: `This endpoint retrieves all seismic events that occurred today from the TerraQuake API, based on UTC time. It provides users with real-time insight into ongoing seismic activity for the current day. The response includes detailed information such as magnitude, location, depth, time, and unique event ID.
+			description: `
+This endpoint retrieves all recent seismic events from the beginning of the year until today via the TerraQuake API sorted from the most recent to the least recent. It provides users with insight into ongoing seismic activity for the current year. The response includes details such as magnitude, location, depth, time, and unique event ID.
+
       
         Query Parameters:
           
       - limit: (Optional) The number of earthquake events to return. Defaults to 50 if not specified.`,
 			query: "?limit=50",
-			example: "/api/earthquakes/recent?limit=50",
+			example: "/v1/earthquakes/recent?limit=50",
 			method: "GET"
 		},
 		{
 			title: "today",
-			description: `This endpoint retrieves all seismic events that occurred today (from 00:00 UTC to the current time) from the TerraQuake API. It allows users to monitor real-time seismic activity and provides a daily overview of ongoing earthquakes. The response includes detailed information such as magnitude, location, depth, event time, and coordinates.
+			description: `
+This endpoint retrieves all seismic events that occurred today (from 00:00 UTC to the current time) from the TerraQuake API. It allows users to monitor real-time seismic activity and provides a daily overview of ongoing earthquakes. The response includes detailed information such as magnitude, location, depth, event time, and coordinates.
       
         Query Parameters:
         
       - limit: (Optional) The number of earthquake events to return. Default is 50 if not provided.`,
       query: '?limit=50',
-      example: '/api/earthquakes/today?limit=50',
+      example: '/v1/earthquakes/today?limit=50',
       method: 'GET',
     },
     {
@@ -42,7 +45,7 @@ It allows users to monitor and analyze recent seismic activity over the past wee
         
       - limit: (Optional) The number of earthquake events to return. Default is 50 if not specified.`,
       query: '?limit=50',
-      example: '/api/earthquakes/last-week?limit=50',
+      example: '/v1/earthquakes/last-week?limit=50',
       method: 'GET',
     },
     {
@@ -55,47 +58,50 @@ It allows users to explore historical earthquake data for a given period. The re
         
       - year: (Required) The target year (e.g., 2025).
       - month: (Required) The target month in numeric format (01 to 12).
-      - limit: (Optional) The number of events to return. Default is 10 if not specified.`,
+      - limit: (Optional) The number of events to return. Default is 50 if not specified.`,
       query: '?year=2025&month=03&limit=50',
-      example: '/api/earthquakes/month?year=2025&month=03&limit=50',
+      example: '/v1/earthquakes/month?year=2025&month=03&limit=50',
       method: 'GET',
     },
     {
       title: 'location',
       description: `
-This endpoint retrieves seismic events near a specific geographical location using latitude, longitude, and an optional search radius.
-It allows users to filter recent earthquake events based on proximity to a point of interest.
+This endpoint fetches seismic events close to a given geographical location, defined by latitude and longitude, with an optional search radius. It retrieves earthquakes that occurred from the beginning of the year up to the current date, allowing users to filter recent events based on their proximity to a specific point of interest.
 
         Query Parameters:
 
-    - lat: (Required) The latitude of the location (e.g., 41.7142).
-    - lon: (Required) The longitude of the location (e.g., 15.9577).
-    - radius: (Optional) The search radius in kilometers. Default is 10 km if not specified.
-    - limit: (Optional) The number of events to return. If not specified, it returns all matching events.
+    - latitude: (Required) The latitude of the location (e.g., 40.835459).
+    - longitude: (Required) The longitude of the location (e.g., 14.117358).
+    - radius: (Optional) The search radius in kilometers. Default is 50 km if not specified.
+    - limit: (Optional) The number of events to return. If not specified, it returns all matching events. 
+	   Default is 50 km if not specified.
 
 The response includes detailed information for each event such as magnitude, coordinates, depth, and time of occurrence.`,
-      query: '?lon=15.9577&lat=41.7142&radius=50',
-      example: '/api/earthquakes/location?lon=15.9577&lat=41.7142&radius=10&limit=50',
+      query: '?latitude=40.835459&longitude=14.117358&radius=50&limit=50',
+      example: '/v1/earthquakes/location?latitude=40.835459&longitude=14.117358&radius=50&limit=50',
       method: 'GET',
     },
     {
       title: 'region',
       description: `
-This endpoint retrieves all seismic events that occurred within a specific Italian region from the TerraQuake API.
-It allows users to filter earthquakes by regional boundaries for localized seismic analysis. The response includes key data such as magnitude, location, depth, and time.
+This endpoint retrieves all seismic events that occurred within a specific Italian region from the TerraQuake API, 
+from the start of the current year up to today. It allows users to filter earthquakes by regional boundaries 
+for localized seismic analysis. The response includes key data such as magnitude, location, depth, and time.
+
       
         Query Parameters:
         
       - region: (Required) The name of the Italian region to filter by (e.g., Campania, Sicilia, Lazio). Case-insensitive.
       - limit: (Optional) The number of events to return. Defaults to 50 if not specified.`,
       query: '?region=Campania&limit=50',
-      example: '/api/earthquakes/region?region=Campania&limit=50',
+      example: '/v1/earthquakes/region?region=Campania&limit=50',
       method: 'GET',
     },
     {
       title: 'depth',
       description: `
-This endpoint retrieves all seismic events that occurred at a specific focal depth, measured in kilometers, from the TerraQuake API.
+This endpoint retrieves all seismic events that occurred at a specific focal depth, measured in kilometers, 
+from the TerraQuake API, from the start of the current year up to today. 
 It allows users to analyze earthquakes based on their depth, which can help assess their potential surface impact.
       
         Query parameters:
@@ -103,7 +109,7 @@ It allows users to analyze earthquakes based on their depth, which can help asse
       - depth: (Required) The focal depth of the earthquakes in kilometers (e.g., 10).
       - limit: (Optional) The number of events to return. Default is 10 if not specified.`,
       query: '?depth=10&limit=50',
-      example: '/api/earthquakes/depth?depth=10&limit=50',
+      example: '/v1/earthquakes/depth?depth=10&limit=50',
       method: 'GET',
     },
     {
@@ -119,21 +125,22 @@ It allows users to query historical earthquake data over any desired period, mak
       - limit: (Optional) The number of earthquake events to return. Default is 50 if not specified.`,
       query: '?startdate=2025-01-01&enddate=2025-03-30&limit=50',
       example:
-        '/api/earthquakes/range-time?startdate=2025-01-01&enddate=2025-03-30&limit=50',
+        '/v1/earthquakes/range-time?startdate=2025-01-01&enddate=2025-03-30&limit=50',
       method: 'GET',
     },
     {
       title: 'magnitude',
       description: `
-This endpoint retrieves all seismic events that have a specific or greater magnitude from the TerraQuake API.
-It is useful for filtering earthquakes based on their strength and analyzing seismic intensity patterns over time or regions.
+This endpoint retrieves all seismic events that have a specific or greater magnitude from the TerraQuake API, 
+from the start of the current year up to today. 
+It is useful for filtering earthquakes based on their strength and analyzing seismic intensity patterns over time or across regions.
       
         Query Parameters:
       
       - mag: (Required) Minimum magnitude to filter by (e.g., 2 will return all events with magnitude ≥ 2.0).
       - limit: (Optional) Number of earthquake events to return. Default is 50 if not specified.`,
       query: '?mag=1&limit=50',
-      example: '/api/earthquakes/magnitude?mag=1&limit=50',
+      example: '/v1/earthquakes/magnitude?mag=1&limit=50',
       method: 'GET',
     },
     {
@@ -145,8 +152,8 @@ It allows users to access detailed information about a single earthquake event, 
         Query Parameters:
       
       - eventId: (Required) The unique identifier of the earthquake event to retrieve.`,
-			query: "?eventId=43410122",
-			example: "/api/earthquakes/eventId?eventId=44061482",
+			query: "?eventId=44085192",
+			example: "/v1/earthquakes/eventId?eventId=44085192",
 			method: "GET"
 		}
 	];
@@ -186,7 +193,9 @@ It allows users to access detailed information about a single earthquake event, 
 								setActiveTab(ep.title);
 								setResponseData(null);
 							}}
-							className={`py-2 px-4 rounded-xl font-semibold transition-colors ${activeTab === ep.title ? "bg-purple-700 text-white cursor-pointer" : "bg-white/10 hover:bg-purple-600 text-gray-300 cursor-pointer"}`}>
+							className={`py-2 px-4 rounded-full font-semibold transition-colors ${activeTab === ep.title ? "bg-gradient-to-r from-pink-500 to-purple-600 text-white cursor-pointer" : "bg-white/10 hover:bg-pink-500 text-white cursor-pointer"}`}
+							aria-label='Select endpoint for test preview'
+						>
 							{ep.title}
 						</button>
 					))}
@@ -225,7 +234,9 @@ It allows users to access detailed information about a single earthquake event, 
 							</div>
 
 							<div className="mb-6">
-								<button onClick={() => handleTest(ep.example)} className="bg-purple-600 hover:bg-purple-800 transition-colors duration-300 text-white font-semibold py-2 px-6 rounded-full cursor-pointer">
+								<button onClick={() => handleTest(ep.example)} className="bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold py-2 px-6 rounded-full hover:scale-105 transform transition duration-300 cursor-pointer"
+								aria-label='Button to preview test endpoint'
+								>
 									Test this endpoint
 								</button>
 							</div>

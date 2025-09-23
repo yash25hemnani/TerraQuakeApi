@@ -5,7 +5,7 @@ export default function Info() {
   const introCard = [
     {
       title: 'Event Details',
-      icon: <FaRegCalendarAlt className='text-8xl text-violet-300 mx-auto' />,
+      icon: <FaRegCalendarAlt className='text-6xl my-6 text-violet-300 mx-auto' />,
       content:
         'Access comprehensive information about seismic events, including magnitude, depth, coordinates, time, and location.',
       button: 'View Docs',
@@ -13,7 +13,7 @@ export default function Info() {
     },
     {
       title: 'Advanced Filtering',
-      icon: <FaFilter className='text-8xl text-violet-300 mx-auto' />,
+      icon: <FaFilter className='text-6xl my-6 text-violet-300 mx-auto' />,
       content:
         'Query earthquakes by time range, location, magnitude interval, and distance radius to get exactly the data you need.',
       button: 'Learn More',
@@ -21,7 +21,7 @@ export default function Info() {
     },
     {
       title: 'Statistical Insights',
-      icon: <FaChartLine className='text-8xl text-violet-300 mx-auto' />,
+      icon: <FaChartLine className='text-6xl my-6 text-violet-200 mx-auto' />,
       content:
         'Generate customized statistics and summaries to analyze seismic activity over time or in specific regions.',
       button: 'See Stats Guide',
@@ -29,7 +29,7 @@ export default function Info() {
     },
     {
       title: 'Easy Integration',
-      icon: <FaCode className='text-8xl text-violet-300 mx-auto' />,
+      icon: <FaCode className='text-6xl my-6 text-violet-300 mx-auto' />,
       content:
         'Seamlessly integrate earthquake data into dashboards, monitoring tools, GIS platforms, mobile apps, or educational projects.',
       button: 'Integration Guide',
@@ -59,7 +59,8 @@ export default function Info() {
               <p className='text-slate-300 text-sm md:text-base leading-relaxed mb-6'>{item.content}</p>
               <button
                 onClick={() => window.location.href = item.link}
-                className='w-full md:w-auto bg-violet-600 hover:bg-violet-700 text-white font-medium py-2 px-6 rounded-xl text-sm md:text-base transition-colors duration-200 cursor-pointer'
+                className='w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-medium py-3 px-6 rounded-full text-sm md:text-base hover:scale-105 transform transition duration-300 cursor-pointer'
+                aria-label={`Navigate to ${item.title} page`}
               >
                 {item.button}
               </button>
