@@ -11,11 +11,7 @@ import routeGetStart from './routes/testRoutes.js'
 import routeEarthquakes from './routes/earthquakesRoutes.js'
 import dbConnect from './config/mongoConfig.js'
 import { authenticateUser } from './middleware/authMiddleware.js'
-import rateLimiter from './middleware/rateLimiter.js'
-// import routeStations from './routes/stationsRoutes.js'
-// import routeGeospatial from './routes/geospatialRoutes.js'
-// import routeStats from './routes/statisticsRoutes.js'
-// import routeDemo from './routes/demoRoutes.js'
+import { apiLimiter, authLimiter, contactLimiter } from './middleware/rateLimiter.js'
 
 dotenv.config()
 
@@ -25,8 +21,40 @@ const app = express()
 // === MIDDLEWARE ===
 app.use(helmet())
 app.use(express.json())
-app.use('/api', rateLimiter)
 
+// === CORS ===
+// Only /v1/earthquakes is public
+app.use(
+  '/v1/earthquakes',
+  cors(), // Allow requests from any origin
+  apiLimiter,
+  routeEarthquakes
+)
+
+// Authenticated routes
+const corsAuthOptions = {
+  origin: [
+    process.env.FRONTEND_PRODUCTION,
+    process.env.FRONTEND_DEVELOPMENT
+  ],
+  credentials: true
+}
+
+app.use('/v1/test', cors(corsAuthOptions), apiLimiter, routeGetStart)
+app.use('/auth', cors(corsAuthOptions), authLimiter, routeAuth)
+app.use('/users', cors(corsAuthOptions), authLimiter, authenticateUser, routeUsers)
+app.use('/contact', cors(corsAuthOptions), contactLimiter, routeContact)
+
+// error handling
+app.use((err, req, res, next) => {
+  console.error('🔥 Error:', err.message)
+  res.status(err.status || 500).json({
+    success: false,
+    message: err.message || 'Internal Server Error'
+  })
+})
+
+// ===== START SERVER =====
 const port = process.env.PORT || 5000
 
 const startServer = async () => {
