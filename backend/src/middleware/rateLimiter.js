@@ -1,7 +1,13 @@
 import rateLimit from 'express-rate-limit'
+import dotenv from 'dotenv'
 
-const WINDOW_MS = 1000
-const LIMIT = 100
+dotenv.config()
+
+// NOTE: Load rate limit configuration from environment variables
+// WINDOW_MS = time window in milliseconds (e.g., 1000 = 1 second)
+// RATE_LIMIT = maximum number of requests allowed per IP in that time window
+const WINDOW_MS = Number(process.env.WINDOW_MS) || 1000
+const LIMIT = Number(process.env.RATE_LIMIT) || 100
 
 // Fixed window approach using HashMap { ip: { count: number, windowStart: number } }
 const buckets = new Map()
