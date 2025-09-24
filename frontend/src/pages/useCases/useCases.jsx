@@ -1,38 +1,26 @@
+import { useState } from "react";
 import MetaData from "@pages/noPage/metaData";
+import { FiChevronDown } from "react-icons/fi"; // import arrow icon
 
 export default function UseCases() {
   const useCaseDocs = [
     {
-      title: "Early Warning Systems",
-      content:
-        "TerraQuake API can feed real-time seismic data into early warning systems, allowing communities to receive alerts and take precautionary measures in the event of an earthquake.",
+      title: "Introduction",
+      content: "Real-world applications where seismic data is useful.",
+      points: [
+        "Open to developers, researchers, and organizations.",
+        "Enables building applications for earthquake early warning systems.",
+        "Supports educational tools to teach about seismic activity.",
+        "Helps monitor infrastructure and safety in real-time.",
+        "Assists in disaster prevention and preparedness planning.",
+      ],
     },
-    {
-      title: "Disaster Response Planning",
-      content:
-        "Emergency management agencies and NGOs can use the API to analyze earthquake patterns and prepare response strategies, optimizing resource allocation and minimizing risks.",
-    },
-    {
-      title: "Research and Education",
-      content:
-        "Researchers and students can access historical and real-time data to study seismic activity, test models, or develop educational tools that raise awareness about earthquakes and their impact.",
-    },
-    {
-      title: "Application Development",
-      content:
-        "Developers can integrate TerraQuake API into web or mobile applications, such as earthquake monitoring dashboards, alert apps, or geospatial visualizations, providing users with up-to-date and accurate information.",
-    },
-    {
-      title: "Community and Organizational Insights",
-      content:
-        "Organizations and local authorities can monitor seismic activity in their regions, supporting infrastructure planning, risk assessment, and community safety initiatives.",
-    },
-    {
-    title: "Insurance & Risk Assessment",
-    content:
-      "Insurance companies can leverage seismic data from TerraQuake API to assess earthquake risks, calculate premiums, and plan coverage strategies more accurately, helping reduce financial losses and improve client safety.",
-  },
   ];
+
+  const [expandedIndex, setExpandedIndex] = useState(null);
+  const toggleExpand = (index) => {
+    setExpandedIndex(expandedIndex === index ? null : index);
+  };
 
   return (
     <>
@@ -42,7 +30,7 @@ export default function UseCases() {
           <h1 className="text-2xl md:text-3xl text-white font-extrabold text-center mb-5 tracking-tight">
             Use Cases for TerraQuake API
           </h1>
-          <p className="text-white text-center w-[75%]">
+          <p className="text-white text-center w-[95%] lg:w-[75%]">
             Use Cases describe real-world scenarios where TerraQuake API can be
             applied. By providing fast, reliable access to seismic data, the API
             enables developers, researchers, institutions, and organizations to
@@ -51,18 +39,40 @@ export default function UseCases() {
           </p>
         </div>
 
-        <div className="max-w-7xl mx-auto grid gap-10 md:grid-cols-2 lg:grid-cols-2">
-          {useCaseDocs.map((item) => (
+        <div className="max-w-7xl mx-auto grid gap-4 grid-cols-1">
+          {useCaseDocs.map((item, index) => (
             <div
               key={item.title}
-              className="bg-gradient-to-br from-white/5 to-violet-950/10 border border-white/10 backdrop-blur-md rounded-2xl p-6 md:p-8 shadow-lg hover:shadow-2xl transition-shadow duration-300"
+              className="bg-gradient-to-br from-white/5 to-violet-950/10 border border-white/10 backdrop-blur-md rounded-2xl p-4 md:p-6 shadow-lg hover:shadow-2xl transition-shadow duration-300 cursor-pointer"
+              onClick={() => toggleExpand(index)}
             >
-              <h2 className="text-xl md:text-2xl font-bold text-white mb-4 border-l-4 border-purple-600 pl-4">
-                {item.title}
-              </h2>
-              <p className="text-gray-300 leading-relaxed text-sm md:text-base">
-                {item.content}
-              </p>
+              <div className="flex justify-between items-center">
+                <h2 className="text-xl md:text-2xl font-bold text-white border-l-4 border-purple-600 pl-4">
+                  {item.title}
+                </h2>
+                <FiChevronDown
+                  className={`text-white text-2xl transition-transform duration-300 ${
+                    expandedIndex === index ? "rotate-180" : ""
+                  }`}
+                />
+              </div>
+
+              <div
+                className={`overflow-hidden transition-all duration-500 ${
+                  expandedIndex === index ? "max-h-96 mt-4" : "max-h-0"
+                }`}
+              >
+                <p className="text-gray-300 leading-relaxed text-sm md:text-base mb-1">
+                  {item.content}
+                </p>
+                <ul className="text-gray-300 leading-relaxed text-sm md:text-base list-disc list-inside pl-4">
+                  {item.points.map((point, idx) => (
+                    <li key={idx} className="mb-1">
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           ))}
         </div>
