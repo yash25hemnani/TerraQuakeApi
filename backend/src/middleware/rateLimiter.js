@@ -54,6 +54,8 @@ export const rateLimiter = (req, res, next) => {
   next()
 }
 
+export default rateLimiter
+
 // NOTE: Generic configuration for APIs
 export const apiLimiter = rateLimit({
   windowMs: 60 * 1000, // 1 minute

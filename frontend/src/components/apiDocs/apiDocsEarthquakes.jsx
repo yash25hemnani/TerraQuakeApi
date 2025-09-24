@@ -242,9 +242,7 @@ It allows users to access detailed information about a single earthquake event, 
 							</div>
 
 							{loading && (
-								<p className="text-yellow-400 mb-2">
-									<ImSpinner9 className="spinner" /> Loading...
-								</p>
+								<p className="text-yellow-400 mb-4 flex items-center gap-2"><ImSpinner9 className="spinner" /> Loading...</p>
 							)}
 
 							{responseData && (

@@ -64,7 +64,7 @@ export default function ApiPlayground({ title = "API Playground", endpoints = []
       let data;
       try { data = JSON.parse(text); } catch { data = { raw: text }; }
       if (!res.ok) {
-        setErrorMessage(`${res.status} ${res.statusText}`);
+        setErrorMessage(`status: ${res.status} - message: ${data.message}` || `${res.status} - ${res.statusText}`);
       }
       setResponseData(data);
     } catch (err) {
@@ -133,12 +133,12 @@ export default function ApiPlayground({ title = "API Playground", endpoints = []
       </div>
 
       <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 mb-6">
           {endpoints.map(ep => (
             <button
               key={ep.key}
               onClick={() => onChangeActive(ep.key)}
-              className={`py-2 px-4 rounded-xl font-semibold transition-colors ${activeKey === ep.key ? "bg-purple-700 text-white cursor-pointer" : "bg-white/10 hover:bg-purple-600 text-gray-300 cursor-pointer"}`}
+              className={`py-2 px-4 rounded-full font-semibold transition-colors ${activeKey === ep.key ? "bg-gradient-to-r from-pink-500 to-purple-600 text-white cursor-pointer" : "bg-white/10 hover:bg-pink-500 text-white cursor-pointer"}`}
             >
               {ep.label}
             </button>
@@ -153,7 +153,7 @@ export default function ApiPlayground({ title = "API Playground", endpoints = []
 
           {(active?.params?.length > 0) && (
             <div className="mb-6">
-              <p className="text-white font-medium mb-3">Parameters</p>
+              <p className="text-white text-xl font-medium mb-3">Parameters</p>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {active.params.map(p => (
                   <div key={p.name} className="text-left">
@@ -173,7 +173,7 @@ export default function ApiPlayground({ title = "API Playground", endpoints = []
           <div className="mb-6">
             <button
               onClick={sendRequest}
-              className="bg-purple-600 hover:bg-purple-800 transition-colors duration-300 text-white font-semibold py-2 px-6 rounded-full cursor-pointer"
+              className="bg-gradient-to-r from-pink-500 to-purple-600 hover:scale-105 transform transition duration-300 text-white font-semibold py-2 px-6 rounded-full cursor-pointer"
             >
               Send request
             </button>
@@ -188,8 +188,10 @@ export default function ApiPlayground({ title = "API Playground", endpoints = []
           )}
 
           {responseData && (
-            <div className="bg-black/40 rounded-lg p-4 text-sm text-yellow-400 max-h-[400px] overflow-auto mb-6">
-              <pre>{JSON.stringify(responseData, null, 2)}</pre>
+            <div className="bg-black/40 rounded-lg p-4 text-sm text-yellow-400 max-h-[400px] overflow-auto">
+              <pre className="text-left font-mono break-words">
+                {JSON.stringify(responseData, null, 2)}
+              </pre>
             </div>
           )}
 
@@ -203,7 +205,7 @@ export default function ApiPlayground({ title = "API Playground", endpoints = []
                       setLangTab(l);
                       setVariantTab(l === 'javascript' ? 'fetch' : (l === 'shell' ? 'curl' : 'requests'));
                     }}
-                    className={`text-xs py-1 px-3 rounded-full ${langTab === l ? 'bg-purple-700' : 'bg-white/10 hover:bg-white/20'} cursor-pointer`}
+                    className={`text-md py-1 px-3 rounded-full ${langTab === l ? 'bg-gradient-to-r from-pink-500 to-purple-600' : 'bg-white/10 hover:bg-white/20'} cursor-pointer`}
                   >{l}</button>
                 ))}
               </div>
@@ -214,7 +216,7 @@ export default function ApiPlayground({ title = "API Playground", endpoints = []
                     <button
                       key={v}
                       onClick={() => setVariantTab(v)}
-                      className={`text-xs py-1 px-3 rounded-full ${variantTab === v ? 'bg-purple-700' : 'bg-white/10 hover:bg-white/20'} cursor-pointer`}
+                      className={`text-md py-1 px-3 rounded-full ${variantTab === v ? 'bg-pink-500' : 'bg-white/10 hover:bg-white/20'} cursor-pointer`}
                     >{v}</button>
                   ))}
                 </div>
@@ -222,24 +224,27 @@ export default function ApiPlayground({ title = "API Playground", endpoints = []
 
               {langTab === 'shell' && (
                 <div className="flex items-center gap-2">
-                  <span className="text-xs bg-purple-700 py-1 px-3 rounded-full">curl</span>
+                  <span className="text-md bg-pink-500 py-1 px-3 rounded-full">curl</span>
                 </div>
               )}
 
               {langTab === 'python' && (
                 <div className="flex items-center gap-2">
-                  <span className="text-xs bg-purple-700 py-1 px-3 rounded-full">requests</span>
+                  <span className="text-md bg-pink-500 py-1 px-3 rounded-full">requests</span>
                 </div>
               )}
 
               <div className="flex items-center justify-between mt-2">
                 <p className="text-white font-medium text-sm">Code Sample</p>
-                <button onClick={() => copyToClipboard('code', currentSnippet())} className="text-xs bg-white/10 hover:bg-white/20 px-2 py-1 rounded cursor-pointer">
+                <button onClick={() => copyToClipboard('code', currentSnippet())} className="text-md bg-white/10 hover:bg-white/20 px-2 py-1 rounded cursor-pointer">
                   {copiedKey === 'code' ? 'Copied' : 'Copy'}
                 </button>
               </div>
 
-              <pre className="text-green-400 text-xs overflow-auto whitespace-pre">{currentSnippet()}</pre>
+              <pre className="text-left font-mono text-green-400 text-sm overflow-auto break-words p-3 bg-black/60 rounded-lg">
+                {currentSnippet()}
+              </pre>
+
             </div>
           </div>
         </div>
