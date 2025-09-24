@@ -6,7 +6,7 @@ export default function UseCases() {
   const useCaseDocs = [
     {
       title: "Introduction",
-      content: "Real-world applications where seismic data is useful.",
+      content: "This section describes the Real-world applications of TerraQuakeAPI. Here is what it does - ",
       points: [
         "Open to developers, researchers, and organizations.",
         "Enables building applications for earthquake early warning systems.",
