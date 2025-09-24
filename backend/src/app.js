@@ -45,7 +45,7 @@ app.use('/auth', cors(corsAuthOptions), authLimiter, routeAuth)
 app.use('/users', cors(corsAuthOptions), authLimiter, authenticateUser, routeUsers)
 app.use('/contact', cors(corsAuthOptions), contactLimiter, routeContact)
 
-// error handling
+// ===== ERROR HANDLER =====
 app.use((err, req, res, next) => {
   console.error('🔥 Error:', err.message)
   res.status(err.status || 500).json({

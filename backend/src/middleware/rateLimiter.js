@@ -6,6 +6,16 @@ const LIMIT = 100
 // Fixed window approach using HashMap { ip: { count: number, windowStart: number } }
 const buckets = new Map()
 
+// Cleanup expired buckets to prevent memory leaks
+setInterval(() => {
+  const now = Date.now()
+  for (const [ip, bucket] of buckets) {
+    if (now - bucket.windowStart > WINDOW_MS) {
+      buckets.delete(ip)
+    }
+  }
+}, WINDOW_MS)
+
 export const rateLimiter = (req, res, next) => {
   const now = Date.now()
   const ip = req.ip || req.connection?.remoteAddress || 'unknown'
