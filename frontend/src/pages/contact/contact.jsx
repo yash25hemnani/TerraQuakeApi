@@ -4,12 +4,12 @@ export default function Contact() {
   return (
     <>
       <MetaData
-        title='Explore Data'
-        description='Explore data Page of TerraQuake'
+        title='About'
+        description='About of TerraQuake API'
       />
-      <section className='relative z-30 w-full min-h-screen flex flex-col items-center text-center px-6 py-20 bg-gradient-to-b text-white'>
-        <h1 className='lg:w-xl text-xl mx-auto md:text-2xl font-extrabold leading-tight mt-[50px]'>
-          Contact
+      <section className='relative z-30 w-full min-h-screen px-6 py-20'>
+        <h1 className='text-2xl md:text-4xl text-white font-extrabold text-center my-25 tracking-tight'>
+          Contact TerraQuake API
         </h1>
       </section>
     </>
