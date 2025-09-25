@@ -32,7 +32,7 @@ export default function UseCases() {
       <section className="relative z-30 w-full min-h-screen px-6 py-20">
         {/* Page header */}
         <div className="flex flex-col justify-center items-center mb-16">
-          <h1 className="text-2xl md:text-4xl text-white font-extrabold text-center mb-5 tracking-tight">
+          <h1 className="text-2xl md:text-4xl text-white font-extrabold text-center my-25 tracking-tight">
             Use Cases for TerraQuake API
           </h1>
 
