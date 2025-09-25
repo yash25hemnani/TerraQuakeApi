@@ -173,7 +173,7 @@ It allows users to access detailed information about a single earthquake event, 
 	};
 
 	return (
-		<section className="min-h-screen text-white px-6 py-16">
+		<section className="w-full text-white px-6 py-10 min-h-screen">
 			<div className="text-center mb-12">
 				<h1 className="text-4xl md:text-6xl font-bold mb-4">TerraQuake API</h1>
 				<p className="text-gray-400 text-lg max-w-2xl mx-auto">Explore real-time seismic data powered by INGV. Use the endpoints below to query earthquake events in Italy and beyond.</p>
@@ -183,7 +183,7 @@ It allows users to access detailed information about a single earthquake event, 
 				<h2 className="text-center text-2xl">Earthquakes</h2>
 			</div>
 
-			<div className="max-w-5xl mx-auto">
+			<div className="max-w-6xl mx-auto">
 				{/* Tabs */}
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
 					{endpoints.map((ep) => (

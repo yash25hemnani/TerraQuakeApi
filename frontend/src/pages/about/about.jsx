@@ -48,14 +48,14 @@ export default function About() {
     <>
       <MetaData
         title='About'
-        description='About Page of TerraQuake'
+        description='About of TerraQuake API'
       />
-      <section className='relative z-30 w-full min-h-screen px-6 py-20'>
-        <h1 className='text-2xl md:text-3xl text-white font-extrabold text-center mb-16 tracking-tight'>
-          About TerraQuake API
-        </h1>
+      <section className='"relative z-30 w-full min-h-screen px-6 py-20'>
+        <h1 className="text-2xl md:text-4xl text-white font-extrabold text-center mb-5 tracking-tight">
+            About for TerraQuake API
+          </h1>
 
-        <div className='max-w-7xl mx-auto grid gap-10 md:grid-cols-2 lg:grid-cols-2'>
+        <div className='max-w-6xl mx-auto grid gap-10 md:grid-cols-2 lg:grid-cols-2'>
           {itemsDocs.map((item) => (
             <div
               key={item.title}

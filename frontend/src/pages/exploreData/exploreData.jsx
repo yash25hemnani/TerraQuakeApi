@@ -272,23 +272,25 @@ export default function ExploreData() {
     <>
       <MetaData
         title='Explore Data'
-        description='Explore Data Page of TerraQuake'
+        description='Explore Data of TerraQuake API'
       />
-      <section className='relative z-30 w-full min-h-screen flex flex-col items-center text-center px-6 py-20 bg-gradient-to-b text-white'>
-        <h1 className='lg:w-xl text-4xl mx-auto md:text-4xl font-extrabold leading-tight mt-[50px]'>
-          Explore Data
-        </h1>
+      <section className='relative z-30 w-full min-h-screen px-6 py-20'>
+        <div className='flex flex-col justify-center items-center mb-16'>
+          <h1 className='text-2xl md:text-4xl text-white font-extrabold text-center mb-5 tracking-tight'>
+            Explore Data for TerraQuake API
+          </h1>
 
-        {/* Descrizione visibile */}
-        <p className='max-w-3xl text-gray-300 text-lg mt-6 mb-10'>
-          Welcome to the <strong>TerraQuake API Playground</strong>! Here, you
-          can explore and interact with earthquake data in real time. Use the
-          playground to test API queries with different parameters such as
-          magnitude, location, or time range, view results in raw JSON format,
-          and copy ready-to-use code snippets for <code>curl</code>, JavaScript
-          (<code>fetch</code> or <code>axios</code>), and Python (
-          <code>requests</code>).
-        </p>
+          {/* Descrizione visibile */}
+          <p className='text-white text-lg w-[95%] lg:w-6xl'>
+            Welcome to the <strong>TerraQuake API Playground</strong>! Here, you
+            can explore and interact with earthquake data in real time. Use the
+            playground to test API queries with different parameters such as
+            magnitude, location, or time range, view results in raw JSON format,
+            and copy ready-to-use code snippets for <code>curl</code>,
+            JavaScript (<code>fetch</code> or <code>axios</code>), and Python (
+            <code>requests</code>).
+          </p>
+        </div>
 
         <div className='w-full mt-10'>
           <ApiPlayground

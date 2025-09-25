@@ -1,18 +1,19 @@
-import { useState } from "react";
-import MetaData from "@pages/noPage/metaData";
-import { FiChevronDown } from "react-icons/fi"; // import arrow icon
+import { useState } from 'react';
+import MetaData from '@pages/noPage/metaData';
+import { FiChevronDown } from 'react-icons/fi';
 
 export default function UseCases() {
   const useCaseDocs = [
     {
-      title: "Introduction",
-      content: "This section describes the Real-world applications of TerraQuakeAPI. Here is what it does - ",
+      title: 'Introduction',
+      content:
+        'This section describes the real-world applications of TerraQuake API. Here is what it does:',
       points: [
-        "Open to developers, researchers, and organizations.",
-        "Enables building applications for earthquake early warning systems.",
-        "Supports educational tools to teach about seismic activity.",
-        "Helps monitor infrastructure and safety in real-time.",
-        "Assists in disaster prevention and preparedness planning.",
+        'Open to developers, researchers, and organizations.',
+        'Enables building applications for earthquake early warning systems.',
+        'Supports educational tools to teach about seismic activity.',
+        'Helps monitor infrastructure and safety in real-time.',
+        'Assists in disaster prevention and preparedness planning.',
       ],
     },
   ];
@@ -24,13 +25,18 @@ export default function UseCases() {
 
   return (
     <>
-      <MetaData title="Use Cases" description="Use Cases for TerraQuake API" />
+      <MetaData
+        title="Use Cases"
+        description="Use Cases for TerraQuake API"
+      />
       <section className="relative z-30 w-full min-h-screen px-6 py-20">
+        {/* Page header */}
         <div className="flex flex-col justify-center items-center mb-16">
-          <h1 className="text-2xl md:text-3xl text-white font-extrabold text-center mb-5 tracking-tight">
+          <h1 className="text-2xl md:text-4xl text-white font-extrabold text-center mb-5 tracking-tight">
             Use Cases for TerraQuake API
           </h1>
-          <p className="text-white text-center w-[95%] lg:w-[75%]">
+
+          <p className="text-white text-lg w-[95%] lg:w-6xl">
             Use Cases describe real-world scenarios where TerraQuake API can be
             applied. By providing fast, reliable access to seismic data, the API
             enables developers, researchers, institutions, and organizations to
@@ -39,11 +45,12 @@ export default function UseCases() {
           </p>
         </div>
 
-        <div className="max-w-7xl mx-auto grid gap-4 grid-cols-1">
+        {/* Accordion section */}
+        <div className="w-full mt-10 flex flex-col items-center">
           {useCaseDocs.map((item, index) => (
             <div
               key={item.title}
-              className="bg-gradient-to-br from-white/5 to-violet-950/10 border border-white/10 backdrop-blur-md rounded-2xl p-4 md:p-6 shadow-lg hover:shadow-2xl transition-shadow duration-300 cursor-pointer"
+              className="w-[95%] lg:w-6xl mb-6 bg-gradient-to-br from-white/5 to-violet-950/10 border border-white/10 backdrop-blur-md rounded-2xl p-4 md:p-6 shadow-lg hover:shadow-2xl transition-shadow duration-300 cursor-pointer"
               onClick={() => toggleExpand(index)}
             >
               <div className="flex justify-between items-center">
@@ -52,14 +59,14 @@ export default function UseCases() {
                 </h2>
                 <FiChevronDown
                   className={`text-white text-2xl transition-transform duration-300 ${
-                    expandedIndex === index ? "rotate-180" : ""
+                    expandedIndex === index ? 'rotate-180' : ''
                   }`}
                 />
               </div>
 
               <div
                 className={`overflow-hidden transition-all duration-500 ${
-                  expandedIndex === index ? "max-h-96 mt-4" : "max-h-0"
+                  expandedIndex === index ? 'max-h-96 mt-4' : 'max-h-0'
                 }`}
               >
                 <p className="text-gray-300 leading-relaxed text-sm md:text-base mb-1">
