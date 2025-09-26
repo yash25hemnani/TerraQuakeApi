@@ -66,7 +66,7 @@ This endpoint retrieves all seismic events that occurred today (from 00:00 UTC t
       label: 'last-week',
       method: 'GET',
       path: '/v1/earthquakes/last-week',
-      description: 'Last 7 days',
+      subtitle: 'Last 7 days',
       description: `
 This endpoint retrieves all seismic events that occurred in the last 7 days from the TerraQuake API.
 It allows users to monitor and analyze recent seismic activity over the past week, providing insights into short-term trends and regional patterns.
@@ -140,7 +140,7 @@ It allows users to explore historical earthquake data for a given period. The re
       label: 'location',
       method: 'GET',
       path: '/v1/earthquakes/location',
-      subtitle: 'Near lat/lon',
+      subtitle: 'Near latitude/longitude',
       description: `
 This endpoint fetches seismic events close to a given geographical location, defined by latitude and longitude, with an optional search radius. It retrieves earthquakes that occurred from the beginning of the year up to the current date, allowing users to filter recent events based on their proximity to a specific point of interest.
 
