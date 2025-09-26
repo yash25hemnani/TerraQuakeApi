@@ -313,7 +313,7 @@ It is useful for filtering earthquakes based on their strength and analyzing sei
       
         Query Parameters:
       
-      - mag: (Required) Minimum magnitude to filter by (e.g., 2 will return all events with magnitude ≥ 2.0).
+      - mag: (Required) Minimum magnitude to filter by (e.g., 2 will return all events with magnitude > 2.0).
       - limit: (Optional) Number of earthquake events to return. Default is 50 if not specified.
       - page: (Optional) The page number of the results to retrieve. Defaults to 1 if not specified.`,
       params: [
