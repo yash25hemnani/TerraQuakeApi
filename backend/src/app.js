@@ -9,6 +9,7 @@ import routeUsers from './routes/usersRoutes.js'
 import routeContact from './routes/contactRoutes.js'
 import routeGetStart from './routes/testRoutes.js'
 import routeEarthquakes from './routes/earthquakesRoutes.js'
+import githubAuthRoute from './routes/githubAuthRoutes.js'
 import dbConnect from './config/mongoConfig.js'
 import { authenticateUser } from './middleware/authMiddleware.js'
 import { apiLimiter, authLimiter, contactLimiter } from './middleware/rateLimiter.js'
@@ -44,6 +45,7 @@ app.use('/v1/test', cors(corsAuthOptions), apiLimiter, routeGetStart)
 app.use('/auth', cors(corsAuthOptions), authLimiter, routeAuth)
 app.use('/users', cors(corsAuthOptions), authLimiter, authenticateUser, routeUsers)
 app.use('/contact', cors(corsAuthOptions), contactLimiter, routeContact)
+app.use('/auth/github', githubAuthRoute);
 
 // ===== ERROR HANDLER =====
 app.use((err, req, res, next) => {
@@ -55,7 +57,7 @@ app.use((err, req, res, next) => {
 })
 
 // ===== START SERVER =====
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 5001
 
 const startServer = async () => {
   try {
