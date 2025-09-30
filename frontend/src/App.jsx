@@ -14,6 +14,7 @@ import About from '@pages/about/about'
 import Contact from './pages/contact/contact'
 import Blog from '@pages/blog/blog'
 import BlogDetail from '@pages/blog/blogDetail'
+import BlogPost from '@pages/blog/BlogPost'
 import NoPage from '@pages/noPage/noPage'
 import SignUp from '@pages/auth/signUp'
 import SignIn from '@pages/auth/signIn'
@@ -48,6 +49,7 @@ function App() {
               <Route path='/contact' element={<Contact />} /> 
               <Route path='/blog' element={<Blog />} />
               <Route path='/blog/:slug' element={<BlogDetail />} />
+              <Route path='/post/:slug' element={<BlogPost />} />
               <Route path='/signup' element={<SignUp />} /> 
               <Route path='/signin' element={<SignIn />} /> 
               <Route path='/profile' element={<Profile />} /> 
