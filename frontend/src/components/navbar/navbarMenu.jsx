@@ -28,6 +28,11 @@ export default function NavbarMenu() {
     { name: 'Use Cases', path: '/use-cases' },
     { name: 'About', path: '/about' },
     { name: 'Contact', path: '/contact' },
+    {
+      name: 'FAQ',
+      path: '/faq',
+      // icon: QuestionMarkCircleIcon, // Import this from @heroicons/react if using Heroicons
+    },
   ];
 
   const handleLogout = () => {
