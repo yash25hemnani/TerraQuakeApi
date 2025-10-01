@@ -1,15 +1,7 @@
-import MetaData from "@pages/noPage/metaData";
-import { useState } from "react";
-import {
-  FaBalanceScale,
-  FaChartLine,
-  FaCode,
-  FaGlobeAmericas,
-  FaHandsHelping,
-  FaLightbulb,
-  FaUserAstronaut,
-  FaUsers,
-} from "react-icons/fa";
+
+import MetaData from '@pages/noPage/metaData';
+import './about.css';
+import { FaGlobeAmericas, FaLightbulb, FaChartLine, FaCode, FaBalanceScale, FaHandsHelping, FaUserAstronaut, FaUsers } from 'react-icons/fa';
 
 export default function About() {
   const [hoveredCard, setHoveredCard] = useState(null);
@@ -150,7 +142,7 @@ export default function About() {
             <div
               key={metric.label}
               className="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.03] px-6 py-6 backdrop-blur-sm transition-all duration-400 hover:border-purple-400/30 hover:bg-white/[0.05]"
-            >
+
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-purple-500/5 via-transparent to-transparent" />
               <div className="relative">
                 <span className="text-2xl md:text-3xl font-semibold text-white tracking-tight">
