@@ -24,6 +24,7 @@ import ResetPassword from '@pages/auth/resetPassword'
 import ChangePassword from './pages/auth/changePassword'
 import TermsAndConditions from './pages/termsAndConditions/termsAndConditions'
 import PrivacyPolicy from './pages/privacyPolicy/privacyPolicy'
+import Faq from '@components/FAQ/FAQ'
 
 import { AuthProvider } from '@components/modules/authProvider'
 import ScrollToTop from '@components/modules/scrollToTop'
@@ -58,6 +59,7 @@ function App() {
               <Route path='/reset-password/:token' element={<ResetPassword />} /> 
               <Route path='/terms-and-conditions' element={<TermsAndConditions />} />
               <Route path='/privacy-policy' element={<PrivacyPolicy />} />
+              <Route path='/faq' element={<Faq />} />
               <Route path='*' element={<NoPage />} />
             </Routes>
             <Footer />
