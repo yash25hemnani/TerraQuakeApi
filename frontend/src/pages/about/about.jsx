@@ -1,6 +1,7 @@
 
-import MetaData from '@pages/noPage/metaData';
 import './about.css';
+import { useState } from 'react';
+import MetaData from '@pages/noPage/metaData';
 import { FaGlobeAmericas, FaLightbulb, FaChartLine, FaCode, FaBalanceScale, FaHandsHelping, FaUserAstronaut, FaUsers } from 'react-icons/fa';
 
 export default function About() {
@@ -141,7 +142,7 @@ export default function About() {
           {highlightMetrics.map((metric) => (
             <div
               key={metric.label}
-              className="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.03] px-6 py-6 backdrop-blur-sm transition-all duration-400 hover:border-purple-400/30 hover:bg-white/[0.05]"
+              className="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.03] px-6 py-6 backdrop-blur-sm transition-all duration-400 hover:border-purple-400/30 hover:bg-white/[0.05]">
 
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-purple-500/5 via-transparent to-transparent" />
               <div className="relative">
