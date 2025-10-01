@@ -240,7 +240,7 @@ curl "https://api.terraquakeapi.com/v1/earthquakes/range-time?startdate=2025-09-
 - Dates are interpreted in UTC timezone
 - Returns 400 error if date format is invalid or range exceeds limit
 
-[↑ Back to Time-Based Queries](#1--time-based-queries) | [↑ Back to top](#-table-of-contents)
+[↑ Back to Time-Based Queries](#1-time-based-queries) | [↑ Back to top](#-table-of-contents)
 
 ---
 
@@ -297,7 +297,7 @@ curl "https://api.terraquakeapi.com/v1/earthquakes/region?region=Calabria"
 
 **Note:** Region names are case-insensitive. Hyphens and spaces should be preserved.
 
-[↑ Back to Location-Based Queries](#2--location-based-queries) | [↑ Back to top](#-table-of-contents)
+[↑ Back to Location-Based Queries](#2-location-based-queries) | [↑ Back to top](#-table-of-contents)
 
 ---
 
@@ -353,7 +353,7 @@ curl "https://api.terraquakeapi.com/v1/earthquakes/magnitude?mag=5.0&limit=100"
 - **Major**: 7.0–7.9 (serious damage over large areas)
 - **Great**: 8.0+ (can cause catastrophic damage)
 
-[↑ Back to Property-Based Queries](#3--property-based-queries) | [↑ Back to top](#-table-of-contents)
+[↑ Back to Property-Based Queries](#3-property-based-queries) | [↑ Back to top](#-table-of-contents)
 
 ---
 
@@ -407,7 +407,7 @@ curl "https://api.terraquakeapi.com/v1/earthquakes/eventId?eventId=44278572"
 
 **Note:** Returns 404 error if `eventId` does not exist.
 
-[↑ Back to Event-Based Queries](#4--event-based-queries) | [↑ Back to top](#-table-of-contents)
+[↑ Back to Event-Based Queries](#4-event-based-queries) | [↑ Back to top](#-table-of-contents)
 
 ---
 
