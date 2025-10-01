@@ -26,6 +26,7 @@ export default function NavbarMenu() {
     { name: 'API Access', path: '/api-access' },
     { name: 'Docs', path: '/docs' },
     { name: 'Use Cases', path: '/use-cases' },
+    { name: 'Blog', path: '/blog' },
     { name: 'About', path: '/about' },
     { name: 'Contact', path: '/contact' },
   ];
