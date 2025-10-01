@@ -1,9 +1,9 @@
-# 🌍 Earthquake API Documentation
+# 🌍 TerraQuake API Documentation
 
 [![API Version](https://img.shields.io/badge/version-1.0-blue.svg)](https://api.terraquakeapi.com)
 [![Status](https://img.shields.io/badge/status-active-success.svg)](https://api.terraquakeapi.com/status)
 
-The **Earthquake API** provides programmatic access to global seismic event data. Query earthquakes by time, location, magnitude, depth, and specific event IDs. All responses are paginated and returned in JSON format.
+The **TerraQuake API** provides programmatic access to global seismic event data. Query earthquakes by time, location, magnitude, depth, and specific event IDs. All responses are paginated and returned in JSON format.
 
 ---
 
