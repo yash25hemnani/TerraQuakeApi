@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export default function GithubAuth() {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ export default function GithubAuth() {
   useEffect(() => {
     const params = new URLSearchParams(search);
     const token = params.get("token");
+    const message = params.get("message");
 
     if (token) {
       localStorage.setItem("token", token);
@@ -20,10 +22,25 @@ export default function GithubAuth() {
         .then((res) => res.json())
         .then((user) => {
           localStorage.setItem("user", JSON.stringify(user.user));
-          navigate("/");
+
+          Swal.fire({
+            title: "Success!",
+            text: message || "Login with GitHub successful!",
+            icon: "success",
+            confirmButtonText: "Ok",
+          }).then(() => {
+            navigate("/profile");
+          });
         });
     } else {
-      navigate("/signin");
+      Swal.fire({
+        title: "Error!",
+        text: "Login with GitHub failed.",
+        icon: "error",
+        confirmButtonText: "Ok",
+      }).then(() => {
+        navigate("/signin");
+      });
     }
   }, [search, navigate]);
 
