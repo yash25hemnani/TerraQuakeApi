@@ -1,4 +1,3 @@
-
 import './about.css';
 import { useState } from 'react';
 import MetaData from '@pages/noPage/metaData';
