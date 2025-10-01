@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Metadata from '../noPage/metadata';
+import MetaData from '@pages/noPage/metaData'
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -23,7 +23,7 @@ const ContactPage = () => {
   return (
     // This is the single main container for the page
     <div className="min-h-screen text-white p-4 md:p-8">
-      <Metadata
+      <MetaData
         title="Contact Us - TerraQuake API"
         description="Get in touch with the TerraQuake API team for support or inquiries."
         ogTitle="Contact Us - TerraQuake API"
