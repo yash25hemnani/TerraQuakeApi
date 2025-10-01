@@ -132,7 +132,7 @@ All API responses follow this standard JSON structure:
 
 ## API Endpoints
 
-### 1.Time-Based Queries
+### 1. Time-Based Queries
 
 Retrieve earthquakes based on temporal filters.
 
@@ -301,7 +301,7 @@ curl "https://api.terraquakeapi.com/v1/earthquakes/region?region=Calabria"
 
 ---
 
-### 3.Property-Based Queries
+### 3. Property-Based Queries
 
 Retrieve earthquakes filtered by physical characteristics.
 
