@@ -157,7 +157,22 @@ export default function Contact() {
           {/* Submit Button */}
           <button
             type='submit'
-            className='block w-sm mx-auto bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold py-3 px-4 rounded-full hover:scale-105 transform transition duration-300 cursor-pointer'
+            className='
+    block 
+    w-[200px]          /* base: mobile */
+    sm:w-[250px]       /* small devices */
+    md:w-[300px]       /* medium devices */
+    lg:w-[350px]       /* large devices */
+    xl:w-[400px]       /* extra large */
+    mx-auto 
+    bg-gradient-to-r from-pink-500 to-purple-600 
+    text-white font-bold 
+    py-3 px-4 
+    rounded-full 
+    hover:scale-105 
+    transform transition duration-300 
+    cursor-pointer
+  '
             disabled={loading}
           >
             {loading ? (
