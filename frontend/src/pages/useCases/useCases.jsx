@@ -29,6 +29,18 @@ export default function UseCases() {
       ],
     },
     {
+      title: "Civil Protection Applications",
+      content:
+        "This section describes how TerraQuakeAPI can be utilized by civil protection agencies to improve preparedness, response, and public safety. Here is what it enables authorities to do -",
+      points: [
+        "Receive real-time earthquake alerts to initiate rapid emergency response measures.",
+        "Integrate live seismic data into dashboards for operators to monitor events and coordinate actions effectively.",
+        "Use map-based visualizations to identify high-risk areas and prioritize resource deployment.",
+        "Support early warning systems that notify communities and infrastructure operators.",
+        "Enhance disaster planning, drills, and situational awareness for emergency teams.",
+      ],
+    },
+    {
       title: "Government & Policy Making",
       content:
         "Governments and policymakers can leverage TerraQuake API to ensure safety, compliance, and better disaster response:",
@@ -132,7 +144,6 @@ export default function UseCases() {
                 <FiChevronDown
                   className={`text-white text-2xl transition-transform duration-300 ${
                     expandedIndex === index ? "rotate-180" : ""
-
                   }`}
                 />
               </div>
