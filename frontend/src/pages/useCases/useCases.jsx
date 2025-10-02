@@ -40,11 +40,72 @@ export default function UseCases() {
         "Enhance disaster planning, drills, and situational awareness for emergency teams.",
       ],
     },
+    {
+      title: "Government & Policy Making",
+      content:
+        "Governments and policymakers can leverage TerraQuake API to ensure safety, compliance, and better disaster response:",
+      points: [
+        "Develop public dashboards for earthquake activity and alerts.",
+        "Enable national disaster management agencies to make faster, data-driven decisions.",
+        "Assist in zoning and land-use policies with earthquake risk maps.",
+        "Provide transparency through open data access for citizens.",
+        "Support law enforcement and emergency protocols in high-risk areas.",
+      ],
+    },
+    {
+      title: "Educational Platforms",
+      content:
+        "The API can help build interactive and engaging learning tools for schools, universities, and online platforms:",
+      points: [
+        "Create simulations that demonstrate seismic waves and fault lines.",
+        "Enable students to track live earthquake activity globally.",
+        "Integrate into e-learning platforms to teach natural disaster management.",
+        "Provide datasets for academic assignments and experiments.",
+        "Gamify seismic learning with quizzes and real-time earthquake data.",
+      ],
+    },
+    {
+      title: "Smart Cities & Infrastructure Monitoring",
+      content:
+        "TerraQuake API can be integrated with IoT and smart city applications to improve safety and infrastructure resilience:",
+      points: [
+        "Enable smart building systems to react automatically to seismic activity (e.g., shut off gas lines).",
+        "Provide city planners with long-term seismic trend insights.",
+        "Integrate with traffic and transport systems for emergency rerouting.",
+        "Assist in monitoring structural health of bridges, tunnels, and skyscrapers.",
+        "Support smart city resilience planning against natural disasters.",
+      ],
+    },
+    {
+      title: "Insurance & Risk Management",
+      content:
+        "Insurance companies and financial institutions can benefit from seismic data for better planning and claims processing:",
+      points: [
+        "Assess risk exposure for properties and infrastructure in earthquake-prone areas.",
+        "Enable dynamic adjustment of insurance policies based on seismic activity.",
+        "Provide real-time alerts for faster claim validation after earthquakes.",
+        "Assist in financial forecasting related to natural disaster damages.",
+        "Support predictive models to minimize long-term financial risks.",
+      ],
+    },
   ];
 
   const [expandedIndex, setExpandedIndex] = useState(null);
   const toggleExpand = (index) => {
     setExpandedIndex(expandedIndex === index ? null : index);
+  };
+
+  // track hover index separately so hover opens on desktop and doesn't
+  // interfere with click/touch behavior (which sets expandedIndex)
+  const [hoverIndex, setHoverIndex] = useState(null);
+
+  const handleMouseEnter = (index) => {
+    // only apply hover for non-touch devices; touch will still use click
+    setHoverIndex(index);
+  };
+
+  const handleMouseLeave = () => {
+    setHoverIndex(null);
   };
 
   return (
@@ -73,6 +134,8 @@ export default function UseCases() {
               key={item.title}
               className="w-[95%] lg:w-6xl mb-6 bg-gradient-to-br from-white/5 to-violet-950/10 border border-white/10 backdrop-blur-md rounded-2xl p-4 md:p-6 shadow-lg hover:shadow-2xl transition-shadow duration-300 cursor-pointer"
               onClick={() => toggleExpand(index)}
+              onMouseEnter={() => handleMouseEnter(index)}
+              onMouseLeave={handleMouseLeave}
             >
               <div className="flex justify-between items-center">
                 <h2 className="text-xl md:text-2xl font-bold text-white border-l-4 border-purple-600 pl-4">
@@ -87,7 +150,9 @@ export default function UseCases() {
 
               <div
                 className={`overflow-hidden transition-all duration-500 ${
+
                   expandedIndex === index ? "max-h-96 mt-4" : "max-h-0"
+
                 }`}
               >
                 <p className="text-gray-300 leading-relaxed text-sm md:text-base mb-1">
