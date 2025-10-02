@@ -28,6 +28,7 @@ import GithubAuth from "./pages/auth/githubAuth"
 
 import { AuthProvider } from '@components/modules/authProvider'
 import ScrollToTop from '@components/modules/scrollToTop'
+import Contribute from "./pages/contribute/contribute"
 
 function App() {
   // useEffect(() => {
@@ -69,6 +70,7 @@ function App() {
               <Route path='/terms-and-conditions' element={<TermsAndConditions />} />
               <Route path='/privacy-policy' element={<PrivacyPolicy />} />
               <Route path='/faq' element={<Faq />} />
+              <Route path='/contribute' element={ <Contribute />} />
               <Route path='*' element={<NoPage />} />
             </Routes>
             <Footer />
