@@ -1,31 +1,43 @@
-import { useState } from 'react';
-import MetaData from '@pages/noPage/metaData';
-import { FiChevronDown } from 'react-icons/fi';
+import { useState } from "react";
+import MetaData from "@pages/noPage/metaData";
+import { FiChevronDown } from "react-icons/fi";
 
 export default function UseCases() {
   const useCaseDocs = [
     {
-      title: 'Introduction',
+      title: "Introduction",
       content:
-        'This section describes the real-world applications of TerraQuake API. Here is what it does:',
+        "This section describes the real-world applications of TerraQuake API. Here is what it does:",
       points: [
-        'Open to developers, researchers, and organizations.',
-        'Enables building applications for earthquake early warning systems.',
-        'Supports educational tools to teach about seismic activity.',
-        'Helps monitor infrastructure and safety in real-time.',
-        'Assists in disaster prevention and preparedness planning.',
+        "Open to developers, researchers, and organizations.",
+        "Enables building applications for earthquake early warning systems.",
+        "Supports educational tools to teach about seismic activity.",
+        "Helps monitor infrastructure and safety in real-time.",
+        "Assists in disaster prevention and preparedness planning.",
       ],
     },
     {
-      title: 'Scientific Research Applications',
+      title: "Scientific Research Applications",
       content:
-        'This section describes how TerraQuakeAPI can be leveraged for scientific research in seismology and related fields. Here is what it enables researchers to do -',
+        "This section describes how TerraQuakeAPI can be leveraged for scientific research in seismology and related fields. Here is what it enables researchers to do -",
       points: [
-        'Monitor seismic patterns and trends in real-time for academic and applied research.',
-        'Conduct studies on earthquake probability, frequency, and impact modeling.',
-        'Integrate data seamlessly with analytical tools like MATLAB, Python, and R for deeper analysis.',
-        'Support thesis projects, publications, and research reports on seismic activity.',
-        'Assist in modeling and simulation of earthquake scenarios for research purposes.',
+        "Monitor seismic patterns and trends in real-time for academic and applied research.",
+        "Conduct studies on earthquake probability, frequency, and impact modeling.",
+        "Integrate data seamlessly with analytical tools like MATLAB, Python, and R for deeper analysis.",
+        "Support thesis projects, publications, and research reports on seismic activity.",
+        "Assist in modeling and simulation of earthquake scenarios for research purposes.",
+      ],
+    },
+    {
+      title: "Civil Protection Applications",
+      content:
+        "This section describes how TerraQuakeAPI can be utilized by civil protection agencies to improve preparedness, response, and public safety. Here is what it enables authorities to do -",
+      points: [
+        "Receive real-time earthquake alerts to initiate rapid emergency response measures.",
+        "Integrate live seismic data into dashboards for operators to monitor events and coordinate actions effectively.",
+        "Use map-based visualizations to identify high-risk areas and prioritize resource deployment.",
+        "Support early warning systems that notify communities and infrastructure operators.",
+        "Enhance disaster planning, drills, and situational awareness for emergency teams.",
       ],
     },
   ];
@@ -37,10 +49,7 @@ export default function UseCases() {
 
   return (
     <>
-      <MetaData
-        title="Use Cases"
-        description="Use Cases for TerraQuake API"
-      />
+      <MetaData title="Use Cases" description="Use Cases for TerraQuake API" />
       <section className="relative z-30 w-full min-h-screen px-6 py-20">
         {/* Page header */}
         <div className="flex flex-col justify-center items-center mb-16">
@@ -71,14 +80,14 @@ export default function UseCases() {
                 </h2>
                 <FiChevronDown
                   className={`text-white text-2xl transition-transform duration-300 ${
-                    expandedIndex === index ? 'rotate-180' : ''
+                    expandedIndex === index ? "rotate-180" : ""
                   }`}
                 />
               </div>
 
               <div
                 className={`overflow-hidden transition-all duration-500 ${
-                  expandedIndex === index ? 'max-h-96 mt-4' : 'max-h-0'
+                  expandedIndex === index ? "max-h-96 mt-4" : "max-h-0"
                 }`}
               >
                 <p className="text-gray-300 leading-relaxed text-sm md:text-base mb-1">
