@@ -32,7 +32,7 @@ const fetchINGV = async (url) => {
   return response.json()
 }
 
-// NOTE: funzione per la lettura da endpoint INGV e la restituzione degli eventi sismici più recenti
+// NOTE: function to read from INGV endpoint and return the most recent seismic events
 export const getEarthquakesByRecent = async (req, res) => {
   try {
     const urlINGV = process.env.URL_INGV
@@ -84,7 +84,7 @@ export const getEarthquakesByRecent = async (req, res) => {
   }
 }
 
-// NOTE: funzione per la lettura da endpoint INGV e la restituzione degli eventi odierni
+// NOTE: function to read from INGV endpoint and return today's seismic events
 export const getEarthquakesByToday = async (req, res) => {
   try {
     const urlINGV = process.env.URL_INGV
@@ -133,7 +133,7 @@ export const getEarthquakesByToday = async (req, res) => {
   }
 }
 
-// NOTE: funzione per ottenere la lista completa eventi sismici dell'ultima settimana
+// NOTE: function to get the complete list of seismic events from the last week
 export const getEarthquakesByLastWeek = async (req, res) => {
   try {
     const urlINGV = process.env.URL_INGV
@@ -190,7 +190,7 @@ export const getEarthquakesByLastWeek = async (req, res) => {
   }
 }
 
-// NOTE: funzione per ottenere una lista completa eventi sismici per un mese specifico
+// NOTE: function to get the complete list of seismic events for a specific month
 export const getEarthquakesByMonth = async (req, res) => {
   try {
     const urlINGV = process.env.URL_INGV
@@ -253,7 +253,7 @@ export const getEarthquakesByMonth = async (req, res) => {
   }
 }
 
-// NOTE: funzione per ottenere eventi sismici per regione italiana dall'inizio dell'anno fino ad oggi
+// NOTE: function to get seismic events by Italian region from the beginning of the year until today
 export const getEarthquakesByRegion = async (req, res) => {
   try {
     const urlINGV = process.env.URL_INGV
@@ -313,7 +313,7 @@ export const getEarthquakesByRegion = async (req, res) => {
   }
 }
 
-// NOTE: funzione per la lettura da endpoint INGV e la restituzione degli eventi sismici filtrati per profondità dall'inizio dell'anno fino ad oggi
+// NOTE: function to read from INGV endpoint and return seismic events filtered by depth from the beginning of the year until today
 export const getEarthquakesByDepth = async (req, res) => {
   try {
     const urlINGV = process.env.URL_INGV
@@ -370,7 +370,7 @@ export const getEarthquakesByDepth = async (req, res) => {
   }
 }
 
-// NOTE: funzione per la lettura da endpoint INGV e la restituzione degli eventi sismici filtrati per un intervallo di tempo
+// NOTE: function to read from INGV endpoint and return seismic events filtered by a date range
 export const getEarthquakesByDateRange = async (req, res) => {
   try {
     const urlINGV = process.env.URL_INGV
@@ -438,13 +438,13 @@ export const getEarthquakesByDateRange = async (req, res) => {
   }
 }
 
-// NOTE: funzione per la lettura da endpoint INGV e la restituzione degli eventi sismici filtrati per magnitudo dall'inizio dell'anno fino ad oggi
+// NOTE: function to read from INGV endpoint and return seismic events filtered by magnitude from the beginning of the year until today
 export const getEarthquakesByMagnitude = async (req, res) => {
   try {
     const urlINGV = process.env.URL_INGV
     const { mag } = req.query
 
-    // Magnitude è obbligatoria
+   // Magnitude is mandatory
     if (mag === undefined) {
       return handleHttpError(
         res,
@@ -514,7 +514,7 @@ export const getEarthquakesByMagnitude = async (req, res) => {
   }
 }
 
-// NOTE: funzione per la lettura da endpoint INGV e la restituzione di un singolo evento id con eventId
+// NOTE: function to read from INGV endpoint and return a single event by eventId
 export const getEarthquakesById = async (req, res) => {
   try {
     const urlINGV = process.env.URL_INGV
@@ -562,7 +562,7 @@ export const getEarthquakesById = async (req, res) => {
   }
 }
 
-// NOTE: funzione per la lettura da endpoint INGV e la restituzione degli eventi sismici filtrati per latitudine e longitudine dall'inizio dell'anno fino ad oggi
+// NOTE: function to read from INGV endpoint and return seismic events filtered by latitude and longitude from the beginning of the year until today
 export const getEarthquakesLocation = async (req, res) => {
   try {
     const urlINGV = process.env.URL_INGV
@@ -584,12 +584,12 @@ export const getEarthquakesLocation = async (req, res) => {
     const lat = parseFloat(latitude)
     const lon = parseFloat(longitude)
 
-    // Date: dall'inizio dell'anno fino ad oggi
+    // Date: from the beginning of the year until today
     const nowUTC = new Date()
     const startOfYear = `${nowUTC.getFullYear()}-01-01T00:00:00`
     const endOfToday = nowUTC.toISOString().split('.')[0] // YYYY-MM-DDTHH:MM:SS
 
-    // Bounding box globale ridotta per sicurezza
+    // Reduced global bounding box for safety
     const degreeRadius = radiusNum / 111 // 1° ≈ 111 km
     const minLat = Math.max(lat - degreeRadius, -90)
     const maxLat = Math.min(lat + degreeRadius, 90)
@@ -609,7 +609,7 @@ export const getEarthquakesLocation = async (req, res) => {
     const data = await response.json()
     let { features } = data
 
-    // Filtraggio locale preciso usando haversine
+    // Precise local filtering using haversine
     const userPoint = { latitude: lat, longitude: lon }
     features = features.filter(({ geometry }) => {
       const [lonF, latF] = geometry.coordinates
