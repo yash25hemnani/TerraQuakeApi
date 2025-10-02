@@ -48,7 +48,6 @@ export const createContact = async (req, res) => {
   }
 }
 
-
 /**
  * Controller: Retrieve all contact messages.
  *
@@ -115,7 +114,6 @@ export const getAllContacts = async (req, res) => {
   }
 }
 
-
 /**
  * Controller: Retrieve a single contact message by ID.
  *
@@ -152,7 +150,6 @@ export const getOneContact = async (req, res) => {
     )
   }
 }
-
 
 /**
  * Controller: Answer a specific contact message.
