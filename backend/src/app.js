@@ -55,9 +55,9 @@ const corsAuthOptions = {
 
 app.use('/v1/test', cors(corsAuthOptions), apiLimiter, routeGetStart)
 app.use('/auth', cors(corsAuthOptions), authLimiter, routeAuth)
+app.use('/auth/github', cors(corsAuthOptions), authLimiter, githubAuthRoute)
 app.use('/users', cors(corsAuthOptions), authLimiter, authenticateUser, routeUsers)
 app.use('/contact', cors(corsAuthOptions), contactLimiter, routeContact)
-app.use('/auth/github', githubAuthRoute);
 
 // ===== ERROR HANDLER =====
 app.use((err, req, res, next) => {
